@@ -3,7 +3,7 @@
 @theme {
   /* Fonts */
   --font-heading: "Source Serif 4", "sans-serif";
-  --font-body: "Roboto", "sans-serif";
+  --font-body: "roboto", "sans-serif";
 
   /* Colors */
   --color-primary-ultra-light: oklch(0.9891 0.0035 219.53);
