@@ -9,7 +9,7 @@
     />
     <title>Trove | Home</title>
     <link rel="icon" href="assets/images/favicon-16.png" />
-    <link rel="stylesheet" href="./dist/styles.css" />
+    <link href="./dist/output.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,12 +22,20 @@
     />
     <script defer type="module" src="src/ts/app.ts"></script>
   </head>
-  <body>
-    <header></header>
-    <main><h1 class="text-red-600">Header</h1></main>
-    <h4>Sub Header</h4>
-    <p>Paragraph</p>
-    <img src="/assets/images/logo-primary-96.png" alt="" />
-    <footer></footer>
+  <body class="mx-auto flex min-h-screen flex-col">
+    <header class="sticky top-0">
+      <h1 class="text-blue-200">Header</h1>
+    </header>
+    <main class="grow">
+      <h4>Sub Header</h4>
+      <p>Paragraph</p>
+      <figure>
+        <img src="/assets/images/logo-primary-48.png" alt="Trove logo" />
+      </figure>
+    </main>
+
+    <footer
+      class="bg-secondary-dark text-secondary-ultra-light sticky bottom-0 mb-0 px-4 py-8 text-sm sm:px-12"
+    ></footer>
   </body>
 </html>
