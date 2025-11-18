@@ -53,6 +53,37 @@
 }
 
 @layer components {
+  .btn {
+    @apply rounded-xl px-4 py-2 text-lg font-semibold;
+  }
+
+  .btn_primary {
+    @apply bg-primary-dark hover:bg-primary-medium text-white;
+  }
+
+  .btn_secondary {
+    @apply bg-primary-light hover:bg-primary-normal border-primary-dark text-primary-dark border;
+  }
+
+  .btn_delete {
+    @apply text-delete-normal hover:bg-delete-normal border-delete-normal border bg-white hover:border-0 hover:text-white;
+  }
+
+  .btn_disabled {
+    @apply bg-gray-medium text-gray-dark;
+  }
+
+  .btn_round {
+    @apply bg-primary-dark hover:bg-primary-medium flex w-fit items-center justify-center rounded-full p-3 text-white;
+  }
+
+  .btn_search {
+    @apply bg-primary-dark hover:bg-primary-medium rounded-e-xl text-white;
+  }
+
+  .btn_tag {
+    @apply bg-secondary-dark hover:bg-secondary-medium text-sm text-white;
+  }
 }
 
 @layer utilities {
