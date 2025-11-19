@@ -83,9 +83,16 @@ export interface CreateBidResponse {
   meta: Record<string, never>;
 }
 
-//Search on Listings
+//Search Listings
 
 export interface SearchListingsResponse {
   data: ListingBase[];
+  meta: Meta;
+}
+
+//Paginated Response (All Listings and Search Listings)
+
+export interface PaginatedResponse<T> {
+  data: T[];
   meta: Meta;
 }

@@ -1,3 +1,5 @@
+//Register
+
 export interface RegisterResponseData {
   id: string;
   name: string;
@@ -8,6 +10,8 @@ export interface RegisterResponse {
   data: RegisterResponseData;
   meta: object;
 }
+
+//Login
 
 export interface LoginResponseData {
   accessToken: string;

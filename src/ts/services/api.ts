@@ -3,7 +3,7 @@ import { API_BASE, API_KEY } from "../utils/constants.js";
 async function apiFetch<T>(
   endpoint: string,
   options: RequestInit = {}
-): Promise<T | null> {
+): Promise<T> {
   const url = API_BASE + endpoint;
 
   const headers: Record<string, string> = {
@@ -31,7 +31,7 @@ async function apiFetch<T>(
     }
 
     if (response.status === 204) {
-      return null;
+      throw new Error("No content returned");
     }
 
     const data: T = await response.json();
@@ -44,31 +44,25 @@ async function apiFetch<T>(
   }
 }
 
-export async function get<T>(endpoint: string): Promise<T | null> {
+export async function get<T>(endpoint: string): Promise<T> {
   return apiFetch<T>(endpoint);
 }
 
-export async function post<T>(
-  endpoint: string,
-  body: object
-): Promise<T | null> {
+export async function post<T>(endpoint: string, body: object): Promise<T> {
   return apiFetch<T>(endpoint, {
     method: "POST",
     body: JSON.stringify(body),
   });
 }
 
-export async function put<T>(
-  endpoint: string,
-  body?: object
-): Promise<T | null> {
+export async function put<T>(endpoint: string, body?: object): Promise<T> {
   return apiFetch<T>(endpoint, {
     method: "PUT",
     body: JSON.stringify(body),
   });
 }
 
-export async function del<T>(endpoint: string): Promise<T | null> {
+export async function del<T>(endpoint: string): Promise<T> {
   return apiFetch<T>(endpoint, {
     method: "DELETE",
   });
