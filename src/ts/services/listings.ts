@@ -16,7 +16,7 @@ export async function getAllListings(
   page: number = 1,
   limit: number = 10
 ): Promise<PaginatedResponse<ListingBase>> {
-  return await get<PaginatedResponse<ListingBase>>(
+  return get<PaginatedResponse<ListingBase>>(
     `/auction/listings?_page=${page}&_limit=${limit}`
   );
 }
@@ -24,7 +24,7 @@ export async function getAllListings(
 export async function getSingleListing(
   id: string
 ): Promise<SingleListingResponse> {
-  return await get<SingleListingResponse>(`/auction/listings/${id}`);
+  return get<SingleListingResponse>(`/auction/listings/${id}`);
 }
 
 export async function createListing(

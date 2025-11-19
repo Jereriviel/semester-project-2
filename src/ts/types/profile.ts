@@ -28,7 +28,7 @@ export interface Meta {
   totalCount?: number;
 }
 
-export interface SingleProfileResponse {
+export interface ProfileResponse {
   data: Profile;
   meta: Record<string, never>;
 }
@@ -57,7 +57,7 @@ export interface ListingCount {
   bids: number;
 }
 
-export interface Listing {
+export interface ProfileListing {
   id: string;
   title: string;
   description: string;
@@ -70,27 +70,28 @@ export interface Listing {
 }
 
 export interface ProfileListingsResponse {
-  data: Listing[];
+  data: ProfileListing[];
   meta: Meta;
 }
 
 //Active Bids by Profile
 
-export interface Bid {
+export interface ProfileBid {
   id: string;
   amount: number;
   bidder: Profile;
   created: string;
+  _listings?: ProfileListing[];
 }
 
 export interface ProfileBidsResponse {
-  data: Bid[];
+  data: ProfileBid[];
   meta: Meta;
 }
 
 //Wins by Profile
 
 export interface ProfileWinsResponse {
-  data: Listing[];
+  data: ProfileListing[];
   meta: Meta;
 }
