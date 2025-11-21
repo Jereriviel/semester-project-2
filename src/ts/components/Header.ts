@@ -1,5 +1,6 @@
-import { isLoggedIn, getUser } from "../store/userStore.js";
+import { isLoggedIn, getUser, clearUser } from "../store/userStore.js";
 import { getProfile } from "../services/profile.js";
+import { toggleDropdown } from "../utils/toggleDropdown.js";
 
 export async function Header() {
   const loggedIn = isLoggedIn();
@@ -23,7 +24,7 @@ export async function Header() {
             <p>CREDITS: ${credits}</p>
           </div>
 
-          <figure class="cursor-pointer" onclick="toggleDropdown()">
+          <figure class="cursor-pointer" id="profile-img">
             <img 
               src="${avatarUrl}" 
               alt="${avatarAlt}" 
@@ -49,7 +50,7 @@ export async function Header() {
             </div>
             <span
               class="material-symbols-outlined cursor-pointer"
-              onclick="toggleDropdown()"
+              id="menu-close"
             >
               close
             </span>
@@ -117,3 +118,20 @@ export async function renderHeader() {
     header.innerHTML = await Header();
   }
 }
+
+const logOutBtn = document.getElementById("logout-button");
+const profileImgBtn = document.getElementById("profile-img");
+const menuCloseBtn = document.getElementById("menu-close");
+
+logOutBtn?.addEventListener("click", () => {
+  clearUser();
+  window.location.href = "/index.html";
+});
+
+profileImgBtn?.addEventListener("click", () => {
+  toggleDropdown();
+});
+
+menuCloseBtn?.addEventListener("click", () => {
+  toggleDropdown();
+});
