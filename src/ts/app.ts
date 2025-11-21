@@ -1,7 +1,5 @@
-import { Footer } from "./components/Footer.js";
+import { renderHeader } from "./components/Header.js";
+import { renderFooter } from "./components/Footer.js";
 
-const footers = document.querySelectorAll("footer");
-
-footers.forEach((footer) => {
-  footer.innerHTML = Footer();
-});
+renderHeader();
+renderFooter();

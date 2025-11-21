@@ -8,7 +8,6 @@ import type {
   ProfileBidsResponse,
   ProfileWinsResponse,
 } from "../types/profile.js";
-
 export async function getProfile(name: string): Promise<Profile> {
   const response = await get<ProfileResponse>(`/auction/profiles/${name}`);
 

@@ -5,7 +5,7 @@ import type {
   RegisterResponse,
   LoginResponseData,
   LoginResponse,
-} from "../types/auth.ts";
+} from "../types/auth.js";
 
 export async function registerUser(
   name: string,
