@@ -111,21 +111,22 @@ export async function renderHeader() {
   for (const header of headers) {
     header.innerHTML = await Header();
   }
+
+  const logOutBtn = document.getElementById("logout-btn");
+  const profileImgBtn = document.getElementById("profile-img");
+  const menuCloseBtn = document.getElementById("menu-close");
+
+  logOutBtn?.addEventListener("click", () => {
+    clearUser();
+    window.location.href = "/index.html";
+  });
+
+  profileImgBtn?.addEventListener("click", () => {
+    toggleDropdown();
+  });
+
+  menuCloseBtn?.addEventListener("click", () => {
+    toggleDropdown();
+    window.location.href = "/index.html";
+  });
 }
-
-const logOutBtn = document.getElementById("logout-button");
-const profileImgBtn = document.getElementById("profile-img");
-const menuCloseBtn = document.getElementById("menu-close");
-
-logOutBtn?.addEventListener("click", () => {
-  clearUser();
-  window.location.href = "/index.html";
-});
-
-profileImgBtn?.addEventListener("click", () => {
-  toggleDropdown();
-});
-
-menuCloseBtn?.addEventListener("click", () => {
-  toggleDropdown();
-});
