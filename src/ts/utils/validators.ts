@@ -10,6 +10,11 @@ interface FormValidationResult {
   errors: FormErrors;
 }
 
+export function validateName(name: string): boolean {
+  const nameRegex = /^[A-Za-z0-9_]+$/;
+  return nameRegex.test(name);
+}
+
 export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@(stud\.noroff\.no|noroff\.no)$/;
   return emailRegex.test(email);
@@ -27,11 +32,16 @@ export function validateConfirmPassword(
 }
 
 export function validateForm(
+  name: string,
   email: string,
   password: string,
   confirmPassword?: string
 ): FormValidationResult {
   const errors: FormErrors = {};
+
+  if (!validateName(name)) {
+    errors.name = "Name can only contain letters, numbers, and underscores";
+  }
 
   if (!validateEmail(email)) {
     errors.email = "Please enter a valid Noroff email address";
