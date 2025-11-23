@@ -1,22 +1,28 @@
-import { BaseError } from "./BaseError";
+import { BaseError } from "./BaseError.js";
+
+interface ApiErrorResponse {
+  errors?: { message: string; code?: string; path?: string[] }[];
+  status?: string;
+  statusCode?: number;
+}
 
 export class ApiError extends BaseError {
-  public readonly details?: unknown;
+  public readonly details?: ApiErrorResponse;
 
-  constructor(message: string, statusCode: number, details?: unknown) {
+  constructor(message: string, statusCode: number, details?: ApiErrorResponse) {
     super(message, statusCode, "ApiError");
     this.details = details;
   }
 
   static async fromResponse(response: Response): Promise<ApiError> {
     let message = `HTTP Error: ${response.status} ${response.statusText}`;
-    let details: unknown = undefined;
+    let details: ApiErrorResponse | undefined = undefined;
 
     try {
-      const json = await response.json();
+      const json: ApiErrorResponse = await response.json();
       details = json;
-      if (typeof json.message === "string") {
-        message = json.message;
+      if (json.errors && json.errors[0]?.message) {
+        message = json.errors[0].message;
       }
     } catch (parseError) {
       console.warn("Failed to parse error response as JSON:", parseError);
