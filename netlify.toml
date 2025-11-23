@@ -1,0 +1,8 @@
+[build]
+  command = "npm run tw:build && npx tsc"
+  publish = "."
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
