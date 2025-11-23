@@ -1,13 +1,13 @@
+import { getToken } from "../store/userStore.js";
+
 export function requireAuth() {
-  const token = localStorage.getItem("accessToken");
-  if (!token) {
-    window.location.href = "/login.html";
+  if (!getToken()) {
+    window.location.href = "/login/index.html";
   }
 }
 
 export function redirectIfAuth() {
-  const token = localStorage.getItem("accessToken");
-  if (token) {
-    window.location.href = "/profile.html";
+  if (getToken()) {
+    window.location.href = "/index.html";
   }
 }
