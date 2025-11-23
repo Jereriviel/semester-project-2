@@ -10,7 +10,7 @@ interface InputProps {
 
 export function input(props: InputProps) {
   return `
-    <div class="flex flex-col gap-2 w-fit">
+    <div class="flex flex-col gap-2">
       <label for="${props.id}" class=" text-lg font-semibold">
         ${props.label || ""}
       </label>
@@ -21,7 +21,7 @@ export function input(props: InputProps) {
         ${props.required ? "required" : ""}
         ${props.minlength ? `minlength="${props.minlength}"` : ""}
         placeholder="${props.placeholder || ""}"
-        class="px-4 py-3 w-[300px] rounded-xl border border-gray-medium focus:outline-none focus:ring-1 focus:ring-primary-dark transition-colors duration-200"
+        class="px-4 py-3 w-full sm:w-[300px] rounded-xl border border-gray-medium focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-0 transition-colors duration-200"
       />
       <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
     </div>
@@ -40,7 +40,7 @@ export function textArea(props: InputProps) {
         ${props.required ? "required" : ""}
         ${props.minlength ? `minlength="${props.minlength}"` : ""}
         placeholder="${props.placeholder || ""}"
-        class="min-h-25 border border-gray-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-1 focus:ring-primary-dark transition-colors duration-200"
+        class="min-h-25 border border-gray-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:border-0 focus:ring-primary-dark transition-colors duration-200"
       ></textarea>
       <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
     </div>
