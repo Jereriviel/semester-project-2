@@ -32,14 +32,14 @@ export function validateConfirmPassword(
 }
 
 export function validateForm(
-  name: string,
   email: string,
   password: string,
+  name?: string,
   confirmPassword?: string
 ): FormValidationResult {
   const errors: FormErrors = {};
 
-  if (!validateName(name)) {
+  if (name !== undefined && !validateName(name)) {
     errors.name = "Name can only contain letters, numbers, and underscores";
   }
 
