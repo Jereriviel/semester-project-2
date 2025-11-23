@@ -6,6 +6,7 @@ import type {
   LoginResponseData,
   LoginResponse,
 } from "../types/auth.js";
+import { ApiError } from "../errors.ts/ApiError.js";
 
 export async function registerUser(
   name: string,
@@ -20,19 +21,16 @@ export async function registerUser(
     });
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => null);
-      throw new Error(
-        (errorData && errorData.message) || "Registration failed"
-      );
+      throw await ApiError.fromResponse(res);
     }
 
     const json: RegisterResponse = await res.json();
     return json.data;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+    if (error instanceof ApiError) {
+      throw error;
     }
-    throw new Error("An unexpected error occurred while registering");
+    throw new ApiError("An unexpected error occurred while registering", 500);
   }
 }
 
@@ -48,8 +46,7 @@ export async function loginUser(
     });
 
     if (!res.ok) {
-      const errorData = await res.json().catch(() => null);
-      throw new Error((errorData && errorData.message) || "Login failed");
+      throw await ApiError.fromResponse(res);
     }
 
     const json: LoginResponse = await res.json();
@@ -61,9 +58,9 @@ export async function loginUser(
 
     return json.data;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+    if (error instanceof ApiError) {
+      throw error;
     }
-    throw new Error("An unexpected error occurred while logging in");
+    throw new ApiError("An unexpected error occurred while logging in", 500);
   }
 }

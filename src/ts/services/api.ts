@@ -1,4 +1,5 @@
 import { API_BASE, API_KEY } from "../utils/constants.js";
+import { ApiError } from "../errors.ts/ApiError.js";
 
 async function apiFetch<T>(
   endpoint: string,
@@ -23,24 +24,20 @@ async function apiFetch<T>(
     const response = await fetch(url, { ...options, headers });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      const message =
-        (errorData && (errorData.message || errorData.errors?.[0]?.message)) ||
-        `Request failed with status ${response.status}`;
-      throw new Error(message);
+      throw await ApiError.fromResponse(response);
     }
 
     if (response.status === 204) {
-      throw new Error("No content returned");
+      throw new ApiError("No content returned", 204);
     }
 
     const data: T = await response.json();
     return data;
   } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message);
+    if (error instanceof ApiError) {
+      throw error;
     }
-    throw new Error("An unexpected error occurred during API request");
+    throw new ApiError("An unexpected error occurred during API request", 500);
   }
 }
 
