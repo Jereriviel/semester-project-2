@@ -93,17 +93,11 @@ export async function Header() {
   return `
       <div class="relative mx-auto flex max-w-7xl items-center justify-between">
         <a href="index.html">
-          <picture>
-            <source
-              media="(min-width: 640px)"
-              srcset="assets/images/logo-primary-48.png"
-              type="image/webp"
-            />
             <img
-              src="assets/images/logo-primary-36.png"
+              src="/assets/images/logo-primary-96.png"
               alt="Trove logo"
+              class="w-[109px] sm:w-[145px]"
             />
-          </picture>
         </a>
 
         ${loggedIn ? profileHTML : loginHTML}

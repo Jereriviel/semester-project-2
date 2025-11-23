@@ -6,12 +6,15 @@
   "type": "module",
   "scripts": {
     "start": "live-server --port=5173",
+    "tsc:watch": "tsc --watch",
+    "tsc:build": "npx tsc",
     "prepare": "husky",
     "lint": "eslint . --ext .js,.ts",
     "lint:fix": "eslint . --ext .js,.ts --fix",
     "format": "prettier --write .",
-    "dev": "npx tailwindcss -i ./src/css/styles.css -o ./dist/output.css --watch",
-    "build": "npx tailwindcss -i ./src/css/styles.css -o ./dist/output.css"
+    "tw:watch": "npx tailwindcss -i ./src/css/styles.css -o ./dist/output.css --watch",
+    "tw:build": "npx tailwindcss -i ./src/css/styles.css -o ./dist/output.css",
+    "dev": "concurrently \"npm run tsc:watch\" \"npx tailwindcss -i ./src/css/styles.css -o ./dist/output.css --watch\" \"live-server --port=5173\""
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,7 @@
     "@eslint/js": "^9.39.1",
     "@tailwindcss/cli": "^4.1.17",
     "@tailwindcss/postcss": "^4.1.17",
+    "concurrently": "^9.2.1",
     "eslint": "^9.39.1",
     "globals": "^16.5.0",
     "husky": "^9.1.7",
