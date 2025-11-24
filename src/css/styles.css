@@ -42,13 +42,13 @@
   h2,
   h3 {
     font-family: var(--font-heading);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   h4,
   h5 {
     font-family: var(--font-body);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   button {
@@ -86,7 +86,7 @@
   }
 
   .btn_tag {
-    @apply bg-secondary-dark hover:bg-secondary-medium text-sm text-white;
+    @apply bg-secondary-dark text-sm font-normal text-white;
   }
 }
 

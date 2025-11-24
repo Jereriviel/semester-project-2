@@ -59,7 +59,7 @@ export async function Header() {
           <div id="dropdown-links">
             <a
               href="/profile/index.html"
-              class="hover:bg-primary-light flex items-center gap-2 p-4 hover:font-semibold"
+              class="hover:bg-primary-light flex items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out"
             >
               <span class="material-symbols-outlined"> account_circle </span>
               <p>Profile</p>
@@ -67,7 +67,7 @@ export async function Header() {
             <button
               id="logout-btn"
               type="button"
-              class="hover:bg-primary-light flex w-full items-center gap-2 p-4 hover:font-semibold"
+              class="hover:bg-primary-light flex w-full items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out"
             >
               <span class="material-symbols-outlined"> logout </span> Log Out
             </button>
