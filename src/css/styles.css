@@ -94,4 +94,8 @@
   .open_dropdown {
     @apply max-h-[400px];
   }
+
+  fieldset:disabled input {
+    @apply text-gray-medium bg-gray-light;
+  }
 }

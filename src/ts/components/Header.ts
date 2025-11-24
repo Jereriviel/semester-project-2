@@ -92,7 +92,7 @@ export async function Header() {
 
   return `
       <div class="relative mx-auto flex max-w-7xl items-center justify-between">
-        <a href="index.html">
+        <a href="/index.html">
             <img
               src="/assets/images/logo-primary-96.png"
               alt="Trove logo"
