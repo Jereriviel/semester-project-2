@@ -16,7 +16,18 @@ export interface ListingBase {
   created: string;
   updated: string;
   endsAt: string;
+  seller?: UserProfile;
+  bids?: Bid[];
   _count: ListingCount;
+}
+
+export interface UserProfile {
+  name: string;
+  email: string;
+  bio?: string;
+  avatar?: Media;
+  banner?: Media;
+  wins?: string[];
 }
 
 export interface Meta {
@@ -72,7 +83,14 @@ export interface UpdateListingResponse {
   meta: Record<string, never>;
 }
 
-//Bid on Listing
+//Bids
+
+export interface Bid {
+  id: string;
+  amount: number;
+  bidder: UserProfile;
+  created: string;
+}
 
 export interface CreateBidRequest {
   amount: number;

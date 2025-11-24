@@ -17,14 +17,16 @@ export async function getAllListings(
   limit: number = 10
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?_page=${page}&_limit=${limit}`
+    `/auction/listings?_page=${page}&_limit=${limit}&_seller=true&_bids=true`
   );
 }
 
 export async function getSingleListing(
   id: string
 ): Promise<SingleListingResponse> {
-  return get<SingleListingResponse>(`/auction/listings/${id}`);
+  return get<SingleListingResponse>(
+    `/auction/listings/${id}?_seller=true&_bids=true`
+  );
 }
 
 export async function createListing(
@@ -57,6 +59,10 @@ export async function searchListings(
   pageSize: number = 10
 ): Promise<SearchListingsResponse> {
   return get<SearchListingsResponse>(
-    `/auction/listings/search?q=${encodeURIComponent(query)}&_page=${page}&_limit=${pageSize}`
+    `/auction/listings/search?` +
+      `q=${encodeURIComponent(query)}` +
+      `&_page=${page}` +
+      `&_limit=${pageSize}` +
+      `&_seller=true&_bids=true`
   );
 }
