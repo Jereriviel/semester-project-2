@@ -21,14 +21,16 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=account_circle,close,edit,login,logout"
     />
     <script type="module" src="/dist/ts/app.js"></script>
-    <script type="module" src="/dist/ts/pages/index.js"></script>
+    <script type="module" src="/dist/ts/pages/index/indexPage.js"></script>
   </head>
   <body class="mx-auto flex min-h-screen flex-col">
-    <header class="sticky top-0 mt-0 px-4 py-4 sm:px-12 sm:py-6"></header>
+    <header
+      class="sticky top-0 mt-0 bg-white px-4 py-4 sm:px-12 sm:py-6"
+    ></header>
     <main class="flex grow flex-col">
       <section id="hero-section" class="bg-primary-dark">
         <div
-          class="text-secondary-ultra-light grid grid-cols-2 px-4 py-8 sm:p-12"
+          class="text-secondary-ultra-light mx-auto grid max-w-7xl grid-cols-2 px-4 py-8 sm:p-12 xl:px-0"
         >
           <h1 class="self-end text-4xl uppercase sm:text-[40px]">
             Explore. <br class="sm:hidden" />Bid. <br class="sm:hidden" />Win.
@@ -48,6 +50,9 @@
           </p>
         </div>
       </section>
+      <section id="search-filter-section"></section>
+      <section id="listing-section"></section>
+      <section id="pagination-section"></section>
     </main>
     <footer
       class="bg-secondary-dark text-secondary-ultra-light sticky bottom-0 mb-0 px-4 py-8 text-sm sm:px-12"
