@@ -98,4 +98,34 @@
   fieldset:disabled input {
     @apply text-gray-medium bg-gray-light;
   }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .fade-out {
+    animation: fadeOut 0.5s ease-out;
+  }
 }

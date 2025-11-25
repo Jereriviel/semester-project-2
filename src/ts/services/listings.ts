@@ -14,7 +14,7 @@ import type {
 
 export async function getAllListings(
   page: number = 1,
-  limit: number = 10
+  limit: number = 12
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
     `/auction/listings?_page=${page}&_limit=${limit}&_seller=true&_bids=true`
