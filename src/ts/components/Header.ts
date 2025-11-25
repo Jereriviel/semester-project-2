@@ -94,7 +94,7 @@ export async function Header() {
       <div class="relative mx-auto flex max-w-7xl items-center justify-between">
         <a href="/index.html">
             <img
-              src="/assets/images/logo-primary-96.png"
+              src="/assets/logos/logo-primary-96.png"
               alt="Trove logo"
               class="w-[109px] sm:w-[145px]"
             />
