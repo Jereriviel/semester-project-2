@@ -1,28 +1,22 @@
 import { ListingCard } from "../../components/listings/ListingCard.js";
 import { getAllListings } from "../../services/listings.js";
 import { listingCardSkeleton } from "../../components/listings/ListingCardSkeleton.js";
+import { initPaginatedList } from "../../utils/pagination.js";
 
 async function init() {
-  const container = document.getElementById("listing-section");
-  if (!container) return;
+  const listingSection = document.getElementById("listing-section");
+  if (!listingSection) return;
 
-  container.innerHTML = Array.from({ length: 12 })
-    .map(() => listingCardSkeleton())
-    .join("");
+  listingSection.innerHTML = "";
+  for (let i = 0; i < 12; i++) {
+    listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
+  }
 
-  const { data } = await getAllListings(1, 12);
-
-  const skeletons = container.querySelectorAll("[data-skeleton]");
-  skeletons.forEach((skeleton) => skeleton.classList.add("fade-out"));
-
-  container.innerHTML = "";
-
-  data.forEach((listing) => {
-    const card = ListingCard(listing);
-
-    card.classList.add("fade-in");
-
-    container.appendChild(card);
+  await initPaginatedList({
+    container: listingSection,
+    loadMoreSection: document.getElementById("load-more-section")!,
+    fetchItems: (page) => getAllListings(page, 12),
+    renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
 

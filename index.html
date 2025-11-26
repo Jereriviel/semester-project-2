@@ -25,7 +25,7 @@
   </head>
   <body class="mx-auto flex min-h-screen flex-col">
     <header
-      class="sticky top-0 mt-0 bg-white px-4 py-4 sm:px-12 sm:py-6"
+      class="sticky top-0 z-50 mt-0 bg-white px-4 py-4 sm:px-12 sm:py-6"
     ></header>
     <main class="flex grow flex-col">
       <section id="hero-section" class="bg-primary-dark">
@@ -55,7 +55,10 @@
         id="listing-section"
         class="mx-auto grid w-full max-w-7xl gap-12 px-4 py-12 sm:grid-cols-2 sm:px-12 lg:grid-cols-3 xl:px-0"
       ></section>
-      <section id="pagination-section"></section>
+      <section
+        id="load-more-section"
+        class="mx-auto flex w-full max-w-7xl justify-center gap-12 px-4 pb-12 sm:px-12 xl:px-0"
+      ></section>
     </main>
     <footer
       class="bg-secondary-dark text-secondary-ultra-light bottom-0 mb-0 px-4 py-8 text-sm sm:px-12"

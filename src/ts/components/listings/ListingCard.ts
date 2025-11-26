@@ -2,12 +2,16 @@ import { ListingBase } from "../../types/listings.js";
 import { formatEndsIn } from "../../utils/formatters.js";
 import { applyPlaceholderImage } from "../../utils/placeholderImg.js";
 
-export function ListingCard(listing: ListingBase) {
+export function ListingCard(
+  listing: ListingBase,
+  options: { lazy?: boolean } = { lazy: true }
+) {
+  const { lazy } = options;
   const article = document.createElement("article");
   article.id = "listing-card";
   article.className =
     "shadow-card bg-secondary-light text-primary-dark hover:bg-secondary-normal w-full overflow-hidden rounded-xl transition-all duration-300 ease-in-out grid grid-rows-[max-content] grid-cols-[minmax(0, 1fr)] cursor-pointer";
-
+  article.classList.add("fade-in");
   article.addEventListener("click", () => {
     window.location.href = `/listing/index.html?id=${listing.id}`;
   });
@@ -15,9 +19,14 @@ export function ListingCard(listing: ListingBase) {
   article.innerHTML = `
       <figure>
         <img
-          class="h-60 object-cover w-full card-image"
-          src="${listing.media?.[0]?.url || "/assets/images/placeholder-img.jpg"}"
-          alt="${listing.media?.[0]?.alt || "No Image."}"
+          class="h-60 object-cover w-full card-image ${lazy ? "lazy-load" : ""}"
+
+         ${
+           lazy
+             ? `data-src="${listing.media?.[0]?.url ?? "/assets/images/placeholder-img.jpg"}" src="/assets/images/placeholder-dot.png"`
+             : `src="${listing.media?.[0]?.url ?? "/assets/images/placeholder-img.jpg"}"`
+         }
+
         >
       </figure>
       <div class="flex flex-col p-6 gap-4 justify-between">

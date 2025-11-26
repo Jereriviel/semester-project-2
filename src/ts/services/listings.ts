@@ -17,7 +17,7 @@ export async function getAllListings(
   limit: number = 12
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?_page=${page}&_limit=${limit}&_seller=true&_bids=true`
+    `/auction/listings?page=${page}&limit=${limit}&_sort=created&_order=desc&_seller=true&_bids=true`
   );
 }
 
@@ -61,8 +61,8 @@ export async function searchListings(
   return get<SearchListingsResponse>(
     `/auction/listings/search?` +
       `q=${encodeURIComponent(query)}` +
-      `&_page=${page}` +
-      `&_limit=${pageSize}` +
+      `&page=${page}` +
+      `&limit=${pageSize}` +
       `&_seller=true&_bids=true`
   );
 }
