@@ -17,7 +17,7 @@ export async function getAllListings(
   limit: number = 12
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?page=${page}&limit=${limit}&_sort=created&_order=desc&_seller=true&_bids=true`
+    `/auction/listings?page=${page}&limit=${limit}&sort=created&sortOrder=desc&_seller=true&_bids=true`
   );
 }
 

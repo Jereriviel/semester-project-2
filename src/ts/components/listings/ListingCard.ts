@@ -35,14 +35,8 @@ export function ListingCard(
                 <h2 class="text-3xl">${listing.title}</h2>
                 <p>By: ${listing.seller?.name ?? "Unknown"}</p>
             </div>
-            <p class="text-lg">
-                ${
-                  listing.description
-                    ? listing.description.length > 50
-                      ? listing.description.slice(0, 110) + "..."
-                      : listing.description
-                    : ""
-                }
+            <p class="text-lg line-clamp-3">
+              ${listing.description ?? ""}
             </p>
             <div class="flex gap-4 flex-wrap">
                 ${listing.tags

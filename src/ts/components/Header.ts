@@ -3,6 +3,10 @@ import { getProfile } from "../services/profile.js";
 import { toggleDropdown } from "../utils/toggleDropdown.js";
 
 export async function Header() {
+  const container = document.createElement("div");
+  container.className =
+    "relative mx-auto flex max-w-7xl items-center justify-between";
+
   const loggedIn = isLoggedIn();
   let profileHTML = "";
 
@@ -90,8 +94,7 @@ export async function Header() {
     </a>
   `;
 
-  return `
-      <div class="relative mx-auto flex max-w-7xl items-center justify-between">
+  container.innerHTML = `
         <a href="/index.html">
             <img
               src="/assets/logos/logo-primary-96.png"
@@ -101,31 +104,29 @@ export async function Header() {
         </a>
 
         ${loggedIn ? profileHTML : loginHTML}
-      </div>
   `;
+
+  return container;
 }
 
 export async function renderHeader() {
-  const headers = document.querySelectorAll("header");
+  const header = document.querySelector("header");
+  if (!header) return;
 
-  for (const header of headers) {
-    header.innerHTML = await Header();
-  }
+  const headerContent = await Header();
+  header.innerHTML = "";
+  header.appendChild(headerContent);
 
-  const logOutBtn = document.getElementById("logout-btn");
-  const profileImgBtn = document.getElementById("profile-img");
-  const menuCloseBtn = document.getElementById("menu-close");
-
-  logOutBtn?.addEventListener("click", () => {
+  document.getElementById("logout-btn")?.addEventListener("click", () => {
     clearUser();
     window.location.href = "/index.html";
   });
 
-  profileImgBtn?.addEventListener("click", () => {
+  document.getElementById("profile-img")?.addEventListener("click", () => {
     toggleDropdown();
   });
 
-  menuCloseBtn?.addEventListener("click", () => {
+  document.getElementById("menu-close")?.addEventListener("click", () => {
     toggleDropdown();
     window.location.href = "/index.html";
   });
