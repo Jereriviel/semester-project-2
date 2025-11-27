@@ -1,6 +1,6 @@
 import { tagFilterInput } from "../Inputs.js";
 
-export function TagFilter(onSearch: (query: string) => void) {
+export function TagFilter(onSearch: (tag: string) => void) {
   const form = document.createElement("form");
   form.id = "filterForm";
   form.classList = "w-full sm:w-fit";
@@ -10,8 +10,8 @@ export function TagFilter(onSearch: (query: string) => void) {
             ${tagFilterInput({
               type: "text",
               name: "filter",
-              placeholder: "Enter tags (comma separated)",
-              label: "Filter By Tags",
+              placeholder: "Enter tag (single)",
+              label: "Filter by Tag",
               id: "filter",
             })}
     </div>
@@ -20,8 +20,8 @@ export function TagFilter(onSearch: (query: string) => void) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const input = form.querySelector<HTMLInputElement>("#filter");
-    const query = input?.value.trim() || "";
-    onSearch(query);
+    const tag = input?.value.trim() || "";
+    onSearch(tag);
   });
 
   return form;

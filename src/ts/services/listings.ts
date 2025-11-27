@@ -65,3 +65,20 @@ export async function searchListings(
       `&_seller=true&_bids=true`
   );
 }
+
+export async function filterListingsByTag(
+  tag: string,
+  page: number = 1,
+  pageSize: number = 12
+): Promise<PaginatedResponse<ListingBase>> {
+  const params = new URLSearchParams();
+  if (tag) params.append("_tag", tag);
+  params.append("page", String(page));
+  params.append("limit", String(pageSize));
+  params.append("_seller", "true");
+  params.append("_bids", "true");
+
+  return get<PaginatedResponse<ListingBase>>(
+    `/auction/listings?${params.toString()}`
+  );
+}
