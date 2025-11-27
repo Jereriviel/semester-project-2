@@ -6,8 +6,8 @@ export function LoginForm() {
   redirectIfAuth();
 
   return `
-        <form id="loginForm">
-          <fieldset id="loginFieldset" class="flex flex-col gap-8 w-fit p-8 rounded-xl shadow-card">
+        <form id="loginForm" class="w-full sm:w-fit">
+          <fieldset id="loginFieldset" class="flex flex-col gap-8 p-8 rounded-xl shadow-card">
             <h4 class="text-2xl font-semibold flex self-start">Log in to your account</h4>
             <div class="flex flex-col gap-8">
               ${input({
@@ -32,7 +32,7 @@ export function LoginForm() {
               <button
                 type="submit"
                 id="loginBtn"
-                class="btn btn_primary sm:w-fit text-white py-3 w-[300px]"
+                class="btn btn_primary sm:w-fit text-white py-3"
               >
                 <span class="button-text">Sign in</span>
                 <span class="spinner hidden">${loadingSpinner()}</span>

@@ -2,7 +2,7 @@
 
 export function loadingSpinner(): string {
   return `
-      <div role="status">
+      <div role="status" class="flex justify-center">
         <svg
           aria-hidden="true"
           class="text-gray-medium dark:text-gray-dark h-5 w-5 animate-spin fill-white"

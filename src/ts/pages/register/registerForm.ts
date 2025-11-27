@@ -6,8 +6,8 @@ export function RegisterForm() {
   redirectIfAuth();
 
   return `
-        <form id="registerForm">
-          <fieldset id="registerFieldset" class="flex flex-col gap-8 w-fit p-8 rounded-xl shadow-card">
+        <form id="registerForm" class="w-full sm:w-fit">
+          <fieldset id="registerFieldset" class=" flex flex-col gap-8 p-8 rounded-xl shadow-card">
             <h4 class="text-2xl font-semibold flex self-start">Register your account</h4>
             <div class="flex flex-col gap-8">
                 ${input({
@@ -49,7 +49,7 @@ export function RegisterForm() {
               <button
                 type="submit"
                 id="registerBtn"
-                class="btn btn_primary sm:w-fit text-white py-3 w-[300px]"
+                class="btn btn_primary sm:w-fit text-white py-3"
               >
                 <span class="button-text">Register</span>
                 <span class="spinner hidden">${loadingSpinner()}</span>

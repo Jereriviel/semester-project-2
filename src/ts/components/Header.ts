@@ -128,6 +128,5 @@ export async function renderHeader() {
 
   document.getElementById("menu-close")?.addEventListener("click", () => {
     toggleDropdown();
-    window.location.href = "/index.html";
   });
 }
