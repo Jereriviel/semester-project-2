@@ -9,6 +9,13 @@ interface InputProps {
   autocomplete?: string;
 }
 
+interface SelectorProps {
+  name: string;
+  label?: string;
+  id?: string;
+  defaultValue?: string;
+}
+
 export function input(props: InputProps) {
   return `
     <div class="flex flex-col gap-1 sm:w-[400px]">
@@ -63,7 +70,6 @@ export function searchInput(props: InputProps) {
           ${props.required ? "required" : ""}
           ${props.minlength ? `minlength="${props.minlength}"` : ""}
           placeholder="${props.placeholder || ""}"
-          autocomplete="${props.autocomplete || ""}"
           class="text-lg px-4 py-3 w-full sm:w-[300px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
         />
           <button type="submit" class="btn_search">
@@ -89,13 +95,37 @@ export function tagFilterInput(props: InputProps) {
           ${props.required ? "required" : ""}
           ${props.minlength ? `minlength="${props.minlength}"` : ""}
           placeholder="${props.placeholder || ""}"
-          autocomplete="${props.autocomplete || ""}"
           class="text-lg px-4 py-3 w-full sm:w-[300px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
         />
           <button type="submit" class="btn_search">
           <span class="material-symbols-outlined">filter_alt</span>
           </button>
         </div>
+      <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
+    </div>
+  `;
+}
+
+export function sortFilterSelector(props: SelectorProps) {
+  const defaultValue = props.defaultValue ?? "desc";
+
+  return `
+    <div class="flex flex-col gap-1">
+      <label for="${props.id}" class="text-lg font-medium">
+        ${props.label || ""}
+      </label>
+        <select
+          id="${props.id}"
+          name="${props.name}"
+          class="text-lg px-4 py-3 w-full sm:w-fit rounded-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
+        >
+          <option value="desc" ${defaultValue === "desc" ? "selected" : ""}>
+            Newest first
+          </option>
+          <option value="asc" ${defaultValue === "asc" ? "selected" : ""}>
+            Oldest first
+          </option>
+        </select>
       <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
     </div>
   `;

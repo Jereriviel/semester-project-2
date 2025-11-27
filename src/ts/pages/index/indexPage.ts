@@ -6,6 +6,9 @@ import { SearchBar } from "../../components/listings/searchBar.js";
 import { searchListings } from "../../services/listings.js";
 import { TagFilter } from "../../components/listings/TagFilter.js";
 import { filterListingsByTag } from "../../services/listings.js";
+import { sortFilter } from "../../components/listings/SortByFilter.js";
+
+let currentSortOrder: "asc" | "desc" = "desc";
 
 async function loadDefaultListings(listingSection: HTMLElement) {
   listingSection.innerHTML = "";
@@ -16,7 +19,7 @@ async function loadDefaultListings(listingSection: HTMLElement) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: document.getElementById("load-more-section")!,
-    fetchItems: (page) => getAllListings(page, 12),
+    fetchItems: (page) => getAllListings(page, 12, currentSortOrder),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
@@ -27,13 +30,11 @@ async function loadSearchResults(listingSection: HTMLElement, query: string) {
     listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
   }
 
-  const items = await searchListings(query, 1, 12);
+  const items = await searchListings(query, 1, 12, currentSortOrder);
   const loadMoreSection = document.getElementById("load-more-section");
 
   if (!items || items.data.length === 0) {
-    listingSection.innerHTML = `
-      <p class="text-lg">No search results found.</p>
-    `;
+    listingSection.innerHTML = `<p class="text-lg">No search results found.</p>`;
     if (loadMoreSection) loadMoreSection.style.display = "none";
     return;
   }
@@ -41,7 +42,7 @@ async function loadSearchResults(listingSection: HTMLElement, query: string) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: loadMoreSection!,
-    fetchItems: (page) => searchListings(query, page, 12),
+    fetchItems: (page) => searchListings(query, page, 12, currentSortOrder),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
@@ -52,7 +53,7 @@ async function loadFilteredListings(listingSection: HTMLElement, tag: string) {
     listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
   }
 
-  const items = await filterListingsByTag(tag, 1, 12);
+  const items = await filterListingsByTag(tag, 1, 12, currentSortOrder);
   const loadMoreSection = document.getElementById("load-more-section");
 
   if (!items || items.data.length === 0) {
@@ -64,7 +65,7 @@ async function loadFilteredListings(listingSection: HTMLElement, tag: string) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: loadMoreSection!,
-    fetchItems: (page) => filterListingsByTag(tag, page, 12),
+    fetchItems: (page) => filterListingsByTag(tag, page, 12, currentSortOrder),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
@@ -91,6 +92,28 @@ async function init() {
         loadDefaultListings(listingSection);
       } else {
         loadFilteredListings(listingSection, tag);
+      }
+    })
+  );
+
+  searchFilterSection.appendChild(
+    sortFilter((sortValue) => {
+      currentSortOrder = sortValue === "asc" ? "asc" : "desc";
+
+      const searchInput = document.querySelector("#search");
+      const tagInput = document.querySelector("#filter");
+
+      const searchQuery =
+        searchInput instanceof HTMLInputElement ? searchInput.value : "";
+      const tagQuery =
+        tagInput instanceof HTMLInputElement ? tagInput.value : "";
+
+      if (searchQuery) {
+        loadSearchResults(listingSection, searchQuery);
+      } else if (tagQuery) {
+        loadFilteredListings(listingSection, tagQuery);
+      } else {
+        loadDefaultListings(listingSection);
       }
     })
   );

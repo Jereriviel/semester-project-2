@@ -13,10 +13,15 @@ import type {
 
 export async function getAllListings(
   page: number = 1,
-  limit: number = 12
+  limit: number = 12,
+  sortOrder: "asc" | "desc" = "desc",
+  active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?page=${page}&limit=${limit}&sort=created&sortOrder=desc&_seller=true&_bids=true`
+    `/auction/listings?page=${page}&limit=${limit}` +
+      `&sort=created&sortOrder=${sortOrder}` +
+      `&_seller=true&_bids=true` +
+      `${active !== undefined ? `&_active=${active}` : ""}`
   );
 }
 
@@ -55,30 +60,31 @@ export async function bidOnListing(
 export async function searchListings(
   query: string,
   page: number = 1,
-  pageSize: number = 12
+  pageSize: number = 12,
+  sortOrder: "asc" | "desc" = "desc",
+  active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings/search?` +
-      `q=${encodeURIComponent(query)}` +
-      `&page=${page}` +
-      `&limit=${pageSize}` +
-      `&_seller=true&_bids=true`
+    `/auction/listings/search?q=${encodeURIComponent(query)}` +
+      `&page=${page}&limit=${pageSize}` +
+      `&sort=created&sortOrder=${sortOrder}` +
+      `&_seller=true&_bids=true` +
+      `${active !== undefined ? `&_active=${active}` : ""}`
   );
 }
 
 export async function filterListingsByTag(
   tag: string,
   page: number = 1,
-  pageSize: number = 12
+  pageSize: number = 12,
+  sortOrder: "asc" | "desc" = "desc",
+  active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
-  const params = new URLSearchParams();
-  if (tag) params.append("_tag", tag);
-  params.append("page", String(page));
-  params.append("limit", String(pageSize));
-  params.append("_seller", "true");
-  params.append("_bids", "true");
-
   return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?${params.toString()}`
+    `/auction/listings?_tag=${encodeURIComponent(tag)}` +
+      `&page=${page}&limit=${pageSize}` +
+      `&sort=created&sortOrder=${sortOrder}` +
+      `&_seller=true&_bids=true` +
+      `${active !== undefined ? `&_active=${active}` : ""}`
   );
 }
