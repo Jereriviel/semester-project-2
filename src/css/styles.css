@@ -34,7 +34,9 @@
 }
 
 @layer base {
-  body {
+  body,
+  input,
+  textarea {
     font-family: var(--font-body);
   }
 
@@ -82,7 +84,7 @@
   }
 
   .btn_search {
-    @apply bg-primary-dark hover:bg-primary-medium rounded-e-xl text-white;
+    @apply bg-primary-dark hover:bg-primary-medium flex w-[50px] items-center justify-center rounded-e-xl text-lg text-white;
   }
 
   .btn_tag {

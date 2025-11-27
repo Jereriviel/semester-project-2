@@ -1,11 +1,11 @@
-import { searchInput } from "../Inputs";
+import { searchInput } from "../Inputs.js";
 
-export async function searchBar(onSearch: (query: string) => void) {
+export function SearchBar(onSearch: (query: string) => void) {
   const form = document.createElement("Form");
   form.id = "searchForm";
 
   form.innerHTML = `
-  <div class="flex">
+  <div>
             ${searchInput({
               type: "text",
               name: "search",
@@ -13,9 +13,6 @@ export async function searchBar(onSearch: (query: string) => void) {
               label: "Search for Listings",
               id: "search",
             })}
-            <button type="submit" class="btn btn_search">
-                <span class="material-symbols-outlined">search</span>
-            </button>
     </div>
   `;
 

@@ -2,10 +2,19 @@ import { ListingCard } from "../../components/listings/ListingCard.js";
 import { getAllListings } from "../../services/listings.js";
 import { listingCardSkeleton } from "../../components/listings/ListingCardSkeleton.js";
 import { initPaginatedList } from "../../utils/pagination.js";
+import { SearchBar } from "../../components/listings/searchBar.js";
 
 async function init() {
   const listingSection = document.getElementById("listing-section");
+  const searchFilterSection = document.getElementById("search-filter-section");
   if (!listingSection) return;
+  if (!searchFilterSection) return;
+
+  searchFilterSection.appendChild(
+    SearchBar((query) => {
+      console.log("test search:", query);
+    })
+  );
 
   listingSection.innerHTML = "";
   for (let i = 0; i < 12; i++) {
