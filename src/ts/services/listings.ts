@@ -9,7 +9,6 @@ import type {
   UpdateListingResponse,
   CreateBidRequest,
   CreateBidResponse,
-  SearchListingsResponse,
 } from "../types/listings.js";
 
 export async function getAllListings(
@@ -56,9 +55,9 @@ export async function bidOnListing(
 export async function searchListings(
   query: string,
   page: number = 1,
-  pageSize: number = 10
-): Promise<SearchListingsResponse> {
-  return get<SearchListingsResponse>(
+  pageSize: number = 12
+): Promise<PaginatedResponse<ListingBase>> {
+  return get<PaginatedResponse<ListingBase>>(
     `/auction/listings/search?` +
       `q=${encodeURIComponent(query)}` +
       `&page=${page}` +
