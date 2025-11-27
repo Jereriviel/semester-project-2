@@ -62,5 +62,3 @@ async function init() {
 }
 
 init();
-
-//This is a test
