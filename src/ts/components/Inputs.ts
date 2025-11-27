@@ -74,3 +74,29 @@ export function searchInput(props: InputProps) {
     </div>
   `;
 }
+
+export function tagFilterInput(props: InputProps) {
+  return `
+    <div class="flex flex-col gap-1">
+      <label for="${props.id}" class=" text-lg font-medium">
+        ${props.label || ""}
+      </label>
+      <div class="flex">
+        <input
+          id="${props.id}"
+          type="${props.type || "text"}"
+          name="${props.name}"
+          ${props.required ? "required" : ""}
+          ${props.minlength ? `minlength="${props.minlength}"` : ""}
+          placeholder="${props.placeholder || ""}"
+          autocomplete="${props.autocomplete || ""}"
+          class="text-lg px-4 py-3 w-full sm:w-[300px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
+        />
+          <button type="submit" class="btn_search">
+          <span class="material-symbols-outlined">filter_alt</span>
+          </button>
+        </div>
+      <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
+    </div>
+  `;
+}
