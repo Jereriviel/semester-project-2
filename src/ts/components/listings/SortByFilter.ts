@@ -1,9 +1,9 @@
-import { sortFilterSelector } from "../Inputs.js";
+import { sortFilterSelector } from "../Selectors.js";
 
 export function sortFilter(onSortChange: (sort: string) => void) {
   const sortFilter = document.createElement("div");
   sortFilter.id = "sort-filter";
-  sortFilter.classList = "w-full sm:w-fit";
+  sortFilter.classList = "w-fit";
 
   sortFilter.innerHTML = sortFilterSelector({
     name: "sort",

@@ -7,10 +7,15 @@ import { searchListings } from "../../services/listings.js";
 import { TagFilter } from "../../components/listings/TagFilter.js";
 import { filterListingsByTag } from "../../services/listings.js";
 import { sortFilter } from "../../components/listings/SortByFilter.js";
+import { Switch } from "../../components/listings/Switch.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
+let currentActiveOnly: boolean = true;
 
-async function loadDefaultListings(listingSection: HTMLElement) {
+async function loadDefaultListings(
+  listingSection: HTMLElement,
+  activeOnly = currentActiveOnly
+) {
   listingSection.innerHTML = "";
   for (let i = 0; i < 6; i++) {
     listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
@@ -19,18 +24,29 @@ async function loadDefaultListings(listingSection: HTMLElement) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: document.getElementById("load-more-section")!,
-    fetchItems: (page) => getAllListings(page, 12, currentSortOrder),
+    fetchItems: (page) =>
+      getAllListings(page, 12, currentSortOrder, activeOnly),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
 
-async function loadSearchResults(listingSection: HTMLElement, query: string) {
+async function loadSearchResults(
+  listingSection: HTMLElement,
+  query: string,
+  activeOnly = currentActiveOnly
+) {
   listingSection.innerHTML = "";
   for (let i = 0; i < 6; i++) {
     listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
   }
 
-  const items = await searchListings(query, 1, 12, currentSortOrder);
+  const items = await searchListings(
+    query,
+    1,
+    12,
+    currentSortOrder,
+    activeOnly
+  );
   const loadMoreSection = document.getElementById("load-more-section");
 
   if (!items || items.data.length === 0) {
@@ -42,18 +58,29 @@ async function loadSearchResults(listingSection: HTMLElement, query: string) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: loadMoreSection!,
-    fetchItems: (page) => searchListings(query, page, 12, currentSortOrder),
+    fetchItems: (page) =>
+      searchListings(query, page, 12, currentSortOrder, activeOnly),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
 
-async function loadFilteredListings(listingSection: HTMLElement, tag: string) {
+async function loadFilteredListings(
+  listingSection: HTMLElement,
+  tag: string,
+  activeOnly = currentActiveOnly
+) {
   listingSection.innerHTML = "";
   for (let i = 0; i < 6; i++) {
     listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
   }
 
-  const items = await filterListingsByTag(tag, 1, 12, currentSortOrder);
+  const items = await filterListingsByTag(
+    tag,
+    1,
+    12,
+    currentSortOrder,
+    activeOnly
+  );
   const loadMoreSection = document.getElementById("load-more-section");
 
   if (!items || items.data.length === 0) {
@@ -65,7 +92,8 @@ async function loadFilteredListings(listingSection: HTMLElement, tag: string) {
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: loadMoreSection!,
-    fetchItems: (page) => filterListingsByTag(tag, page, 12, currentSortOrder),
+    fetchItems: (page) =>
+      filterListingsByTag(tag, page, 12, currentSortOrder, activeOnly),
     renderItem: (listing) => ListingCard(listing, { lazy: true }),
   });
 }
@@ -84,7 +112,6 @@ async function init() {
       }
     })
   );
-  await loadDefaultListings(listingSection);
 
   searchFilterSection.appendChild(
     TagFilter((tag) => {
@@ -107,6 +134,26 @@ async function init() {
         searchInput instanceof HTMLInputElement ? searchInput.value : "";
       const tagQuery =
         tagInput instanceof HTMLInputElement ? tagInput.value : "";
+
+      if (searchQuery) {
+        loadSearchResults(listingSection, searchQuery);
+      } else if (tagQuery) {
+        loadFilteredListings(listingSection, tagQuery);
+      } else {
+        loadDefaultListings(listingSection);
+      }
+    })
+  );
+
+  searchFilterSection.appendChild(
+    Switch((activeOnly) => {
+      currentActiveOnly = activeOnly;
+
+      const searchInput = document.querySelector("#search") as HTMLInputElement;
+      const tagInput = document.querySelector("#filter") as HTMLInputElement;
+
+      const searchQuery = searchInput?.value || "";
+      const tagQuery = tagInput?.value || "";
 
       if (searchQuery) {
         loadSearchResults(listingSection, searchQuery);

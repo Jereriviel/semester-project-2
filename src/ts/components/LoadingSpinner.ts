@@ -1,4 +1,4 @@
-//Code from: https://flowbite.com/docs/components/spinner/
+//Original code from: https://flowbite.com/docs/components/spinner/
 
 export function loadingSpinner(): string {
   return `
