@@ -2,6 +2,7 @@ import { loadMoreButton } from "../components/listings/LoadMoreButton.js";
 import { PaginatedResponse } from "../types/listings.js";
 import { lazyLoadImages } from "./lazyLoad.js";
 import { showErrorModal } from "../components/modals/errorModal.js";
+import { ApiError } from "../errors.ts/ApiError.js";
 
 function fadeOutSkeletons(container: HTMLElement) {
   const skeletons = container.querySelectorAll("[data-skeleton]");
@@ -58,7 +59,15 @@ export async function initPaginatedList<T>(options: {
       btnContainer.appendChild(loadMoreBtn);
     }
   } catch (error) {
-    await showErrorModal("This will be an error from the API");
+    let message = "Something went wrong. Please try again.";
+
+    if (error instanceof ApiError) {
+      message = error.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+
+    await showErrorModal(message);
     console.error("initPaginatedList error:", error);
   }
 }
