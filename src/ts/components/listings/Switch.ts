@@ -2,7 +2,7 @@
 
 export function Switch(onToggle: (activeOnly: boolean) => void) {
   const Switch = document.createElement("label");
-  Switch.classList = "inline-flex items-center cursor-pointer self-end";
+  Switch.classList = "inline-flex items-center cursor-pointer sm:self-end";
   Switch.innerHTML = `
   <input id="toggle-active" type="checkbox" class="sr-only peer" checked>
   <div class="
