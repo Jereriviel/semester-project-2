@@ -58,7 +58,7 @@ export async function initPaginatedList<T>(options: {
       btnContainer.appendChild(loadMoreBtn);
     }
   } catch (error) {
-    await showErrorModal();
+    await showErrorModal("This will be an error from the API");
     console.error("initPaginatedList error:", error);
   }
 }

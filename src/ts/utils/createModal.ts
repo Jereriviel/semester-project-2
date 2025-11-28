@@ -24,7 +24,7 @@ export function createModal(
     "py-8",
     "px-8",
     "w-full",
-    "max-w-xl"
+    "sm:w-fit"
   );
 
   modal.innerHTML = content;
