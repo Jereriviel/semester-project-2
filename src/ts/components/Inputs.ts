@@ -114,10 +114,11 @@ export function sortFilterSelector(props: SelectorProps) {
       <label for="${props.id}" class="text-lg font-medium">
         ${props.label || ""}
       </label>
+      <div class="relative flex items-center text-lg px-4 py-3 w-full sm:w-fit rounded-xl border border-gray-medium transition-colors duration-200">
         <select
           id="${props.id}"
           name="${props.name}"
-          class="text-lg px-4 py-3 w-full sm:w-fit rounded-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
+          class="appearance-none w-full pr-6 bg-transparent outline-none"
         >
           <option value="desc" ${defaultValue === "desc" ? "selected" : ""}>
             Newest first
@@ -126,7 +127,13 @@ export function sortFilterSelector(props: SelectorProps) {
             Oldest first
           </option>
         </select>
-      <p id="${props.id}Error" class="text-red-500 text-sm hidden"></p>
+        <span
+          class="material-symbols-outlined pointer-events-none absolute right-3"
+          aria-hidden="true"
+        >
+          keyboard_arrow_down
+        </span>
+      </div>
     </div>
   `;
 }
