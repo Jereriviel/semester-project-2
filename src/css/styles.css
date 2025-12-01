@@ -66,7 +66,7 @@
 
 @layer components {
   .btn {
-    @apply rounded-xl px-4 py-2 text-lg font-medium transition-all duration-300 ease-in-out;
+    @apply focus-visible:ring-primary-dark rounded-xl px-4 py-2 text-lg font-medium transition-all duration-300 ease-in-out focus-visible:ring-2 focus-visible:outline-none;
   }
 
   .btn_primary {

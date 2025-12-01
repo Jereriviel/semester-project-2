@@ -9,11 +9,17 @@ export function ListingCard(
   const { lazy } = options;
   const article = document.createElement("article");
   article.id = "listing-card";
+  article.tabIndex = 0;
   article.className =
-    "shadow-card bg-secondary-light text-primary-dark hover:bg-secondary-normal w-full overflow-hidden rounded-xl transition-all duration-300 ease-in-out grid grid-rows-[max-content] grid-cols-[minmax(0, 1fr)] cursor-pointer";
+    "shadow-card bg-secondary-light text-primary-dark hover:bg-secondary-normal w-full overflow-hidden rounded-xl transition-all duration-300 ease-in-out grid grid-rows-[max-content] grid-cols-[minmax(0, 1fr)] cursor-pointer focus-visible:ring-2 focus-visible:ring-primary-dark focus-visible:outline-none";
   article.classList.add("fade-in");
   article.addEventListener("click", () => {
     window.location.href = `/listing/index.html?id=${listing.id}`;
+  });
+  article.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      window.location.href = `/listing/index.html?id=${listing.id}`;
+    }
   });
 
   article.innerHTML = `
