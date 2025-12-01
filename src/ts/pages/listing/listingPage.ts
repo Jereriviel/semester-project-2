@@ -2,6 +2,7 @@ import { getSingleListing } from "../../services/listings.js";
 import { updateListingHead } from "../../utils/updateHead.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "../../components/modals/errorModal.js";
+import { renderBreadcrumb } from "../../components/singleListing/breadcrumb.js";
 
 async function initListingPage() {
   const params = new URLSearchParams(window.location.search);
@@ -12,6 +13,7 @@ async function initListingPage() {
     const { data: listing } = await getSingleListing(id);
 
     updateListingHead(listing);
+    renderBreadcrumb(listing.title);
   } catch (error) {
     let message = "Something went wrong. Please try again.";
 

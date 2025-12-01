@@ -2,7 +2,7 @@ import { isLoggedIn, getUser, clearUser } from "../store/userStore.js";
 import { getProfile } from "../services/profile.js";
 import { toggleDropdown } from "../utils/toggleDropdown.js";
 
-export async function Header() {
+async function Header() {
   const container = document.createElement("div");
   container.className =
     "relative mx-auto flex max-w-7xl items-center justify-between";
