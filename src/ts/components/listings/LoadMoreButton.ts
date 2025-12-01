@@ -6,20 +6,35 @@ export function loadMoreButton<T>(options: {
   fetchItems: (page: number) => Promise<PaginatedResponse<T>>;
   renderItem: (item: T) => HTMLElement;
   onAfterRender?: (newItems: T[]) => void;
+  initialPage?: number;
+  initialIsLastPage?: boolean;
 }): HTMLButtonElement {
-  const { container, fetchItems, renderItem, onAfterRender } = options;
+  const {
+    container,
+    fetchItems,
+    renderItem,
+    onAfterRender,
+    initialPage = 1,
+    initialIsLastPage = false,
+  } = options;
 
   const button = document.createElement("button");
   button.id = "load-more-btn";
   button.textContent = "Load More";
   button.classList.add("btn", "btn_primary", "w-full", "sm:w-fit");
 
-  let currentPage = 1;
+  let currentPage = initialPage;
   let isFetching = false;
 
+  if (initialIsLastPage) {
+    button.style.display = "none";
+  }
+
   async function fetchAndRender(page: number) {
+    if (isFetching) return;
     isFetching = true;
     toggleButtonLoading(button, true);
+    button.disabled = true;
 
     try {
       const response = await fetchItems(page);
@@ -36,9 +51,11 @@ export function loadMoreButton<T>(options: {
 
       if (onAfterRender) onAfterRender(items);
 
-      if (meta?.isLastPage) {
-        button.style.display = "none";
-      }
+      const pageSize = items.length || 12;
+      const isLastPageNow = meta?.isLastPage ?? items.length < pageSize;
+
+      button.style.display = isLastPageNow ? "none" : "";
+      if (!isLastPageNow) button.disabled = false;
     } catch (error) {
       console.error("Failed to load items:", error);
       button.textContent = "Failed to load. Try again?";
