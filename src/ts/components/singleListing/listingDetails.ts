@@ -12,7 +12,7 @@ function ListingDetails(listing: ListingBase) {
 
   article.innerHTML = `
     <div class="flex flex-col gap-4">
-        <h1 class="text-4xl sm:text-[40px]">${listing.title}</h1>
+        <h1 class="text-4xl sm:text-[40px] capitalize">${listing.title}</h1>
         <p class="text-lg">
         ${listing.description ?? ""}
         </p>

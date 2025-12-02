@@ -38,7 +38,7 @@ export function ListingCard(
       <div class="flex flex-col p-6 gap-4 justify-between">
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-2">
-                <h2 class="text-3xl line-clamp-2">${listing.title}</h2>
+                <h2 class="text-3xl line-clamp-2 capitalize">${listing.title}</h2>
                 <p>By: ${listing.seller?.name ?? "Unknown"}</p>
             </div>
             <p class="text-lg line-clamp-3">

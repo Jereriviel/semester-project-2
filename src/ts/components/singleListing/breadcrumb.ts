@@ -7,7 +7,7 @@ function Breadcrumb(title: string) {
     class="font-medium transition-all duration-200 hover:underline"
     >Listings</a
     ><span class="material-symbols-outlined"> keyboard_arrow_right </span>
-    <p>${title}</p>
+    <p class="capitalize">${title}</p>
 `;
 
   return container;
