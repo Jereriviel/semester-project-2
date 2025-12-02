@@ -29,12 +29,16 @@
         id="breadcrumb-section"
         class="mx-auto flex w-full max-w-7xl gap-12 p-4 sm:px-12 xl:px-0"
       ></section>
-      <section
-        id="image-gallery-section"
-        class="mx-auto flex w-full max-w-7xl gap-12 p-4 sm:px-12 xl:px-0"
-      ></section>
-      <section id="details-section"></section>
-      <section id="bid-history-section"></section>
+      <div
+        class="mx-auto flex w-full max-w-7xl flex-col gap-12 p-4 sm:px-12 md:grid md:grid-cols-2 xl:px-0"
+      >
+        <section id="image-gallery-section"></section>
+        <div class="flex flex-col">
+          <section id="details-section" class="flex flex-col gap-8"></section>
+          <section id="place-bid-section"></section>
+        </div>
+        <section id="bid-history-section"></section>
+      </div>
     </main>
     <footer
       class="bg-secondary-dark text-secondary-ultra-light bottom-0 mb-0 px-4 py-8 text-sm sm:px-12"

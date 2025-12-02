@@ -4,6 +4,7 @@ import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "../../components/modals/errorModal.js";
 import { renderBreadcrumb } from "../../components/singleListing/breadcrumb.js";
 import { renderImageGallery } from "../../components/singleListing/imageGallery.js";
+import { renderListingDetails } from "../../components/singleListing/listingDetails.js";
 
 async function initListingPage() {
   const params = new URLSearchParams(window.location.search);
@@ -16,6 +17,7 @@ async function initListingPage() {
     updateListingHead(listing);
     renderBreadcrumb(listing.title);
     renderImageGallery(listing);
+    renderListingDetails(listing);
   } catch (error) {
     let message = "Something went wrong. Please try again.";
 
