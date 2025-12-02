@@ -1,5 +1,5 @@
 import { ListingBase } from "../../types/listings.js";
-import { formatEndsIn } from "../../utils/formatters.js";
+import { formatEndsIn, startCountdown } from "../../utils/formatters.js";
 import { applyPlaceholderImage } from "../../utils/placeholderImg.js";
 
 export function ListingCard(
@@ -63,11 +63,16 @@ export function ListingCard(
           </div>
           <div class="flex flex-col gap-2">
             <p>Ends in:</p>
-            <p class="text-lg font-semibold">${formatEndsIn(listing.endsAt)}</p>
+            <p class="text-lg font-semibold" id="countdown">${formatEndsIn(listing.endsAt)}</p>
           </div>
         </div>
       </div>
   `;
+
+  const countdownElement = article.querySelector("#countdown") as HTMLElement;
+  if (countdownElement) {
+    startCountdown(listing.endsAt, countdownElement);
+  }
 
   const img = article.querySelector<HTMLImageElement>("img.card-image");
   if (img) applyPlaceholderImage(img);

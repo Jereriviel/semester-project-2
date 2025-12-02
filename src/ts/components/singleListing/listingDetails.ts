@@ -1,6 +1,6 @@
 import { ListingBase } from "../../types/listings.js";
 import { formatEndsIn } from "../../utils/formatters.js";
-import { formatDate } from "../../utils/formatters.js";
+import { formatDate, startCountdown } from "../../utils/formatters.js";
 
 function ListingDetails(listing: ListingBase) {
   const article = document.createElement("article");
@@ -61,9 +61,14 @@ function ListingDetails(listing: ListingBase) {
     </div>
     <div class="flex gap-4 text-lg">
         <p>Ends in:</p>
-        <p class="font-medium">${formatEndsIn(listing.endsAt)}</p>
+        <p class="font-medium" id="countdown">${formatEndsIn(listing.endsAt)}</p>
     </div>
   `;
+
+  const countdownElement = article.querySelector("#countdown") as HTMLElement;
+  if (countdownElement) {
+    startCountdown(listing.endsAt, countdownElement);
+  }
 
   return article;
 }

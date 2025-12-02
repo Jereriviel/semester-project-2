@@ -5,16 +5,18 @@ export function formatEndsIn(endsAt: string): string {
 
   if (diff <= 0) return "Ended";
 
-  const totalMinutes = Math.floor(diff / (1000 * 60));
-  const days = Math.floor(totalMinutes / (60 * 24));
-  const hours = Math.floor((totalMinutes % (60 * 24)) / 60);
-  const minutes = totalMinutes % 60;
+  const totalSeconds = Math.floor(diff / 1000);
+
+  const days = Math.floor(totalSeconds / (60 * 60 * 24));
+  const hours = Math.floor((totalSeconds % (60 * 60 * 24)) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
   let result = "";
-
   if (days > 0) result += `${days}d `;
   if (hours > 0) result += `${hours}h `;
-  if (minutes > 0) result += `${minutes}m`;
+  if (minutes > 0) result += `${minutes}m `;
+  result += `${seconds}s`;
 
   return result.trim();
 }
@@ -31,4 +33,22 @@ export function formatDate(dateString: string): string {
     hour: "2-digit",
     minute: "2-digit",
   });
+}
+
+export function startCountdown(
+  endsAt: string,
+  element: HTMLElement
+): () => void {
+  element.textContent = formatEndsIn(endsAt);
+
+  const interval = setInterval(() => {
+    const formatted = formatEndsIn(endsAt);
+    element.textContent = formatted;
+
+    if (formatted === "Ended") {
+      clearInterval(interval);
+    }
+  }, 1000);
+
+  return () => clearInterval(interval);
 }
