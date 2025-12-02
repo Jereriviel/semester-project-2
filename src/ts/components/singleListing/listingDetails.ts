@@ -1,6 +1,8 @@
 import { ListingBase } from "../../types/listings.js";
 import { formatEndsIn } from "../../utils/formatters.js";
 import { formatDate, startCountdown } from "../../utils/formatters.js";
+import { PlaceBid } from "./bid.js";
+import { getSingleListing } from "../../services/listings.js";
 
 function ListingDetails(listing: ListingBase) {
   const article = document.createElement("article");
@@ -9,6 +11,12 @@ function ListingDetails(listing: ListingBase) {
   const isUpdated =
     listing.updated &&
     new Date(listing.updated).getTime() > new Date(listing.created).getTime();
+
+  const sortedBids = listing.bids
+    ? [...listing.bids].sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      )
+    : [];
 
   article.innerHTML = `
     <div class="flex flex-col gap-4">
@@ -54,7 +62,7 @@ function ListingDetails(listing: ListingBase) {
             <p class="font-medium">              
             ${
               listing.bids?.length
-                ? `${listing.bids.at(-1)?.amount} Credits`
+                ? `${sortedBids[0].amount} Credits`
                 : "No bids yet"
             }</p>
         </div>
@@ -79,4 +87,12 @@ export function renderListingDetails(listing: ListingBase) {
 
   section.innerHTML = "";
   section.appendChild(ListingDetails(listing));
+
+  section.appendChild(
+    PlaceBid(listing.id, async () => {
+      const refreshed = await getSingleListing(listing.id);
+
+      renderListingDetails(refreshed.data);
+    })
+  );
 }

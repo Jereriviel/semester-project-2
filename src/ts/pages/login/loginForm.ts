@@ -34,7 +34,7 @@ export function LoginForm() {
                 id="loginBtn"
                 class="btn btn_primary sm:w-fit text-white py-3"
               >
-                <span class="button-text">Sign in</span>
+                <span class="button-text">Log in</span>
                 <span class="spinner hidden">${loadingSpinner()}</span>
               </button>
               <div class="flex flex-col sm:flex-row gap-2 text-lg">
