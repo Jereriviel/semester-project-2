@@ -18,3 +18,17 @@ export function formatEndsIn(endsAt: string): string {
 
   return result.trim();
 }
+
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+
+  if (isNaN(date.getTime())) return "";
+
+  return date.toLocaleString("en-GB", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}

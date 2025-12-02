@@ -62,6 +62,10 @@
     -moz-appearance: none;
     appearance: none;
   }
+
+  a {
+    @apply focus:border-primary-dark rounded-xl transition-colors duration-200 focus:border-2 focus:outline-none;
+  }
 }
 
 @layer components {

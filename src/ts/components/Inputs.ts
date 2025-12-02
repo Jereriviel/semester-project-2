@@ -65,7 +65,7 @@ export function searchInput(props: InputProps) {
           placeholder="${props.placeholder || ""}"
           class="text-lg px-4 py-3 w-full sm:w-[300px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
         />
-          <button type="submit" class="btn_search">
+          <button type="submit" class="btn_search focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200">
           <span class="material-symbols-outlined">search</span>
           </button>
         </div>
@@ -90,7 +90,7 @@ export function tagFilterInput(props: InputProps) {
           placeholder="${props.placeholder || ""}"
           class="text-lg px-4 py-3 w-full sm:w-[300px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
         />
-          <button type="submit" class="btn_search">
+          <button type="submit" class="btn_search focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200">
           <span class="material-symbols-outlined">filter_alt</span>
           </button>
         </div>
