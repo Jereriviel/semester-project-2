@@ -88,11 +88,12 @@ export function renderListingDetails(listing: ListingBase) {
   section.innerHTML = "";
   section.appendChild(ListingDetails(listing));
 
-  section.appendChild(
-    PlaceBid(listing.id, async () => {
-      const refreshed = await getSingleListing(listing.id);
-
-      renderListingDetails(refreshed.data);
-    })
-  );
+  if (listing.seller) {
+    section.appendChild(
+      PlaceBid(listing.id, listing.seller, async () => {
+        const refreshed = await getSingleListing(listing.id);
+        renderListingDetails(refreshed.data);
+      })
+    );
+  }
 }

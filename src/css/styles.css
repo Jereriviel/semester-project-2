@@ -97,6 +97,10 @@
     @apply bg-primary-dark hover:bg-primary-medium flex w-[50px] items-center justify-center rounded-e-xl text-lg text-white;
   }
 
+  .btn_search_disabled {
+    @apply bg-gray-medium text-gray-dark flex w-[50px] items-center justify-center rounded-e-xl text-lg;
+  }
+
   .btn_tag {
     @apply bg-secondary-dark text-sm font-normal text-white;
   }
