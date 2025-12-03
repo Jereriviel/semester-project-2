@@ -24,8 +24,8 @@
 
   --color-delete-normal: oklch(0.4954 0.1948 28.33);
   --color-delete-medium: oklch(0.416 0.1655 28.56);
-  --color-success-normal: oklch(0.6437 0.2118 143.02);
-  --color-success-medium: oklch(0.5091 0.1686 142.79);
+  --color-success-light: oklch(0.9409 0.0548 145.94);
+  --color-success-normal: oklch(0.5091 0.1686 142.79);
 
   /* Shadows */
 

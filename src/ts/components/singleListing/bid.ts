@@ -37,18 +37,28 @@ export function PlaceBid(
                 id: "bid",
               })}
               <p class="hidden italic" id="cannot-bid">You cannot bid on your own listing.<p>
+              <div class="text-success-normal items-center gap-4 hidden" id="bid-success">
+                <div
+                  class="bg-success-light flex h-8 w-8 items-center justify-center rounded-full"
+                >
+                  <span class="material-symbols-outlined"> check </span>
+                </div>
+                <p class="font-medium">Your bid was placed successfully!</p>
+              </div>
       </fieldset>
     `;
 
     const input = form.querySelector<HTMLInputElement>("#bid")!;
 
     const fieldset = form.querySelector("#bid-fieldset") as HTMLFieldSetElement;
-    const message = form.querySelector("#cannot-bid") as HTMLParagraphElement;
+    const errorMessage = form.querySelector(
+      "#cannot-bid"
+    ) as HTMLParagraphElement;
     const button = form.querySelector("button") as HTMLButtonElement;
 
     if (isOwnListing) {
       if (fieldset) fieldset.disabled = true;
-      if (message) message.classList.remove("hidden");
+      if (errorMessage) errorMessage.classList.remove("hidden");
       if (button) {
         button.classList.remove("btn_search");
         button.classList.add("btn_search_disabled");
@@ -71,10 +81,17 @@ export function PlaceBid(
       try {
         const body: CreateBidRequest = { amount };
         const response = await bidOnListing(body, id);
+        const successMessage = form.querySelector(
+          "#bid-success"
+        ) as HTMLDivElement;
         input.value = "";
-
-        console.log("Bid placed successfully", response);
-        if (onBidSuccess) onBidSuccess(response);
+        if (successMessage) {
+          successMessage.classList.remove("hidden");
+          successMessage.classList.add("flex");
+        }
+        setTimeout(() => {
+          if (onBidSuccess) onBidSuccess(response);
+        }, 3000);
       } catch (error: unknown) {
         if (error instanceof ApiError) {
           bidError.textContent = error.message;
