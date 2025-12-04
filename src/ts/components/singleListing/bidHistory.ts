@@ -30,6 +30,14 @@ export function renderBidHistory(listingBids: Bid[] = []) {
   const section = document.getElementById("bid-history-section");
   if (!section) return;
 
+  if (listingBids.length === 0) {
+    section.innerHTML = `  
+      <h4 class="text-2xl mb-4">Bid History</h4>
+      <p class="pb-4 sm:b-8 font-semibold">No bids yet.</p>
+    `;
+    return;
+  }
+
   section.innerHTML = `
     <h4 class="text-2xl mb-4">Bid History</h4>
   `;
