@@ -90,7 +90,7 @@ export function renderListingDetails(listing: ListingBase) {
 
   if (listing.seller) {
     section.appendChild(
-      PlaceBid(listing.id, listing.seller, async () => {
+      PlaceBid(listing.id, listing.seller, listing, async () => {
         const refreshed = await getSingleListing(listing.id);
         renderListingDetails(refreshed.data);
       })
