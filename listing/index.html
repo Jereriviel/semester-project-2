@@ -30,11 +30,20 @@
         class="mx-auto flex w-full max-w-7xl gap-12 p-4 sm:px-12 xl:px-0"
       ></section>
       <div
-        class="mx-auto flex w-full max-w-7xl flex-col gap-12 p-4 sm:px-12 md:grid md:grid-cols-2 xl:px-0"
+        class="mx-auto flex w-full max-w-7xl flex-col gap-12 p-4 sm:px-12 md:grid md:grid-cols-2 md:grid-rows-[auto_auto] xl:px-0"
       >
-        <section id="image-gallery-section"></section>
-        <section id="details-section" class="flex flex-col gap-8"></section>
-        <section id="bid-history-section"></section>
+        <section
+          id="image-gallery-section"
+          class="md:col-start-1 md:row-start-1"
+        ></section>
+        <section
+          id="details-section"
+          class="flex flex-col gap-8 md:col-start-2 md:row-start-1"
+        ></section>
+        <section
+          id="bid-history-section"
+          class="md:col-span-2 md:row-start-2"
+        ></section>
       </div>
     </main>
     <footer
