@@ -3,6 +3,7 @@ import { formatEndsIn } from "../../utils/formatters.js";
 import { formatDate, startCountdown } from "../../utils/formatters.js";
 import { PlaceBid } from "./bid.js";
 import { getSingleListing } from "../../services/listings.js";
+import { renderBidHistory } from "./bidHistory.js";
 
 function ListingDetails(listing: ListingBase) {
   const article = document.createElement("article");
@@ -93,6 +94,7 @@ export function renderListingDetails(listing: ListingBase) {
       PlaceBid(listing.id, listing.seller, listing, async () => {
         const refreshed = await getSingleListing(listing.id);
         renderListingDetails(refreshed.data);
+        renderBidHistory(refreshed.data.bids ?? []);
       })
     );
   }
