@@ -4,11 +4,11 @@ import {
   CreateBidResponse,
   UserProfile,
   ListingBase,
-} from "../../types/listings";
+} from "../../types/listings.js";
 import { bidOnListing } from "../../services/listings.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { isLoggedIn, getUser } from "../../store/userStore.js";
-import { editListingButton } from "../editListingButton.js";
+import { editListingButton } from "../buttons/editListingButton.js";
 
 export function PlaceBid(
   id: string,

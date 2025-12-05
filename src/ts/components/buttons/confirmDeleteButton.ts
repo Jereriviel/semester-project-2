@@ -1,19 +1,18 @@
-import { editListingModal } from "./modals/editListingModal.js";
+import { confirmDeleteModal } from "../modals/confirmDeleteModal.js";
 
-export function editListingButton() {
+export function confirmDeleteButton() {
   const button = document.createElement("button");
   button.type = "button";
-  button.id = "edit-listing-btn";
+  button.id = "confirm-delete-btn";
   button.className =
     "btn btn_primary flex items-center justify-center gap-2 sm:w-fit";
 
   button.innerHTML = `
-        <span class="material-symbols-outlined"> edit </span>
-        Edit Listing
+        Yes, Delete
   `;
 
   button.addEventListener("click", () => {
-    editListingModal();
+    confirmDeleteModal();
   });
 
   return button;

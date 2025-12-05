@@ -1,4 +1,4 @@
-import { loadMoreButton } from "../components/listings/LoadMoreButton.js";
+import { loadMoreButton } from "../components/buttons/LoadMoreButton.js";
 import { PaginatedResponse } from "../types/listings.js";
 import { lazyLoadImages } from "./lazyLoad.js";
 import { showErrorModal } from "../components/modals/errorModal.js";

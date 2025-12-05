@@ -19,7 +19,7 @@ export function editListingModal() {
 
   saveChangesBtn.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log("Submit Changes)");
+    console.log("Submit Changes");
   });
 
   ///Delete Listing button here
