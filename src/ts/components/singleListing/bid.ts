@@ -8,6 +8,7 @@ import {
 import { bidOnListing } from "../../services/listings.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { isLoggedIn, getUser } from "../../store/userStore.js";
+import { editListingButton } from "../editListingButton.js";
 
 export function PlaceBid(
   id: string,
@@ -25,15 +26,15 @@ export function PlaceBid(
 
     form.innerHTML = `
     <fieldset id="bid-fieldset" class="flex flex-col gap-4">
-              ${bidInput({
-                type: "number",
-                name: "bid",
-                placeholder: "Enter Amount",
-                label: "Place your bid!",
-                id: "bid",
-              })}
-              <p class="hidden italic" id="cannot-bid">You cannot bid on your own listing.<p>
-              <p class="hidden italic" id="bid-ended">This listing has already ended.</p>
+              <div id="bid-content">
+                ${bidInput({
+                  type: "number",
+                  name: "bid",
+                  placeholder: "Enter Amount",
+                  label: "Place your bid!",
+                  id: "bid",
+                })}
+              </div>
               <div class="text-success-normal items-center gap-4 hidden" id="bid-success">
                 <div
                   class="bg-success-light flex h-8 w-8 items-center justify-center rounded-full"
@@ -45,41 +46,34 @@ export function PlaceBid(
       </fieldset>
     `;
 
-    const input = form.querySelector<HTMLInputElement>("#bid")!;
+    const input = form.querySelector("#bid") as HTMLFormElement;
     const fieldset = form.querySelector("#bid-fieldset") as HTMLFieldSetElement;
     const button = form.querySelector("button") as HTMLButtonElement;
+    const bidLabel = form.querySelector(`label[for="bid"]`);
+    const editBtn = editListingButton() as HTMLButtonElement;
+    const bidContent = form.querySelector("#bid-content");
 
     const isOwnListing = loggedInUser?.name === profile.name;
-    const cannotBidMessage = form.querySelector(
-      "#cannot-bid"
-    ) as HTMLParagraphElement;
 
     if (isOwnListing) {
-      if (fieldset) fieldset.disabled = true;
-      if (cannotBidMessage) cannotBidMessage.classList.remove("hidden");
-      if (button) {
-        button.classList.remove("btn_search");
-        button.classList.add("btn_search_disabled");
-      }
+      if (bidLabel) bidLabel.classList.add("hidden");
+      if (bidContent) bidContent.innerHTML = "";
+      bidContent?.appendChild(editBtn);
     }
 
     const endsAtDate = new Date(listing.endsAt);
     const listingEnded = Date.now() > endsAtDate.getTime();
 
-    const bidEndedMessage = form.querySelector(
-      "#bid-ended"
-    ) as HTMLParagraphElement;
-
     if (listingEnded) {
       if (fieldset) fieldset.disabled = true;
-      if (bidEndedMessage) bidEndedMessage.classList.remove("hidden");
+      if (bidLabel) bidLabel.classList.add("hidden");
       if (button) {
         button.classList.remove("btn_search");
         button.classList.add("btn_search_disabled");
       }
     }
 
-    const bidError = form.querySelector<HTMLElement>("#bidError")!;
+    const bidError = form.querySelector("#bidError")!;
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
