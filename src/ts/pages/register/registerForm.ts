@@ -6,7 +6,7 @@ export function RegisterForm() {
   redirectIfAuth();
 
   return `
-        <form id="registerForm" class="w-full sm:w-fit">
+        <form id="registerForm" class="w-full sm:w-[500px]">
           <fieldset id="registerFieldset" class=" flex flex-col gap-8 p-8 rounded-xl shadow-card">
             <h4 class="text-2xl font-semibold flex self-start">Register your account</h4>
             <div class="flex flex-col gap-8">

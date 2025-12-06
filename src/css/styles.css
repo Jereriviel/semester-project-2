@@ -78,7 +78,7 @@
   }
 
   .btn_secondary {
-    @apply bg-primary-light hover:bg-primary-normal border-primary-dark text-primary-dark border;
+    @apply bg-primary-light hover:bg-primary-normal border-primary-dark text-primary-dark border border-2;
   }
 
   .btn_delete {

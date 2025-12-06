@@ -6,7 +6,7 @@ export function LoginForm() {
   redirectIfAuth();
 
   return `
-        <form id="loginForm" class="w-full sm:w-fit">
+        <form id="loginForm" class="w-full sm:w-[500px]">
           <fieldset id="loginFieldset" class="flex flex-col gap-8 p-8 rounded-xl shadow-card">
             <h4 class="text-2xl font-semibold flex self-start">Log in to your account</h4>
             <div class="flex flex-col gap-8">
