@@ -109,10 +109,10 @@ export function openEditListingModal(listing: ListingBase) {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.type = "button";
-  deleteBtn.className = "btn btn_secondary sm:w-fit";
+  deleteBtn.className = "btn btn_delete sm:w-fit";
   deleteBtn.textContent = "Delete Listing";
   deleteBtn.addEventListener("click", () => {
-    confirmDeleteModal();
+    confirmDeleteModal(listing.id);
     modal.close();
   });
 

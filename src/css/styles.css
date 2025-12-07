@@ -82,7 +82,7 @@
   }
 
   .btn_delete {
-    @apply text-delete-normal hover:bg-delete-normal border-delete-normal border bg-white hover:border-0 hover:text-white;
+    @apply text-delete-normal hover:bg-delete-normal border-delete-normal border-2 bg-white hover:text-white;
   }
 
   .btn_disabled {

@@ -27,8 +27,8 @@ async function apiFetch<T>(
       throw await ApiError.fromResponse(response);
     }
 
-    if (response.status === 204) {
-      throw new ApiError("No content returned", 204);
+    if (response.status === 204 && options.method === "DELETE") {
+      return true as T;
     }
 
     const data: T = await response.json();
