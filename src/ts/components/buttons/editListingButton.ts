@@ -1,6 +1,7 @@
-import { editListingModal } from "../modals/editListingModal.js";
+import { openEditListingModal } from "../modals/editListingModal.js";
+import { ListingBase } from "../../types/listings.js";
 
-export function editListingButton() {
+export function editListingButton(listing: ListingBase) {
   const button = document.createElement("button");
   button.type = "button";
   button.id = "edit-listing-btn";
@@ -13,7 +14,7 @@ export function editListingButton() {
   `;
 
   button.addEventListener("click", () => {
-    editListingModal();
+    openEditListingModal(listing);
   });
 
   return button;

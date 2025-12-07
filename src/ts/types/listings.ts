@@ -76,6 +76,7 @@ export interface UpdateListingRequest {
   description?: string;
   tags?: string[];
   media?: Media[];
+  endsAt?: string;
 }
 
 export interface UpdateListingResponse {

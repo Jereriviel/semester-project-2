@@ -7,6 +7,7 @@ interface InputProps {
   minlength?: number;
   id?: string;
   autocomplete?: string;
+  value?: string;
 }
 
 function createLabeledInput<T extends HTMLInputElement | HTMLTextAreaElement>(
@@ -98,15 +99,20 @@ function createInputWithButton(
   return container;
 }
 
-export function input(props: InputProps): HTMLDivElement {
-  return createLabeledInput(() => document.createElement("input"), props);
+export function input({ value, ...props }: InputProps & { value?: string }) {
+  return createLabeledInput(() => {
+    const element = document.createElement("input");
+    if (value !== undefined) element.value = value;
+    return element;
+  }, props);
 }
 
-export function textArea(props: InputProps): HTMLDivElement {
-  return createLabeledInput(() => document.createElement("textarea"), props, {
-    inputClass:
-      "text-lg min-h-25 border border-gray-medium rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:border-0 focus:ring-primary-dark transition-colors duration-200",
-  });
+export function textArea({ value, ...props }: InputProps & { value?: string }) {
+  return createLabeledInput(() => {
+    const element = document.createElement("textarea");
+    if (value !== undefined) element.value = value;
+    return element;
+  }, props);
 }
 
 export function searchInput(props: InputProps): HTMLDivElement {
@@ -132,12 +138,22 @@ export function bidInput(props: InputProps): HTMLDivElement {
   );
 }
 
-export function dateTimeInput(props: InputProps): HTMLDivElement {
-  const note = document.createElement("p");
-  note.className = "text-xs italic pb-2";
-  note.textContent = "Note: Expiration date cannot be changed after listing.";
-
-  return createLabeledInput(() => document.createElement("input"), props, {
-    afterLabel: [note],
-  });
+export function dateTimeInput({
+  value,
+  ...props
+}: InputProps & { value?: string; disabled?: boolean }) {
+  return createLabeledInput(
+    () => {
+      const inputEl = document.createElement("input");
+      inputEl.type = "datetime-local";
+      if (value) inputEl.value = value;
+      if (props.disabled) inputEl.disabled = true;
+      return inputEl;
+    },
+    props,
+    {
+      inputClass:
+        "text-lg px-4 py-3 rounded-xl border border-gray-medium focus:outline-none focus:ring-2 focus:ring-primary-dark focus:border-0 transition-colors duration-200",
+    }
+  );
 }

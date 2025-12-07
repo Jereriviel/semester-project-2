@@ -74,6 +74,13 @@ export function openNewListingModal() {
     required: true,
   });
 
+  const dateNote = document.createElement("p");
+  dateNote.textContent =
+    "Note: Expiration date cannot be changed after listing.";
+  dateNote.className = "text-sm italic pt-2";
+
+  dateInput.appendChild(dateNote);
+
   const submitBtn = document.createElement("button");
   submitBtn.type = "submit";
   submitBtn.id = "add-listing-btn";

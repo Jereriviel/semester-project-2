@@ -50,7 +50,7 @@ export function PlaceBid(
     const fieldset = form.querySelector("#bid-fieldset") as HTMLFieldSetElement;
     const button = form.querySelector("button") as HTMLButtonElement;
     const bidLabel = form.querySelector(`label[for="bid"]`);
-    const editBtn = editListingButton() as HTMLButtonElement;
+    const editBtn = editListingButton(listing) as HTMLButtonElement;
     const bidContent = form.querySelector("#bid-content");
 
     const isOwnListing = loggedInUser?.name === profile.name;
