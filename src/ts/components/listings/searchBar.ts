@@ -1,21 +1,22 @@
 import { searchInput } from "../Inputs.js";
 
-export function SearchBar(onSearch: (query: string) => void) {
+export function SearchBar(onSearch: (query: string) => void): HTMLFormElement {
   const form = document.createElement("form");
   form.id = "searchForm";
-  form.classList = "w-full sm:w-fit";
+  form.className = "w-full sm:w-fit";
 
-  form.innerHTML = `
-  <div>
-            ${searchInput({
-              type: "text",
-              name: "search",
-              placeholder: "Search by title or description",
-              label: "Search for Listings",
-              id: "search",
-            })}
-    </div>
-  `;
+  const searchInputElement = searchInput({
+    type: "text",
+    name: "search",
+    placeholder: "Search by title or description",
+    label: "Search for Listings",
+    id: "search",
+  });
+
+  const wrapper = document.createElement("div");
+  wrapper.appendChild(searchInputElement);
+
+  form.appendChild(wrapper);
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
