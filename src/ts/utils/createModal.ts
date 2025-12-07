@@ -1,5 +1,5 @@
 export function createModal(
-  content: string,
+  content: string | Node,
   className = "modal-name"
 ): HTMLDialogElement {
   const existing = document.querySelector<HTMLDialogElement>(
@@ -27,7 +27,11 @@ export function createModal(
     "sm:w-fit"
   );
 
-  modal.innerHTML = content;
+  if (typeof content === "string") {
+    modal.innerHTML = content;
+  } else {
+    modal.appendChild(content);
+  }
 
   modal.addEventListener("close", () => {
     modal.remove();
