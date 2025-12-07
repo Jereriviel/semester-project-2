@@ -5,10 +5,8 @@ import { ApiError } from "../../errors.ts/ApiError.js";
 import { validateForm } from "../../utils/validators.js";
 
 function renderRegister() {
-  const register = document.getElementById("register-section");
-  if (!register) return;
-
-  register.innerHTML = RegisterForm();
+  const registerSection = document.getElementById("register-section");
+  registerSection?.appendChild(RegisterForm());
 
   const form = document.getElementById("registerForm") as HTMLFormElement;
   const fieldset = document.getElementById(

@@ -5,10 +5,8 @@ import { ApiError } from "../../errors.ts/ApiError.js";
 import { validateForm } from "../../utils/validators.js";
 
 function renderLogin() {
-  const login = document.getElementById("login-section");
-  if (!login) return;
-
-  login.innerHTML = LoginForm();
+  const loginSection = document.getElementById("login-section");
+  loginSection?.appendChild(LoginForm());
 
   const form = document.getElementById("loginForm") as HTMLFormElement;
   const fieldset = document.getElementById(
