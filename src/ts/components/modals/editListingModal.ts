@@ -7,6 +7,7 @@ import { confirmDeleteModal } from "./confirmDeleteModal.js";
 import { ListingBase, UpdateListingRequest } from "../../types/listings.js";
 import { getSingleListing } from "../../services/listings.js";
 import { renderListingDetails } from "../singleListing/listingDetails.js";
+import { showToast, successToastUpdate } from "../Toasts.js";
 
 export function openEditListingModal(listing: ListingBase) {
   const form = document.createElement("form");
@@ -177,9 +178,12 @@ export function openEditListingModal(listing: ListingBase) {
 
     try {
       await updateListing(body, listing.id);
+      showToast(successToastUpdate());
       modal.close();
       const refreshed = await getSingleListing(listing.id);
-      renderListingDetails(refreshed.data);
+      setTimeout(() => {
+        renderListingDetails(refreshed.data);
+      }, 1500);
     } catch (err) {
       console.error("Error updating listing:", err);
     }

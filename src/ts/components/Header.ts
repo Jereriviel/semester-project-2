@@ -52,12 +52,12 @@ async function Header() {
               </figure>
               <p>${userName}</p>
             </div>
-            <span
-              class="material-symbols-outlined cursor-pointer"
-              id="menu-close"
-            >
-              close
-            </span>
+            <button id="menu-close" class="btn_close">
+              <span
+                class="material-symbols-outlined cursor-pointer">
+                close
+              </span>
+            </button>
           </div>
           <hr class="bg-gray-medium h-px border-0" />
           <div id="dropdown-links">

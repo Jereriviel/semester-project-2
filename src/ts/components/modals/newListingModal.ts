@@ -3,6 +3,7 @@ import { input, textArea, dateTimeInput } from "../../components/Inputs.js";
 import { AddImageButton } from "../buttons/AddImageButton.js";
 import { createImageInputGroup } from "../../utils/createImageInputGroup.js";
 import { createListing } from "../../services/listings.js";
+import { showToast, successToastCreate } from "../Toasts.js";
 
 export function openNewListingModal() {
   const form = document.createElement("form");
@@ -137,9 +138,11 @@ export function openNewListingModal() {
 
     try {
       await createListing(body);
+      showToast(successToastCreate());
       modal.close();
-      if (window.location.pathname.includes("listings"))
+      setTimeout(() => {
         window.location.reload();
+      }, 1500);
     } catch (err) {
       console.error("Error creating listing:", err);
     }

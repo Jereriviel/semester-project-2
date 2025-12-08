@@ -1,5 +1,6 @@
 import { createModal } from "../../utils/createModal.js";
 import { deleteListing } from "../../services/listings.js";
+import { showToast, successToastDelete } from "../Toasts.js";
 
 export function confirmDeleteModal(listingId: string) {
   const modal = createModal(`
@@ -29,8 +30,11 @@ export function confirmDeleteModal(listingId: string) {
   deleteBtn.addEventListener("click", async () => {
     try {
       await deleteListing(listingId);
+      showToast(successToastDelete());
       modal.close();
-      window.location.href = "/index.html";
+      setTimeout(() => {
+        window.location.href = "/index.html";
+      }, 1500);
     } catch (error) {
       console.error("Failed to delete listing:", error);
       alert("Something went wrong while deleting the listing.");
