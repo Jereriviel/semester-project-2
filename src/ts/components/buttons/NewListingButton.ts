@@ -1,6 +1,6 @@
 import { openNewListingModal } from "../modals/newListingModal.js";
 
-function NewListingButton() {
+export function NewListingButton() {
   const button = document.createElement("button");
   button.id = "new-listing-btn";
   button.className =
@@ -16,13 +16,4 @@ function NewListingButton() {
   });
 
   return button;
-}
-
-export function renderNewListingButton() {
-  const newListingSection = document.getElementById("new-listing-section");
-  if (!newListingSection) return;
-
-  const sectionContent = NewListingButton();
-  newListingSection.innerHTML = "";
-  newListingSection.appendChild(sectionContent);
 }
