@@ -4,6 +4,8 @@ import { AddImageButton } from "../buttons/AddImageButton.js";
 import { createImageInputGroup } from "../../utils/createImageInputGroup.js";
 import { createListing } from "../../services/listings.js";
 import { showToast, successToastCreate } from "../Toasts.js";
+import { ApiError } from "../../errors.ts/ApiError.js";
+import { showErrorModal } from "./errorModal.js";
 
 export function openNewListingModal() {
   const form = document.createElement("form");
@@ -143,8 +145,17 @@ export function openNewListingModal() {
       setTimeout(() => {
         window.location.reload();
       }, 1500);
-    } catch (err) {
-      console.error("Error creating listing:", err);
+    } catch (error) {
+      let message = "Something went wrong. Please try again.";
+
+      if (error instanceof ApiError) {
+        message = error.message;
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+
+      await showErrorModal(message);
+      console.error("Error creating listing:", error);
     }
   });
 

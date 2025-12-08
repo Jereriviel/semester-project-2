@@ -1,6 +1,8 @@
 import { createModal } from "../../utils/createModal.js";
 import { deleteListing } from "../../services/listings.js";
 import { showToast, successToastDelete } from "../Toasts.js";
+import { ApiError } from "../../errors.ts/ApiError.js";
+import { showErrorModal } from "./errorModal.js";
 
 export function confirmDeleteModal(listingId: string) {
   const modal = createModal(`
@@ -36,8 +38,16 @@ export function confirmDeleteModal(listingId: string) {
         window.location.href = "/index.html";
       }, 1500);
     } catch (error) {
+      let message = "Something went wrong. Please try again.";
+
+      if (error instanceof ApiError) {
+        message = error.message;
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+
+      await showErrorModal(message);
       console.error("Failed to delete listing:", error);
-      alert("Something went wrong while deleting the listing.");
     }
   });
 

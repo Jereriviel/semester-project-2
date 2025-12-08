@@ -8,6 +8,8 @@ import { ListingBase, UpdateListingRequest } from "../../types/listings.js";
 import { getSingleListing } from "../../services/listings.js";
 import { renderListingDetails } from "../singleListing/listingDetails.js";
 import { showToast, successToastUpdate } from "../Toasts.js";
+import { ApiError } from "../../errors.ts/ApiError.js";
+import { showErrorModal } from "./errorModal.js";
 
 export function openEditListingModal(listing: ListingBase) {
   const form = document.createElement("form");
@@ -184,8 +186,17 @@ export function openEditListingModal(listing: ListingBase) {
       setTimeout(() => {
         renderListingDetails(refreshed.data);
       }, 1500);
-    } catch (err) {
-      console.error("Error updating listing:", err);
+    } catch (error) {
+      let message = "Something went wrong. Please try again.";
+
+      if (error instanceof ApiError) {
+        message = error.message;
+      } else if (error instanceof Error) {
+        message = error.message;
+      }
+
+      await showErrorModal(message);
+      console.error("Error updating listing:", error);
     }
   });
 
