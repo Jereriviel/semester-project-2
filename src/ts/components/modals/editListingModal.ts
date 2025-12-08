@@ -25,6 +25,7 @@ export function openEditListingModal(listing: ListingBase) {
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.id = "close-edit-listing-btn";
+  closeBtn.className = "btn_close";
   closeBtn.innerHTML = `<span class="material-symbols-outlined"> close </span>`;
   closeBtn.addEventListener("click", () => modal.close());
 

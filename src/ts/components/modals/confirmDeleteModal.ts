@@ -9,7 +9,7 @@ export function confirmDeleteModal(listingId: string) {
             <img class="w-12" src="/assets/icons/warning.png" alt="Warning icon">
             <h4 class="text-2xl">Delete?</h4>
           </div>
-          <button type="button" id="close-delete-btn"><span class="material-symbols-outlined"> close </span></button>
+          <button type="button" id="close-delete-btn" class="btn_close"><span class="material-symbols-outlined"> close </span></button>
         </div>
         <hr class="bg-gray-medium h-px border-0" />
         <div class="text-lg flex flex-col gap-2">

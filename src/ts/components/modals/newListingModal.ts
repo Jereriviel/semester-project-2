@@ -21,6 +21,7 @@ export function openNewListingModal() {
   const closeBtn = document.createElement("button");
   closeBtn.type = "button";
   closeBtn.id = "close-new-listing-btn";
+  closeBtn.className = "btn_close";
   closeBtn.innerHTML = `<span class="material-symbols-outlined"> close </span>`;
   closeBtn.addEventListener("click", () => modal.close());
 
