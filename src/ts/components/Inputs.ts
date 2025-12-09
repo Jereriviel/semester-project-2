@@ -85,7 +85,7 @@ function createInputWithButton(
   const button = document.createElement("button");
   button.type = "submit";
   button.className =
-    "btn_search w-fit px-4 focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200";
+    "btn_search w-fit px-4 text-nowrap focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200";
   if (typeof buttonContent === "string") button.innerHTML = buttonContent;
   else button.appendChild(buttonContent);
 

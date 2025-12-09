@@ -7,6 +7,7 @@ export function ProfileCredits(profile: Profile) {
 
   const text = document.createElement("p");
   text.textContent = `Available Credits: ${profile.credits}`;
+  text.className = "text-nowrap";
 
   container.appendChild(text);
 
