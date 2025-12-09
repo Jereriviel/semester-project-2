@@ -5,6 +5,7 @@ import { getUser } from "../../store/userStore.js";
 import { getProfile } from "../../services/profile.js";
 import { profileBannerSkeleton } from "../../components/profile/ProfileBannerSkeleton.js";
 import { ProfileCredits } from "../../components/profile/ProfileCredits.js";
+import { ProfileCard } from "../../components/profile/ProfileCard.js";
 
 requireAuth();
 initProfilePage();
@@ -22,6 +23,10 @@ async function initProfilePage() {
   const profile = await getProfile(user.name);
 
   bannerSection.replaceChild(ProfileBanner(profile), skeleton);
+
+  const profileCardSection = document.getElementById("profile-card-section");
+  if (!profileCardSection) return;
+  profileCardSection.appendChild(ProfileCard(profile));
 
   const creditsSection = document.getElementById("credits-section");
   if (!creditsSection) return;
