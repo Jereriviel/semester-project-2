@@ -32,14 +32,14 @@ export function renderBidHistory(listingBids: Bid[] = []) {
 
   if (listingBids.length === 0) {
     section.innerHTML = `  
-      <h4 class="text-2xl mb-4">Bid History</h4>
+      <h3 class="text-2xl mb-4">Bid History</h3>
       <p class="pb-4 sm:b-8 font-semibold">No bids yet.</p>
     `;
     return;
   }
 
   section.innerHTML = `
-    <h4 class="text-2xl mb-4">Bid History</h4>
+    <h3 class="text-2xl mb-4">Bid History</h3>
   `;
 
   const sorted = [...listingBids].sort(

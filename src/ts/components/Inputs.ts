@@ -53,6 +53,7 @@ function createLabeledInput<T extends HTMLInputElement | HTMLTextAreaElement>(
 
   return container;
 }
+
 function createInputWithButton(
   props: InputProps,
   buttonContent: string | HTMLElement,
@@ -84,7 +85,7 @@ function createInputWithButton(
   const button = document.createElement("button");
   button.type = "submit";
   button.className =
-    "btn_search focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200";
+    "btn_search w-fit px-4 focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200";
   if (typeof buttonContent === "string") button.innerHTML = buttonContent;
   else button.appendChild(buttonContent);
 
@@ -135,7 +136,7 @@ export function bidInput(props: InputProps): HTMLDivElement {
     "Place bid",
     "flex flex-col gap-4",
     "text-lg px-4 py-3 w-full sm:w-[200px] rounded-s-xl border border-gray-medium focus:outline-none focus:border-2 focus:border-primary-dark transition-colors duration-200"
-  );
+  ) as HTMLDivElement;
 }
 
 export function dateTimeInput({
