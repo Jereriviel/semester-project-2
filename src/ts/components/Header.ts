@@ -28,7 +28,7 @@ async function Header() {
             <p>CREDITS: ${credits}</p>
           </div>
 
-          <figure class="cursor-pointer" id="profile-img">
+          <figure class="rounded-full cursor-pointer focus-visible:ring-2 focus-visible:outline-none" id="profile-img" tabindex = "0">
             <img 
               src="${avatarUrl}" 
               alt="${avatarAlt}" 
@@ -122,8 +122,16 @@ export async function renderHeader() {
     window.location.href = "/index.html";
   });
 
-  document.getElementById("profile-img")?.addEventListener("click", () => {
+  const profileImg = document.getElementById("profile-img");
+
+  profileImg?.addEventListener("click", () => {
     toggleDropdown();
+  });
+
+  profileImg?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      toggleDropdown();
+    }
   });
 
   document.getElementById("menu-close")?.addEventListener("click", () => {
