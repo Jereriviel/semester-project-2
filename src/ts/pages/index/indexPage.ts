@@ -1,6 +1,6 @@
 import { ListingCard } from "../../components/listings/ListingCard.js";
 import { getAllListings } from "../../services/listings.js";
-import { listingCardSkeleton } from "../../components/listings/ListingCardSkeleton.js";
+import { ListingCardSkeleton } from "../../components/skeletons/ListingCardSkeleton.js";
 import { initPaginatedList } from "../../utils/pagination.js";
 import { SearchBar } from "../../components/listings/searchBar.js";
 import { searchListings } from "../../services/listings.js";
@@ -8,6 +8,7 @@ import { TagFilter } from "../../components/listings/TagFilter.js";
 import { filterListingsByTag } from "../../services/listings.js";
 import { sortFilter } from "../../components/listings/SortByFilter.js";
 import { Switch } from "../../components/listings/Switch.js";
+import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
 let currentActiveOnly: boolean = true;
@@ -16,17 +17,17 @@ async function loadDefaultListings(
   listingSection: HTMLElement,
   activeOnly = currentActiveOnly
 ) {
-  listingSection.innerHTML = "";
-  for (let i = 0; i < 6; i++) {
-    listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
-  }
+  addSkeletons(listingSection, ListingCardSkeleton, 6);
 
   await initPaginatedList({
     container: listingSection,
     loadMoreSection: document.getElementById("load-more-section")!,
     fetchItems: (page) =>
       getAllListings(page, 12, currentSortOrder, activeOnly),
-    renderItem: (listing) => ListingCard(listing, { lazy: true }),
+    renderItem: (listing) => {
+      fadeOutSkeletons(listingSection, () => ListingCard(listing));
+      return ListingCard(listing, { lazy: true });
+    },
   });
 }
 
@@ -35,10 +36,7 @@ async function loadSearchResults(
   query: string,
   activeOnly = currentActiveOnly
 ) {
-  listingSection.innerHTML = "";
-  for (let i = 0; i < 6; i++) {
-    listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
-  }
+  addSkeletons(listingSection, ListingCardSkeleton, 6);
 
   const items = await searchListings(
     query,
@@ -60,7 +58,10 @@ async function loadSearchResults(
     loadMoreSection: loadMoreSection!,
     fetchItems: (page) =>
       searchListings(query, page, 12, currentSortOrder, activeOnly),
-    renderItem: (listing) => ListingCard(listing, { lazy: true }),
+    renderItem: (listing) => {
+      fadeOutSkeletons(listingSection, () => ListingCard(listing));
+      return ListingCard(listing, { lazy: true });
+    },
   });
 }
 
@@ -69,10 +70,7 @@ async function loadFilteredListings(
   tag: string,
   activeOnly = currentActiveOnly
 ) {
-  listingSection.innerHTML = "";
-  for (let i = 0; i < 6; i++) {
-    listingSection.insertAdjacentHTML("beforeend", listingCardSkeleton());
-  }
+  addSkeletons(listingSection, ListingCardSkeleton, 6);
 
   const items = await filterListingsByTag(
     tag,
@@ -94,7 +92,10 @@ async function loadFilteredListings(
     loadMoreSection: loadMoreSection!,
     fetchItems: (page) =>
       filterListingsByTag(tag, page, 12, currentSortOrder, activeOnly),
-    renderItem: (listing) => ListingCard(listing, { lazy: true }),
+    renderItem: (listing) => {
+      fadeOutSkeletons(listingSection, () => ListingCard(listing));
+      return ListingCard(listing, { lazy: true });
+    },
   });
 }
 

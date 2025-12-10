@@ -2,7 +2,6 @@ export function profileCardSkeleton() {
   const div = document.createElement("div");
   div.role = "status";
   div.className = "animate-pulse w-full";
-
   div.innerHTML = `
 <div class="flex gap-4 py-4 sm:gap-8">
             <div
