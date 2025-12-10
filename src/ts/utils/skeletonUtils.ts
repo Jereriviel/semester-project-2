@@ -13,9 +13,21 @@ export function addSkeletons(
 
 export function fadeOutSkeletons(
   container: HTMLElement,
-  createContent: () => HTMLElement | HTMLElement[]
+  createContent: () => HTMLElement | HTMLElement[],
+  replaceOnce = false
 ) {
   const skeletons = container.querySelectorAll("[role='status']");
+  if (replaceOnce) {
+    container.innerHTML = "";
+    const content = createContent();
+    if (Array.isArray(content)) {
+      content.forEach((el) => container.appendChild(el));
+    } else {
+      container.appendChild(content);
+    }
+    return;
+  }
+
   skeletons.forEach((skeleton) => {
     skeleton.classList.add("fade-out");
     skeleton.addEventListener("animationend", () => {

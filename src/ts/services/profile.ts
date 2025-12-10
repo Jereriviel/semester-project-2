@@ -28,17 +28,20 @@ export async function updateProfile(
 export async function getProfileListings(
   name: string
 ): Promise<ProfileListingsResponse> {
-  return get<ProfileListingsResponse>(`/auction/profiles/${name}/listings`);
+  const url = `/auction/profiles/${name}/listings?_seller=true&_bids=true`;
+  return get<ProfileListingsResponse>(url);
 }
 
 export async function getProfileBids(
   name: string
 ): Promise<ProfileBidsResponse> {
-  return get<ProfileBidsResponse>(`/auction/profiles/${name}/bids`);
+  const url = `/auction/profiles/${name}/bids?_listings=true&_seller=true&_bids=true`;
+  return get<ProfileBidsResponse>(url);
 }
 
 export async function getProfileWins(
   name: string
 ): Promise<ProfileWinsResponse> {
-  return get<ProfileWinsResponse>(`/auction/profiles/${name}/wins`);
+  const url = `/auction/profiles/${name}/wins?_seller=true&_bids=true`;
+  return get<ProfileWinsResponse>(url);
 }

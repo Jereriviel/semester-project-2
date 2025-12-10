@@ -1,3 +1,5 @@
+import { ListingBase } from "./listings";
+
 export interface Media {
   url: string;
   alt: string;
@@ -81,7 +83,7 @@ export interface ProfileBid {
   amount: number;
   bidder: Profile;
   created: string;
-  _listings?: ProfileListing[];
+  listing?: ListingBase;
 }
 
 export interface ProfileBidsResponse {

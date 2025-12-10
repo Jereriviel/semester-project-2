@@ -20,8 +20,8 @@ export function ProfileCard(profile: Profile) {
   const NameEmail = document.createElement("div");
   NameEmail.className = "flex flex-col gap-1";
 
-  const profileName = document.createElement("h2");
-  profileName.className = "text-2xl font-medium sm:text-3xl";
+  const profileName = document.createElement("h1");
+  profileName.className = "text-3xl font-medium sm:text-4xl";
   profileName.innerText = profile.name;
 
   const profileEmail = document.createElement("p");
