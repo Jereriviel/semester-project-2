@@ -82,11 +82,22 @@ export async function openEditProfileModal(username: string) {
       placeholder: "Enter a description for the image",
     });
 
+    const buttons = document.createElement("div");
+    buttons.className = "flex flex-col gap-4 sm:flex-row sm:justify-between";
+
+    const cancelBtn = document.createElement("button");
+    cancelBtn.type = "button";
+    cancelBtn.id = "cancel-btn";
+    cancelBtn.className = "btn btn_secondary sm:w-fit";
+    cancelBtn.innerText = "cancel";
+
     const submitBtn = document.createElement("button");
     submitBtn.type = "submit";
     submitBtn.id = "save-changes-btn";
     submitBtn.className = "btn btn_primary sm:self-end";
     submitBtn.textContent = "Save Changes";
+
+    buttons.append(cancelBtn, submitBtn);
 
     form.append(
       header,
@@ -95,11 +106,13 @@ export async function openEditProfileModal(username: string) {
       avatarAltInput,
       bannerURLInput,
       bannerAltInput,
-      submitBtn
+      buttons
     );
 
     document.body.appendChild(modal);
     modal.showModal();
+
+    cancelBtn.addEventListener("click", () => modal.close());
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
