@@ -7,8 +7,8 @@ export function ProfileCard(profile: Profile) {
   const figure = document.createElement("figure");
 
   const img = document.createElement("img");
-  img.src = profile.avatar.url;
-  img.alt = profile.avatar.alt;
+  img.src = profile.avatar?.url ?? "/placeholder-avatar.png";
+  img.alt = profile.avatar?.alt ?? `${profile.name}'s avatar`;
   img.className =
     "h-[60px] w-[60px] rounded-full object-cover sm:h-[90px] sm:w-[90px]";
 
@@ -32,7 +32,7 @@ export function ProfileCard(profile: Profile) {
 
   const bio = document.createElement("p");
   bio.className = "text-lg";
-  bio.innerText = profile.bio;
+  bio.innerText = profile.bio ?? "No bio yet.";
 
   container.append(NameEmail, bio);
 

@@ -1,201 +1,151 @@
 import { isLoggedIn, getUser, clearUser } from "../store/userStore.js";
 import { getProfile } from "../services/profile.js";
 import { toggleDropdown } from "../utils/toggleDropdown.js";
-
-async function Header() {
-  const container = document.createElement("div");
-  container.className =
-    "relative mx-auto flex max-w-7xl items-center justify-between";
-
-  const logoLink = document.createElement("a");
-  logoLink.href = "/index.html";
-
-  const logoImg = document.createElement("img");
-  logoImg.src = "/assets/logos/logo-primary-96.png";
-  logoImg.alt = "Trove logo";
-  logoImg.className = "w-[109px] sm:w-[145px]";
-
-  logoLink.appendChild(logoImg);
-  container.appendChild(logoLink);
-
-  const loggedIn = isLoggedIn();
-
-  if (loggedIn) {
-    const user = getUser();
-    if (user) {
-      const profile = await getProfile(user.name);
-
-      const avatarUrl = profile.avatar?.url;
-      const avatarAlt = profile.name;
-      const credits = profile.credits;
-      const userName = profile.name;
-
-      const profileContainer = document.createElement("div");
-      profileContainer.className = "flex items-center gap-3 sm:gap-4";
-
-      const creditsBox = document.createElement("div");
-      creditsBox.className =
-        "bg-primary-normal text-primary-dark rounded-xl px-2 py-1 text-sm font-semibold sm:px-3 sm:py-2";
-
-      const creditsText = document.createElement("p");
-      creditsText.textContent = `CREDITS: ${credits}`;
-      creditsBox.appendChild(creditsText);
-
-      const profileFigure = document.createElement("figure");
-      profileFigure.id = "profile-img";
-      profileFigure.tabIndex = 0;
-      profileFigure.className =
-        "rounded-full cursor-pointer focus-visible:ring-2 focus-visible:outline-none";
-
-      const profileImg = document.createElement("img");
-      profileImg.src = avatarUrl;
-      profileImg.alt = avatarAlt;
-      profileImg.className = "h-12 w-12 rounded-full object-cover";
-
-      profileFigure.appendChild(profileImg);
-
-      profileContainer.appendChild(creditsBox);
-      profileContainer.appendChild(profileFigure);
-
-      const dropdown = document.createElement("div");
-      dropdown.id = "dropdown";
-      dropdown.className =
-        "shadow-dropdown absolute top-18 right-0 block max-h-0 w-full overflow-hidden rounded-xl bg-white transition-all duration-500 ease-in-out sm:w-[300px]";
-
-      const dropdownHeader = document.createElement("div");
-      dropdownHeader.className = "p4-4 flex justify-between p-4";
-
-      const headerInfoWrapper = document.createElement("div");
-      headerInfoWrapper.className = "flex items-center gap-2";
-
-      const headerAvatarFig = document.createElement("figure");
-      const headerAvatarImg = document.createElement("img");
-      headerAvatarImg.src = avatarUrl;
-      headerAvatarImg.alt = avatarAlt;
-      headerAvatarImg.className = "h-12 w-12 rounded-full object-cover";
-      headerAvatarFig.appendChild(headerAvatarImg);
-
-      const headerName = document.createElement("p");
-      headerName.textContent = userName;
-
-      headerInfoWrapper.appendChild(headerAvatarFig);
-      headerInfoWrapper.appendChild(headerName);
-
-      const closeBtn = document.createElement("button");
-      closeBtn.id = "menu-close";
-      closeBtn.className = "btn_close";
-
-      const closeIcon = document.createElement("span");
-      closeIcon.className = "material-symbols-outlined cursor-pointer";
-      closeIcon.textContent = "close";
-
-      closeBtn.appendChild(closeIcon);
-
-      dropdownHeader.appendChild(headerInfoWrapper);
-      dropdownHeader.appendChild(closeBtn);
-
-      const divider = document.createElement("hr");
-      divider.className = "bg-gray-medium h-px border-0";
-
-      const dropdownLinks = document.createElement("div");
-      dropdownLinks.id = "dropdown-links";
-
-      const profileLink = document.createElement("a");
-      profileLink.href = "/profile/index.html";
-      profileLink.className =
-        "hover:bg-primary-light flex items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out";
-
-      const profileIcon = document.createElement("span");
-      profileIcon.className = "material-symbols-outlined";
-      profileIcon.textContent = "account_circle";
-
-      const profileText = document.createElement("p");
-      profileText.textContent = "Profile";
-
-      profileLink.appendChild(profileIcon);
-      profileLink.appendChild(profileText);
-
-      const logoutBtn = document.createElement("button");
-      logoutBtn.id = "logout-btn";
-      logoutBtn.type = "button";
-      logoutBtn.className =
-        "hover:bg-primary-light flex w-full items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out";
-
-      const logoutIcon = document.createElement("span");
-      logoutIcon.className = "material-symbols-outlined";
-      logoutIcon.textContent = "logout";
-
-      const logoutText = document.createElement("span");
-      logoutText.textContent = "Log Out";
-
-      logoutBtn.appendChild(logoutIcon);
-      logoutBtn.appendChild(logoutText);
-
-      dropdownLinks.appendChild(profileLink);
-      dropdownLinks.appendChild(logoutBtn);
-
-      dropdown.appendChild(dropdownHeader);
-      dropdown.appendChild(divider);
-      dropdown.appendChild(dropdownLinks);
-
-      container.appendChild(profileContainer);
-      container.appendChild(dropdown);
-    }
-  } else {
-    const loginBtnMobile = document.createElement("a");
-    loginBtnMobile.href = "/login/index.html";
-    loginBtnMobile.className = "btn btn_round sm:hidden";
-
-    const mobileIcon = document.createElement("span");
-    mobileIcon.className = "material-symbols-outlined";
-    mobileIcon.textContent = "login";
-
-    loginBtnMobile.appendChild(mobileIcon);
-
-    const loginBtnDesktop = document.createElement("a");
-    loginBtnDesktop.href = "/login/index.html";
-    loginBtnDesktop.className =
-      "btn btn_primary hidden items-center gap-2 sm:inline-flex";
-
-    const desktopIcon = document.createElement("span");
-    desktopIcon.className = "material-symbols-outlined";
-    desktopIcon.textContent = "login";
-
-    const desktopText = document.createElement("p");
-    desktopText.textContent = "Log in";
-
-    loginBtnDesktop.appendChild(desktopIcon);
-    loginBtnDesktop.appendChild(desktopText);
-
-    container.appendChild(loginBtnMobile);
-    container.appendChild(loginBtnDesktop);
-  }
-
-  return container;
-}
+import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
+import { HeaderSkeleton } from "./skeletons/HeaderSkeleton.js";
 
 export async function renderHeader() {
   const header = document.querySelector("header");
   if (!header) return;
 
-  const headerContent = await Header();
   header.innerHTML = "";
-  header.appendChild(headerContent);
 
-  document.getElementById("logout-btn")?.addEventListener("click", () => {
-    clearUser();
-    window.location.href = "/index.html";
-  });
+  const loggedIn = isLoggedIn();
 
-  const profileImg = document.getElementById("profile-img");
+  if (!loggedIn) {
+    const container = document.createElement("div");
+    container.className =
+      "relative mx-auto flex max-w-7xl items-center justify-between";
+    container.innerHTML = `
+      <a href="/index.html">
+        <img src="/assets/logos/logo-primary-96.png" alt="Trove logo" class="w-[109px] sm:w-[145px]" />
+      </a>
+      <div class="flex items-center gap-3">
+        <a href="/login/index.html" class="btn btn_round sm:hidden">
+          <span class="material-symbols-outlined"> login </span>
+        </a>
+        <a href="/login/index.html" class="btn btn_primary hidden items-center gap-2 sm:inline-flex">
+          <span class="material-symbols-outlined"> login </span>
+          <p>Log in</p>
+        </a>
+      </div>
+    `;
+    header.appendChild(container);
+    return;
+  }
 
-  profileImg?.addEventListener("click", () => toggleDropdown());
+  const skeletonContainer = document.createElement("div");
+  header.appendChild(skeletonContainer);
+  addSkeletons(skeletonContainer, HeaderSkeleton, 1);
 
-  profileImg?.addEventListener("keydown", (event) => {
-    if (event.key === "Enter") toggleDropdown();
-  });
+  const user = getUser();
+  if (!user) return;
 
-  document.getElementById("menu-close")?.addEventListener("click", () => {
-    toggleDropdown();
-  });
+  const profile = await getProfile(user.name);
+  fadeOutSkeletons(
+    skeletonContainer,
+    () => {
+      const container = document.createElement("div");
+      container.className =
+        "relative mx-auto flex max-w-7xl items-center justify-between";
+
+      container.innerHTML = `
+        <a href="/index.html">
+          <img src="/assets/logos/logo-primary-96.png" alt="Trove logo" class="w-[109px] sm:w-[145px]" />
+        </a>
+
+        <div class="user-section flex items-center gap-3 sm:gap-4">
+          <div class="credits bg-primary-normal text-primary-dark rounded-xl px-2 py-1 text-sm font-semibold sm:px-3 sm:py-2">
+            <p class="credits-text"></p>
+          </div>
+
+          <figure id="profile-img" tabindex="0" class="rounded-full cursor-pointer focus-visible:ring-2 focus-visible:outline-none">
+            <img class="avatar-img h-12 w-12 rounded-full object-cover" />
+          </figure>
+
+          <div id="dropdown" class="shadow-dropdown absolute top-18 right-0 block max-h-0 w-full overflow-hidden rounded-xl bg-white transition-all duration-500 ease-in-out sm:w-[300px]">
+            <div class="p4-4 flex justify-between p-4">
+              <div class="flex items-center gap-2">
+                <figure>
+                  <img class="dropdown-avatar h-12 w-12 rounded-full object-cover" />
+                </figure>
+                <p class="username"></p>
+              </div>
+              <button id="menu-close" class="btn_close">
+                <span class="material-symbols-outlined cursor-pointer"> close </span>
+              </button>
+            </div>
+
+            <hr class="bg-gray-medium h-px border-0" />
+
+            <div id="dropdown-links">
+              <a href="/profile/index.html" class="hover:bg-primary-light flex items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out">
+                <span class="material-symbols-outlined"> account_circle </span>
+                <p>Profile</p>
+              </a>
+              <button id="logout-btn" type="button" class="hover:bg-primary-light flex w-full items-center gap-2 p-4 hover:font-semibold transition-all duration-300 ease-in-out">
+                <span class="material-symbols-outlined"> logout </span> Log Out
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="login-section flex items-center gap-3">
+          <a href="/login/index.html" class="btn btn_round sm:hidden">
+            <span class="material-symbols-outlined"> login </span>
+          </a>
+          <a href="/login/index.html" class="btn btn_primary hidden items-center gap-2 sm:inline-flex">
+            <span class="material-symbols-outlined"> login </span>
+            <p>Log in</p>
+          </a>
+        </div>
+      `;
+
+      const creditsText =
+        container.querySelector<HTMLParagraphElement>(".credits-text");
+      if (creditsText) creditsText.textContent = `CREDITS: ${profile.credits}`;
+
+      const avatarImg =
+        container.querySelector<HTMLImageElement>(".avatar-img");
+      if (avatarImg) {
+        avatarImg.src =
+          profile.avatar?.url || "/assets/images/placeholder-avatar.jpg";
+        avatarImg.alt = profile.avatar?.alt || profile.name;
+      }
+
+      const dropdownAvatar =
+        container.querySelector<HTMLImageElement>(".dropdown-avatar");
+      if (dropdownAvatar) {
+        dropdownAvatar.src =
+          profile.avatar?.url || "/assets/images/placeholder-avatar.jpg";
+        dropdownAvatar.alt = profile.avatar?.alt || profile.name;
+      }
+
+      const usernameText =
+        container.querySelector<HTMLParagraphElement>(".username");
+      if (usernameText) usernameText.textContent = profile.name;
+
+      const loginSection = container.querySelector(".login-section");
+      if (loginSection) loginSection.classList.add("hidden");
+
+      const profileImg = container.querySelector("#profile-img");
+      const closeBtn = container.querySelector("#menu-close");
+      const logoutBtn = container.querySelector("#logout-btn");
+
+      profileImg?.addEventListener("click", () => toggleDropdown());
+      profileImg?.addEventListener("keydown", (evt: Event) => {
+        const e = evt as KeyboardEvent;
+        if (e.key === "Enter") toggleDropdown();
+      });
+
+      closeBtn?.addEventListener("click", () => toggleDropdown());
+      logoutBtn?.addEventListener("click", () => {
+        clearUser();
+        window.location.href = "/index.html";
+      });
+
+      return container;
+    },
+    true
+  );
 }
