@@ -4,24 +4,27 @@ function BidHistory(bid: Bid, index: number) {
   const container = document.createElement("div");
   container.className = "gap:4 flex flex-col sm:gap-8 max-w-[520px]";
 
-  const date = new Date(bid.created).toLocaleString();
-
   container.innerHTML = `
     <div class="flex items-center justify-between pb-4 row-span-2">
       <div class="flex gap-4">
-        <div
-          class="bg-primary-normal flex h-8 w-8 items-center justify-center rounded-full shrink-0"
-        >
-          <p class="font-medium">${index}</p>
+        <div class="bg-primary-normal flex h-8 w-8 items-center justify-center rounded-full shrink-0">
+          <p class="font-medium title"></p>
         </div>
-        <div class="flex flex-col  sm:flex-row sm:items-center sm:gap-4 ">
-          <p class="text-gray-dark text-sm">${date}</p>
-          <p class="font-medium">${bid.bidder.name}</p>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:gap-4">
+          <p class="text-gray-dark text-sm created"></p>
+          <p class="font-medium user"></p>
         </div>
       </div>
-      <p class="font-medium">${bid.amount} Credits</p>
+      <p class="font-medium amount"></p>
     </div>
   `;
+
+  container.querySelector(".title")!.textContent = String(index);
+  container.querySelector(".created")!.textContent = new Date(
+    bid.created
+  ).toLocaleString();
+  container.querySelector(".user")!.textContent = bid.bidder.name;
+  container.querySelector(".amount")!.textContent = `${bid.amount} Credits`;
 
   return container;
 }

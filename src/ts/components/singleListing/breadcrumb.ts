@@ -7,9 +7,10 @@ function Breadcrumb(title: string) {
     class="font-medium transition-all duration-200 hover:underline"
     >Listings</a
     ><span class="material-symbols-outlined"> keyboard_arrow_right </span>
-    <p class="capitalize">${title}</p>
+    <p class="capitalize title"></p>
 `;
 
+  container.querySelector(".title")!.textContent = title;
   return container;
 }
 

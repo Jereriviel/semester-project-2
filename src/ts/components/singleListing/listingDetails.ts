@@ -21,63 +21,87 @@ function ListingDetails(listing: ListingBase) {
 
   article.innerHTML = `
     <div class="flex flex-col gap-4">
-        <h1 class="text-4xl sm:text-[40px] capitalize">${listing.title}</h1>
-        <p class="text-lg">
-        ${listing.description ?? ""}
-        </p>
-        <div class="flex flex-wrap gap-4">
-            ${listing.tags
-              .map((tag) => `<div class="btn btn_tag"><p>${tag}</p></div>`)
-              .join("")}
+      <h1 class="text-4xl sm:text-[40px] capitalize title"></h1>
+      <p class="text-lg description"></p>
+
+      <div class="flex flex-wrap gap-4 tags"></div>
+
+      <div class="flex w-fit flex-col gap-2">
+        <div class="flex gap-4 text-sm">
+          <div class="flex w-fit justify-between gap-1">
+            <p>Posted:</p>
+            <p class="created"></p>
+          </div>
+
+          <div class="updated-wrapper hidden flex gap-2 text-gray-dark italic">
+            <p>Updated:</p>
+            <p class="updated"></p>
+          </div>
         </div>
-        <div class="flex w-fit flex-col gap-2">
-            <div class="flex gap-4 text-sm">
-                <div class="flex w-fit justify-between gap-1">
-                    <p>Posted:</p>
-                    <p>${formatDate(listing.created)}</p>
-                </div>
-                ${
-                  isUpdated
-                    ? `
-                        <div class="flex gap-2 text-gray-dark italic">
-                            <p>Updated:</p>
-                            <p>${formatDate(listing.updated)}</p>
-                        </div>
-                       `
-                    : ""
-                }
-            </div>
-            <div class="flex gap-2">
-                <p>Seller:</p>
-                <p>${listing.seller?.name ?? "Unknown"}</p>
-            </div>
+
+        <div class="flex gap-2">
+          <p>Seller:</p>
+          <p class="seller"></p>
         </div>
+      </div>
     </div>
+
     <div class="flex w-fit flex-col gap-2">
-        <div class="flex w-full justify-between gap-4">
-            <p>Number of bids:</p>
-            <p class="font-medium">${listing._count?.bids ?? 0}</p>
-        </div>
-        <div class="flex w-full justify-between gap-4">
-            <p>Newest bid:</p>
-            <p class="font-medium">              
-            ${
-              listing.bids?.length
-                ? `${sortedBids[0].amount} Credits`
-                : "No bids yet"
-            }</p>
-        </div>
+      <div class="flex w-full justify-between gap-4">
+        <p>Number of bids:</p>
+        <p class="font-medium bid-count"></p>
+      </div>
+
+      <div class="flex w-full justify-between gap-4">
+        <p>Newest bid:</p>
+        <p class="font-medium newest-bid"></p>
+      </div>
     </div>
+
     <div class="flex gap-4 text-lg">
-        <p>Ends in:</p>
-        <p class="font-medium" id="countdown">${formatEndsIn(listing.endsAt)}</p>
+      <p>Ends in:</p>
+      <p class="font-medium" id="countdown"></p>
     </div>
   `;
 
-  const countdownElement = article.querySelector("#countdown") as HTMLElement;
-  if (countdownElement) {
-    startCountdown(listing.endsAt, countdownElement);
+  article.querySelector(".title")!.textContent = listing.title;
+  article.querySelector(".description")!.textContent =
+    listing.description ?? "";
+
+  article.querySelector(".created")!.textContent = formatDate(listing.created);
+
+  article.querySelector(".seller")!.textContent =
+    listing.seller?.name ?? "Unknown";
+
+  if (isUpdated) {
+    const wrapper = article.querySelector(".updated-wrapper") as HTMLElement;
+    wrapper.classList.remove("hidden");
+    wrapper.querySelector(".updated")!.textContent = formatDate(
+      listing.updated!
+    );
   }
+
+  article.querySelector(".bid-count")!.textContent = String(
+    listing._count?.bids ?? 0
+  );
+
+  article.querySelector(".newest-bid")!.textContent = listing.bids?.length
+    ? `${sortedBids[0].amount} Credits`
+    : "No bids yet";
+
+  const tagContainer = article.querySelector(".tags")!;
+  listing.tags.forEach((tag) => {
+    const div = document.createElement("div");
+    div.className = "btn btn_tag";
+    const p = document.createElement("p");
+    p.textContent = tag;
+    div.appendChild(p);
+    tagContainer.appendChild(div);
+  });
+
+  const countdownElement = article.querySelector("#countdown") as HTMLElement;
+  countdownElement.textContent = formatEndsIn(listing.endsAt);
+  startCountdown(listing.endsAt, countdownElement);
 
   return article;
 }
