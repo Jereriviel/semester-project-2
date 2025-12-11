@@ -5,6 +5,8 @@ import { showToast, successToastUpdate } from "../Toasts.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
 import { UpdateProfileRequest } from "../../types/profile.js";
+import { loadingSpinner } from "../LoadingSpinner.js";
+import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export async function openEditProfileModal(username: string) {
   try {
@@ -14,8 +16,12 @@ export async function openEditProfileModal(username: string) {
     const form = document.createElement("form");
     const modal = createModal(form);
     form.id = "edit-profile-form";
-    form.className = "edit-listing-modal flex flex-col gap-8 sm:w-[600px]";
+    form.className = "edit-listing-modal sm:w-[600px]";
     form.method = "dialog";
+
+    const fieldset = document.createElement("fieldset");
+    fieldset.id = "edit-profile-fieldset";
+    fieldset.className = "flex flex-col gap-8";
 
     const header = document.createElement("div");
     header.className = "flex items-start justify-between";
@@ -95,11 +101,11 @@ export async function openEditProfileModal(username: string) {
     submitBtn.type = "submit";
     submitBtn.id = "save-changes-btn";
     submitBtn.className = "btn btn_primary sm:self-end";
-    submitBtn.textContent = "Save Changes";
+    submitBtn.innerHTML = `<span class="button-text">Save Changes</span><span class="spinner hidden">${loadingSpinner()}</span>`;
 
     buttons.append(cancelBtn, submitBtn);
 
-    form.append(
+    fieldset.append(
       header,
       bioInput,
       avatarURLInput,
@@ -108,6 +114,7 @@ export async function openEditProfileModal(username: string) {
       bannerAltInput,
       buttons
     );
+    form.appendChild(fieldset);
 
     document.body.appendChild(modal);
     modal.showModal();
@@ -137,6 +144,8 @@ export async function openEditProfileModal(username: string) {
       };
 
       try {
+        fieldset.disabled = true;
+        toggleButtonLoading(submitBtn, true);
         await updateProfile(body, profile.name);
         showToast(successToastUpdate());
         modal.close();
@@ -154,6 +163,9 @@ export async function openEditProfileModal(username: string) {
 
         await showErrorModal(message);
         console.error("Error creating listing:", error);
+      } finally {
+        toggleButtonLoading(submitBtn, false);
+        fieldset.disabled = false;
       }
     });
 

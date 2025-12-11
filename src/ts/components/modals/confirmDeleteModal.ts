@@ -3,6 +3,8 @@ import { deleteListing } from "../../services/listings.js";
 import { showToast, successToastDelete } from "../Toasts.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
+import { loadingSpinner } from "../LoadingSpinner.js";
+import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export function confirmDeleteModal(listingId: string) {
   const modal = createModal(`
@@ -19,7 +21,7 @@ export function confirmDeleteModal(listingId: string) {
           <p>Are you sure you want to delete this listing? This action is permanent and cannot be undone.</p>
         </div>
         <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
-          <button id="delete-btn" class="btn btn_delete sm:w-fit">Yes, Delete</button>
+          <button id="delete-btn" class="btn btn_delete sm:w-fit"><span class="button-text">Delete Listing</span><span class="spinner hidden">${loadingSpinner()}</span></button>
           <button id="cancel-delete-btn" class="btn btn_secondary sm:w-fit">Cancel</button>
         </div>
       </div>
@@ -31,11 +33,12 @@ export function confirmDeleteModal(listingId: string) {
   const deleteBtn = modal.querySelector<HTMLButtonElement>("#delete-btn")!;
   deleteBtn.addEventListener("click", async () => {
     try {
+      toggleButtonLoading(deleteBtn, true);
       await deleteListing(listingId);
       showToast(successToastDelete());
       modal.close();
       setTimeout(() => {
-        window.location.href = "/index.html";
+        history.back();
       }, 1500);
     } catch (error) {
       let message = "Something went wrong. Please try again.";
@@ -48,6 +51,8 @@ export function confirmDeleteModal(listingId: string) {
 
       await showErrorModal(message);
       console.error("Failed to delete listing:", error);
+    } finally {
+      toggleButtonLoading(deleteBtn, false);
     }
   });
 

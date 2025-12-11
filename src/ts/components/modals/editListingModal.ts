@@ -2,20 +2,25 @@ import { createModal } from "../../utils/createModal.js";
 import { input, textArea, dateTimeInput } from "../../components/Inputs.js";
 import { AddImageButton } from "../buttons/AddImageButton.js";
 import { createImageInputGroup } from "../../utils/createImageInputGroup.js";
-import { getSingleListing, updateListing } from "../../services/listings.js";
+import { updateListing } from "../../services/listings.js";
 import { confirmDeleteModal } from "./confirmDeleteModal.js";
 import { ListingBase, UpdateListingRequest } from "../../types/listings.js";
-import { renderListingDetails } from "../singleListing/listingDetails.js";
 import { showToast, successToastUpdate } from "../Toasts.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
+import { loadingSpinner } from "../LoadingSpinner.js";
+import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export function openEditListingModal(listing: ListingBase) {
   const form = document.createElement("form");
   const modal = createModal(form);
   form.id = "edit-listing-form";
-  form.className = "edit-listing-modal flex flex-col gap-8 sm:w-[600px]";
+  form.className = "edit-listing-modal sm:w-[600px]";
   form.method = "dialog";
+
+  const fieldset = document.createElement("fieldset");
+  fieldset.id = "edit-listing-fieldset";
+  fieldset.className = "flex flex-col gap-8";
 
   const header = document.createElement("div");
   header.className = "flex items-start justify-between";
@@ -123,11 +128,11 @@ export function openEditListingModal(listing: ListingBase) {
   submitBtn.type = "submit";
   submitBtn.id = "edit-listing-btn";
   submitBtn.className = "btn btn_primary sm:w-fit";
-  submitBtn.textContent = "Update Listing";
+  submitBtn.innerHTML = `<span class="button-text">Save Changes</span><span class="spinner hidden">${loadingSpinner()}</span>`;
 
   buttonsContainer.append(deleteBtn, submitBtn);
 
-  form.append(
+  fieldset.append(
     header,
     titleInput,
     descriptionInput,
@@ -137,6 +142,7 @@ export function openEditListingModal(listing: ListingBase) {
     dateInput,
     buttonsContainer
   );
+  form.appendChild(fieldset);
 
   document.body.appendChild(modal);
   modal.showModal();
@@ -178,12 +184,14 @@ export function openEditListingModal(listing: ListingBase) {
     if (endsAt) body.endsAt = endsAt;
 
     try {
+      fieldset.disabled = true;
+      toggleButtonLoading(submitBtn, true);
       await updateListing(body, listing.id);
       showToast(successToastUpdate());
       modal.close();
-      const refreshed = await getSingleListing(listing.id);
+
       setTimeout(() => {
-        renderListingDetails(refreshed.data);
+        location.reload();
       }, 1500);
     } catch (error) {
       let message = "Something went wrong. Please try again.";
@@ -196,6 +204,9 @@ export function openEditListingModal(listing: ListingBase) {
 
       await showErrorModal(message);
       console.error("Error updating listing:", error);
+    } finally {
+      toggleButtonLoading(submitBtn, false);
+      fieldset.disabled = false;
     }
   });
 

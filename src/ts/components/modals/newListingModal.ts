@@ -6,13 +6,19 @@ import { createListing } from "../../services/listings.js";
 import { showToast, successToastCreate } from "../Toasts.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
+import { loadingSpinner } from "../LoadingSpinner.js";
+import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export function openNewListingModal() {
   const form = document.createElement("form");
   const modal = createModal(form);
   form.id = "add-listing-form";
-  form.className = "new-listing-modal flex flex-col gap-8 sm:w-[600px]";
+  form.className = "new-listing-modal sm:w-[600px]";
   form.method = "dialog";
+
+  const fieldset = document.createElement("fieldset");
+  fieldset.id = "edit-listing-fieldset";
+  fieldset.className = "flex flex-col gap-8";
 
   const header = document.createElement("div");
   header.className = "flex items-start justify-between";
@@ -98,11 +104,11 @@ export function openNewListingModal() {
   submitBtn.type = "submit";
   submitBtn.id = "add-listing-btn";
   submitBtn.className = "btn btn_primary sm:self-end";
-  submitBtn.textContent = "Add Listing";
+  submitBtn.innerHTML = `<span class="button-text">Add Listing</span><span class="spinner hidden">${loadingSpinner()}</span>`;
 
   buttons.append(cancelBtn, submitBtn);
 
-  form.append(
+  fieldset.append(
     header,
     titleInput,
     descriptionInput,
@@ -112,6 +118,7 @@ export function openNewListingModal() {
     dateInput,
     buttons
   );
+  form.appendChild(fieldset);
 
   document.body.appendChild(modal);
   modal.showModal();
@@ -152,6 +159,8 @@ export function openNewListingModal() {
     const body = { title, description, tags, media, endsAt };
 
     try {
+      fieldset.disabled = true;
+      toggleButtonLoading(submitBtn, true);
       await createListing(body);
       showToast(successToastCreate());
       modal.close();
@@ -169,6 +178,9 @@ export function openNewListingModal() {
 
       await showErrorModal(message);
       console.error("Error creating listing:", error);
+    } finally {
+      toggleButtonLoading(submitBtn, false);
+      fieldset.disabled = false;
     }
   });
 
