@@ -19,6 +19,8 @@ import {
 } from "../../components/profile/ProfileListingCard.js";
 import { ListingCardSkeleton } from "../../components/skeletons/ListingCardSkeleton.js";
 import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
+import { profileCreditsSkeleton } from "../../components/skeletons/ProfileCreditsSkeleton.js";
+import { profileAddListingSkeleton } from "../../components/skeletons/ProfileAddListingSkeleton.js";
 
 requireAuth();
 initProfilePage();
@@ -39,7 +41,6 @@ async function initProfilePage() {
   const profile = await getProfile(user.name);
 
   fadeOutSkeletons(bannerSection, () => ProfileBanner(profile));
-
   fadeOutSkeletons(profileCardSection, () => ProfileCard(profile));
 
   // Credits and New Listing sections
@@ -48,8 +49,11 @@ async function initProfilePage() {
   const newListingSection = document.getElementById("new-listing-section");
   if (!creditsSection || !newListingSection) return;
 
-  creditsSection.appendChild(ProfileCredits(profile));
-  newListingSection.appendChild(NewListingButton());
+  addSkeletons(creditsSection, profileCreditsSkeleton, 1);
+  addSkeletons(newListingSection, profileAddListingSkeleton, 1);
+
+  fadeOutSkeletons(creditsSection, () => ProfileCredits(profile), true);
+  fadeOutSkeletons(newListingSection, () => NewListingButton(), true);
 
   // Your Listings, Active Bids and Won bids sections
 
