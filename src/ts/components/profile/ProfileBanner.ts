@@ -10,12 +10,15 @@ export function ProfileBanner(profile: Profile) {
 
   const image = document.createElement("img");
   image.className = "h-auto w-full object-cover";
-  image.src = profile.banner.url;
-  image.alt = profile.banner.alt || `${profile.name}'s banner`;
+  image.src = profile.banner?.url ?? "";
+  image.alt = profile.banner?.alt || `${profile.name}'s banner`;
+  image.onerror = () => {
+    image.src = "/assets/images/placeholder-img.jpg";
+  };
 
   figure.appendChild(image);
 
-  const { btnMobile, btnDesktop } = editProfileButtons();
+  const { btnMobile, btnDesktop } = editProfileButtons(profile.name);
   const btnWrapper = document.createElement("div");
   btnWrapper.className = "absolute top-4 right-4 flex";
 
