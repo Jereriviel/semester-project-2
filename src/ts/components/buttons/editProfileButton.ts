@@ -1,6 +1,6 @@
 import { openEditProfileModal } from "../modals/editProfileModal.js";
 
-export function editProfileButtons() {
+export function editProfileButtons(username: string) {
   const btnMobile = document.createElement("button");
   btnMobile.type = "button";
   btnMobile.id = "edit-profile-btn-mobile";
@@ -10,7 +10,7 @@ export function editProfileButtons() {
   `;
 
   btnMobile.addEventListener("click", () => {
-    openEditProfileModal();
+    openEditProfileModal(username);
   });
 
   const btnDesktop = document.createElement("button");
@@ -24,7 +24,7 @@ export function editProfileButtons() {
   `;
 
   btnDesktop.addEventListener("click", () => {
-    openEditProfileModal();
+    openEditProfileModal(username);
   });
 
   return { btnMobile, btnDesktop };

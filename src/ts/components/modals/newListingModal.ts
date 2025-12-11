@@ -11,7 +11,7 @@ export function openNewListingModal() {
   const form = document.createElement("form");
   const modal = createModal(form);
   form.id = "add-listing-form";
-  form.className = "new-listing-modal flex flex-col gap-8 sm:w-[500px]";
+  form.className = "new-listing-modal flex flex-col gap-8 sm:w-[600px]";
   form.method = "dialog";
 
   const header = document.createElement("div");

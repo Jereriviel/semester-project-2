@@ -33,7 +33,7 @@ function ListingDetails(listing: ListingBase) {
             <p class="created"></p>
           </div>
 
-          <div class="updated-wrapper hidden flex gap-2 text-gray-dark italic">
+          <div class="updated-wrapper hidden gap-2 text-gray-dark italic">
             <p>Updated:</p>
             <p class="updated"></p>
           </div>
@@ -76,6 +76,7 @@ function ListingDetails(listing: ListingBase) {
   if (isUpdated) {
     const wrapper = article.querySelector(".updated-wrapper") as HTMLElement;
     wrapper.classList.remove("hidden");
+    wrapper.classList.add("flex");
     wrapper.querySelector(".updated")!.textContent = formatDate(
       listing.updated!
     );

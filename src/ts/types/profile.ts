@@ -13,9 +13,9 @@ export interface ProfileCount {
 export interface Profile {
   name: string;
   email: string;
-  bio: string;
-  avatar: Media;
-  banner: Media;
+  bio?: string;
+  avatar?: Media;
+  banner?: Media;
   credits: number;
   _count: ProfileCount;
 }

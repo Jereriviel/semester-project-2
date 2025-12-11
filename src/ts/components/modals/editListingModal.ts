@@ -2,10 +2,9 @@ import { createModal } from "../../utils/createModal.js";
 import { input, textArea, dateTimeInput } from "../../components/Inputs.js";
 import { AddImageButton } from "../buttons/AddImageButton.js";
 import { createImageInputGroup } from "../../utils/createImageInputGroup.js";
-import { updateListing } from "../../services/listings.js";
+import { getSingleListing, updateListing } from "../../services/listings.js";
 import { confirmDeleteModal } from "./confirmDeleteModal.js";
 import { ListingBase, UpdateListingRequest } from "../../types/listings.js";
-import { getSingleListing } from "../../services/listings.js";
 import { renderListingDetails } from "../singleListing/listingDetails.js";
 import { showToast, successToastUpdate } from "../Toasts.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
@@ -15,7 +14,7 @@ export function openEditListingModal(listing: ListingBase) {
   const form = document.createElement("form");
   const modal = createModal(form);
   form.id = "edit-listing-form";
-  form.className = "edit-listing-modal flex flex-col gap-8 sm:w-[500px]";
+  form.className = "edit-listing-modal flex flex-col gap-8 sm:w-[600px]";
   form.method = "dialog";
 
   const header = document.createElement("div");
