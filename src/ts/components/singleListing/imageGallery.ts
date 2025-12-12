@@ -20,7 +20,6 @@ export function ImageGallery(listing: ListingBase) {
 
   mainWrapper.className = "w-full max-w-[520px]";
   mainImg.className = "rounded-xl w-full";
-
   mainWrapper.appendChild(mainImg);
   container.appendChild(mainWrapper);
 
@@ -30,26 +29,54 @@ export function ImageGallery(listing: ListingBase) {
     const thumbnailGrid = document.createElement("div");
     thumbnailGrid.className = "grid grid-cols-3 gap-4 w-full max-w-[520px]";
 
-    listing.media.slice(1).forEach((mediaItem) => {
-      const thumbWrapper = document.createElement("figure");
-      const thumbImg = document.createElement("img");
+    const allImages = listing.media;
 
+    allImages.forEach((mediaItem) => {
+      const thumbWrapper = document.createElement("figure");
+      thumbWrapper.className = "overflow-hidden rounded-xl";
+
+      const thumbImg = document.createElement("img");
       thumbImg.src = mediaItem.url;
       thumbImg.alt = mediaItem.alt ?? listing.title;
+      thumbImg.tabIndex = 0;
       thumbImg.className =
-        "rounded-xl cursor-pointer w-full aspect-[4/3] object-cover";
+        "rounded-xl cursor-pointer w-full aspect-[4/3] object-cover transition-all focus:border-primary-dark focus:border-2 focus:outline-none hover:scale-104";
 
       applyPlaceholderImage(thumbImg);
 
+      function updateMainImage() {
+        mainImg.classList.add("fade-out");
+
+        mainImg.addEventListener(
+          "animationend",
+          () => {
+            mainImg.src = thumbImg.src;
+            mainImg.alt = thumbImg.alt;
+
+            mainImg.classList.remove("fade-out");
+            mainImg.classList.add("fade-in");
+
+            mainImg.addEventListener(
+              "animationend",
+              () => {
+                mainImg.classList.remove("fade-in");
+              },
+              { once: true }
+            );
+          },
+          { once: true }
+        );
+      }
+
       thumbImg.addEventListener("click", () => {
-        const oldMainSrc = mainImg.src;
-        const oldMainAlt = mainImg.alt;
+        updateMainImage();
+      });
 
-        mainImg.src = thumbImg.src;
-        mainImg.alt = thumbImg.alt;
-
-        thumbImg.src = oldMainSrc;
-        thumbImg.alt = oldMainAlt;
+      thumbImg.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          updateMainImage();
+        }
       });
 
       thumbWrapper.appendChild(thumbImg);
@@ -58,5 +85,6 @@ export function ImageGallery(listing: ListingBase) {
 
     container.appendChild(thumbnailGrid);
   }
+
   return container;
 }

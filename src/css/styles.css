@@ -125,12 +125,12 @@
 
   .fade-in {
     opacity: 0;
-    animation: fadeIn 0.5s ease forwards;
+    animation: fadeIn 0.25s ease forwards;
   }
 
   .fade-out {
     opacity: 1;
-    animation: fadeOut 0.5s ease forwards;
+    animation: fadeOut 0.25s ease forwards;
   }
 
   @keyframes fadeIn {
