@@ -1,6 +1,7 @@
 import { createModal } from "../../utils/createModal.js";
 import { deleteListing } from "../../services/listings.js";
-import { showToast, successToastDelete } from "../Toasts.js";
+import { showToast } from "../../utils/showToast.js";
+import { successToastDelete } from "../toasts/SuccessDelete.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
 import { loadingSpinner } from "../LoadingSpinner.js";
