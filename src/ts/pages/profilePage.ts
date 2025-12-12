@@ -1,26 +1,26 @@
-import { requireAuth } from "../../utils/authGuard.js";
-import { NewListingButton } from "../../components/buttons/NewListingButton.js";
-import { ProfileBanner } from "../../components/profile/ProfileBanner.js";
-import { getUser } from "../../store/userStore.js";
+import { requireAuth } from "../utils/authGuard.js";
+import { NewListingButton } from "../components/buttons/NewListingButton.js";
+import { ProfileBanner } from "../components/profile/ProfileBanner.js";
+import { getUser } from "../store/userStore.js";
 import {
   getProfile,
   getProfileListings,
   getProfileBids,
   getProfileWins,
-} from "../../services/profile.js";
-import { profileBannerSkeleton } from "../../components/loading/ProfileBannerSkeleton.js";
-import { ProfileCredits } from "../../components/profile/ProfileCredits.js";
-import { ProfileCard } from "../../components/profile/ProfileCard.js";
-import { profileCardSkeleton } from "../../components/loading/ProfileCardSkeleton.js";
+} from "../services/profile.js";
+import { profileBannerSkeleton } from "../components/loading/ProfileBannerSkeleton.js";
+import { ProfileCredits } from "../components/profile/ProfileCredits.js";
+import { ProfileCard } from "../components/profile/ProfileCard.js";
+import { profileCardSkeleton } from "../components/loading/ProfileCardSkeleton.js";
 import {
   ProfileYourListingCard,
   ProfileActiveBidCard,
   ProfileWonBidCard,
-} from "../../components/profile/ProfileListingCard.js";
-import { ListingCardSkeleton } from "../../components/loading/ListingCardSkeleton.js";
-import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
-import { profileCreditsSkeleton } from "../../components/loading/ProfileCreditsSkeleton.js";
-import { profileAddListingSkeleton } from "../../components/loading/ProfileAddListingSkeleton.js";
+} from "../components/profile/ProfileListingCard.js";
+import { ListingCardSkeleton } from "../components/loading/ListingCardSkeleton.js";
+import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
+import { profileCreditsSkeleton } from "../components/loading/ProfileCreditsSkeleton.js";
+import { profileAddListingSkeleton } from "../components/loading/ProfileAddListingSkeleton.js";
 
 requireAuth();
 initProfilePage();

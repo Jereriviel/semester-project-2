@@ -1,6 +1,6 @@
 import { InputProps } from "../../types/inputs.js";
-import { createLabeledInput } from "../../utils/createInputs/createLabeledInput";
-import { createInputWithButton } from "../../utils/createInputs/createInputWithButton";
+import { createLabeledInput } from "../../utils/createInputs/createLabeledInput.js";
+import { createInputWithButton } from "../../utils/createInputs/createInputWithButton.js";
 
 export function input({ value, ...props }: InputProps & { value?: string }) {
   return createLabeledInput(() => {

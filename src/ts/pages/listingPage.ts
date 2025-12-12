@@ -1,13 +1,13 @@
-import { getSingleListing } from "../../services/listings.js";
-import { updateListingHead } from "../../utils/updateHead.js";
-import { ApiError } from "../../errors.ts/ApiError.js";
-import { showErrorModal } from "../../components/modals/errorModal.js";
-import { renderBreadcrumb } from "../../components/singleListing/breadcrumb.js";
-import { ImageGallery } from "../../components/singleListing/imageGallery.js";
-import { renderListingDetails } from "../../components/singleListing/listingDetails.js";
-import { renderBidHistory } from "../../components/singleListing/bidHistory.js";
-import { ImageGallerySkeleton } from "../../components/loading/ImageGallerySkeleton.js";
-import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
+import { getSingleListing } from "../services/listings.js";
+import { updateListingHead } from "../utils/updateHead.js";
+import { ApiError } from "../errors.ts/ApiError.js";
+import { showErrorModal } from "../components/modals/errorModal.js";
+import { renderBreadcrumb } from "../components/singleListing/breadcrumb.js";
+import { ImageGallery } from "../components/singleListing/imageGallery.js";
+import { renderListingDetails } from "../components/singleListing/listingDetails.js";
+import { renderBidHistory } from "../components/singleListing/bidHistory.js";
+import { ImageGallerySkeleton } from "../components/loading/ImageGallerySkeleton.js";
+import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
 
 async function initListingPage() {
   const params = new URLSearchParams(window.location.search);

@@ -1,8 +1,8 @@
-import { RegisterForm } from "./registerForm.js";
-import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
-import { registerUser, loginUser } from "../../services/auth.js";
-import { ApiError } from "../../errors.ts/ApiError.js";
-import { validateForm } from "../../utils/validators.js";
+import { RegisterForm } from "../components/forms/registerForm.js";
+import { toggleButtonLoading } from "../utils/toggleButtonLoading.js";
+import { registerUser, loginUser } from "../services/auth.js";
+import { ApiError } from "../errors.ts/ApiError.js";
+import { validateForm } from "../utils/validators.js";
 
 function renderRegister() {
   const registerSection = document.getElementById("register-section");

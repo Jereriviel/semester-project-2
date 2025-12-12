@@ -1,14 +1,14 @@
-import { ListingCard } from "../../components/listings/ListingCard.js";
-import { getAllListings } from "../../services/listings.js";
-import { ListingCardSkeleton } from "../../components/loading/ListingCardSkeleton.js";
-import { initPaginatedList } from "../../utils/pagination.js";
-import { SearchBar } from "../../components/listings/searchBar.js";
-import { searchListings } from "../../services/listings.js";
-import { TagFilter } from "../../components/listings/TagFilter.js";
-import { filterListingsByTag } from "../../services/listings.js";
-import { sortFilter } from "../../components/listings/SortByFilter.js";
-import { Switch } from "../../components/listings/Switch.js";
-import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
+import { ListingCard } from "../components/listings/ListingCard.js";
+import { getAllListings } from "../services/listings.js";
+import { ListingCardSkeleton } from "../components/loading/ListingCardSkeleton.js";
+import { initPaginatedList } from "../utils/pagination.js";
+import { SearchBar } from "../components/listings/searchBar.js";
+import { searchListings } from "../services/listings.js";
+import { TagFilter } from "../components/listings/TagFilter.js";
+import { filterListingsByTag } from "../services/listings.js";
+import { sortFilter } from "../components/listings/SortByFilter.js";
+import { Switch } from "../components/listings/Switch.js";
+import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
 let currentActiveOnly: boolean = true;

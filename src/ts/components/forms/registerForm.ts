@@ -1,6 +1,6 @@
 import { redirectIfAuth } from "../../utils/authGuard.js";
-import { input } from "../../components/inputs/Inputs.js";
-import { loadingSpinner } from "../../components/loading/LoadingSpinner.js";
+import { input } from "../inputs/Inputs.js";
+import { loadingSpinner } from "../loading/LoadingSpinner.js";
 
 export function RegisterForm(): HTMLFormElement {
   redirectIfAuth();

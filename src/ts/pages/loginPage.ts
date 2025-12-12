@@ -1,8 +1,8 @@
-import { LoginForm } from "./loginForm.js";
-import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
-import { loginUser } from "../../services/auth.js";
-import { ApiError } from "../../errors.ts/ApiError.js";
-import { validateForm } from "../../utils/validators.js";
+import { LoginForm } from "../components/forms/loginForm.js";
+import { toggleButtonLoading } from "../utils/toggleButtonLoading.js";
+import { loginUser } from "../services/auth.js";
+import { ApiError } from "../errors.ts/ApiError.js";
+import { validateForm } from "../utils/validators.js";
 
 function renderLogin() {
   const loginSection = document.getElementById("login-section");
