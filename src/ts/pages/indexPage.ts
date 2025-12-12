@@ -9,6 +9,7 @@ import { filterListingsByTag } from "../services/listings.js";
 import { sortFilter } from "../components/listings/SortByFilter.js";
 import { Switch } from "../components/listings/Switch.js";
 import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
+import { Hero } from "../components/listings/Hero.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
 let currentActiveOnly: boolean = true;
@@ -100,9 +101,21 @@ async function loadFilteredListings(
 }
 
 async function init() {
+  const heroSection = document.getElementById("hero-section");
+  const headingSection = document.getElementById("heading-section");
   const listingSection = document.getElementById("listing-section");
   const searchFilterSection = document.getElementById("search-filter-section");
-  if (!listingSection || !searchFilterSection) return;
+  if (
+    !heroSection ||
+    !headingSection ||
+    !listingSection ||
+    !searchFilterSection
+  )
+    return;
+
+  heroSection.appendChild(Hero());
+
+  headingSection.innerHTML = `<h2 class="text-3xl uppercase sm:text-4xl">Listings</h2>`;
 
   searchFilterSection.appendChild(
     SearchBar((query) => {

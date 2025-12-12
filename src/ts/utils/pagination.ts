@@ -4,14 +4,6 @@ import { lazyLoadImages } from "./lazyLoad.js";
 import { showErrorModal } from "../components/modals/errorModal.js";
 import { ApiError } from "../errors.ts/ApiError.js";
 
-function fadeOutSkeletons(container: HTMLElement) {
-  const skeletons = container.querySelectorAll("[data-skeleton]");
-  skeletons.forEach((skeleton) => {
-    skeleton.classList.add("fade-out");
-    skeleton.addEventListener("animationend", () => skeleton.remove());
-  });
-}
-
 export async function initPaginatedList<T>(options: {
   container: HTMLElement;
   fetchItems: (page: number) => Promise<PaginatedResponse<T>>;
@@ -30,8 +22,6 @@ export async function initPaginatedList<T>(options: {
     const htmlArray = await Promise.all(
       items.map((item) => Promise.resolve(renderItem(item)))
     );
-
-    fadeOutSkeletons(container);
 
     container.innerHTML = "";
     htmlArray.forEach((el) => container.appendChild(el));

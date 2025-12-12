@@ -64,6 +64,27 @@ async function initProfilePage() {
 
   addSkeletons(yourListingsSection, ListingCardSkeleton, 3);
 
+  yourListingsSection.insertAdjacentHTML(
+    "beforebegin",
+    `<div class="mx-auto flex w-full max-w-7xl gap-12 px-4 pt-8 sm:px-12 xl:px-0">
+       <h2 class="text-2xl uppercase sm:text-3xl">Your Listings</h2>
+     <div>`
+  );
+
+  activeBidsSection.insertAdjacentHTML(
+    "beforebegin",
+    `<div class="mx-auto flex w-full max-w-7xl gap-12 px-4 pt-8 sm:px-12 xl:px-0">
+       <h2 class="text-2xl uppercase sm:text-3xl">Active Bids</h2>
+    <div>`
+  );
+
+  wonBidsSection.insertAdjacentHTML(
+    "beforebegin",
+    `<div class="mx-auto flex w-full max-w-7xl gap-12 px-4 pt-8 sm:px-12 xl:px-0">
+    <h2 class="text-2xl uppercase sm:text-3xl">Won Bids</h2>
+    <div>`
+  );
+
   const yourListings = await getProfileListings(user.name);
   const activeBids = await getProfileBids(user.name);
   const wonBids = await getProfileWins(user.name);
