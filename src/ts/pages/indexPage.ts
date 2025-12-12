@@ -10,6 +10,8 @@ import { sortFilter } from "../components/listings/SortByFilter.js";
 import { Switch } from "../components/listings/Switch.js";
 import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
 import { Hero } from "../components/listings/Hero.js";
+import { showErrorModal } from "../components/modals/errorModal.js";
+import { ApiError } from "../errors.ts/ApiError.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
 let currentActiveOnly: boolean = true;
@@ -113,73 +115,87 @@ async function init() {
   )
     return;
 
-  heroSection.appendChild(Hero());
+  try {
+    heroSection.appendChild(Hero());
 
-  headingSection.innerHTML = `<h2 class="text-3xl uppercase sm:text-4xl">Listings</h2>`;
+    headingSection.innerHTML = `<h2 class="text-3xl uppercase sm:text-4xl">Listings</h2>`;
 
-  searchFilterSection.appendChild(
-    SearchBar((query) => {
-      if (query.length === 0) {
-        loadDefaultListings(listingSection);
-      } else {
-        loadSearchResults(listingSection, query);
-      }
-    })
-  );
+    searchFilterSection.appendChild(
+      SearchBar((query) => {
+        if (query.length === 0) {
+          loadDefaultListings(listingSection);
+        } else {
+          loadSearchResults(listingSection, query);
+        }
+      })
+    );
 
-  searchFilterSection.appendChild(
-    TagFilter((tag) => {
-      if (tag.length === 0) {
-        loadDefaultListings(listingSection);
-      } else {
-        loadFilteredListings(listingSection, tag);
-      }
-    })
-  );
+    searchFilterSection.appendChild(
+      TagFilter((tag) => {
+        if (tag.length === 0) {
+          loadDefaultListings(listingSection);
+        } else {
+          loadFilteredListings(listingSection, tag);
+        }
+      })
+    );
 
-  searchFilterSection.appendChild(
-    sortFilter((sortValue) => {
-      currentSortOrder = sortValue === "asc" ? "asc" : "desc";
+    searchFilterSection.appendChild(
+      sortFilter((sortValue) => {
+        currentSortOrder = sortValue === "asc" ? "asc" : "desc";
 
-      const searchInput = document.querySelector("#search");
-      const tagInput = document.querySelector("#filter");
+        const searchInput = document.querySelector("#search");
+        const tagInput = document.querySelector("#filter");
 
-      const searchQuery =
-        searchInput instanceof HTMLInputElement ? searchInput.value : "";
-      const tagQuery =
-        tagInput instanceof HTMLInputElement ? tagInput.value : "";
+        const searchQuery =
+          searchInput instanceof HTMLInputElement ? searchInput.value : "";
+        const tagQuery =
+          tagInput instanceof HTMLInputElement ? tagInput.value : "";
 
-      if (searchQuery) {
-        loadSearchResults(listingSection, searchQuery);
-      } else if (tagQuery) {
-        loadFilteredListings(listingSection, tagQuery);
-      } else {
-        loadDefaultListings(listingSection);
-      }
-    })
-  );
+        if (searchQuery) {
+          loadSearchResults(listingSection, searchQuery);
+        } else if (tagQuery) {
+          loadFilteredListings(listingSection, tagQuery);
+        } else {
+          loadDefaultListings(listingSection);
+        }
+      })
+    );
 
-  searchFilterSection.appendChild(
-    Switch((activeOnly) => {
-      currentActiveOnly = activeOnly;
+    searchFilterSection.appendChild(
+      Switch((activeOnly) => {
+        currentActiveOnly = activeOnly;
 
-      const searchInput = document.querySelector("#search") as HTMLInputElement;
-      const tagInput = document.querySelector("#filter") as HTMLInputElement;
+        const searchInput = document.querySelector(
+          "#search"
+        ) as HTMLInputElement;
+        const tagInput = document.querySelector("#filter") as HTMLInputElement;
 
-      const searchQuery = searchInput?.value || "";
-      const tagQuery = tagInput?.value || "";
+        const searchQuery = searchInput?.value || "";
+        const tagQuery = tagInput?.value || "";
 
-      if (searchQuery) {
-        loadSearchResults(listingSection, searchQuery);
-      } else if (tagQuery) {
-        loadFilteredListings(listingSection, tagQuery);
-      } else {
-        loadDefaultListings(listingSection);
-      }
-    })
-  );
+        if (searchQuery) {
+          loadSearchResults(listingSection, searchQuery);
+        } else if (tagQuery) {
+          loadFilteredListings(listingSection, tagQuery);
+        } else {
+          loadDefaultListings(listingSection);
+        }
+      })
+    );
 
-  await loadDefaultListings(listingSection);
+    await loadDefaultListings(listingSection);
+  } catch (error) {
+    let message = "Something went wrong. Please try again.";
+
+    if (error instanceof ApiError) {
+      message = error.message;
+    } else if (error instanceof Error) {
+      message = error.message;
+    }
+    await showErrorModal(message);
+    console.error("initPaginatedList error:", error);
+  }
 }
 
 init();
