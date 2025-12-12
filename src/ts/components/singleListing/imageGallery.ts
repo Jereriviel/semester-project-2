@@ -1,17 +1,14 @@
 import { ListingBase } from "../../types/listings.js";
 import { applyPlaceholderImage } from "../../utils/placeholderImg.js";
 
-function ImageGallery(listing: ListingBase) {
+export function ImageGallery(listing: ListingBase) {
   const container = document.createElement("div");
   container.className = "grid gap-4 grid-rows[max-content]";
 
-  if (!listing.media || listing.media.length === 0) {
-    return container;
-  }
-
-  const hasImages = listing.media && listing.media.length > 0;
   const mainWrapper = document.createElement("figure");
   const mainImg = document.createElement("img");
+
+  const hasImages = listing.media && listing.media.length > 0;
 
   if (hasImages) {
     mainImg.src = listing.media[0].url;
@@ -62,12 +59,4 @@ function ImageGallery(listing: ListingBase) {
     container.appendChild(thumbnailGrid);
   }
   return container;
-}
-
-export function renderImageGallery(listing: ListingBase) {
-  const section = document.getElementById("image-gallery-section");
-  if (!section) return;
-
-  section.innerHTML = "";
-  section.appendChild(ImageGallery(listing));
 }
