@@ -1,4 +1,4 @@
-import { sortFilterSelector } from "../Selectors.js";
+import { sortFilterSelector } from "../selectors/SortFilterSelector.js";
 
 export function sortFilter(
   onSortChange: (sort: string) => void

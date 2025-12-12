@@ -1,4 +1,4 @@
-import { searchInput } from "../Inputs.js";
+import { searchInput } from "../inputs/Inputs.js";
 
 export function SearchBar(onSearch: (query: string) => void): HTMLFormElement {
   const form = document.createElement("form");

@@ -1,4 +1,4 @@
-import { loadingSpinner } from "../components/LoadingSpinner.js";
+import { loadingSpinner } from "../components/loading/LoadingSpinner.js";
 
 export function toggleButtonLoading(
   button: HTMLButtonElement,

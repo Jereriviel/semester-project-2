@@ -1,13 +1,13 @@
 import { createModal } from "../../utils/createModal.js";
-import { input, textArea, dateTimeInput } from "../../components/Inputs.js";
+import { input, textArea, dateTimeInput } from "../inputs/Inputs.js";
 import { AddImageButton } from "../buttons/AddImageButton.js";
-import { createImageInputGroup } from "../../utils/createImageInputGroup.js";
+import { createImageInputGroup } from "../../utils/createInputs/createImageInputGroup.js";
 import { createListing } from "../../services/listings.js";
 import { showToast } from "../../utils/showToast.js";
 import { successToastCreate } from "../toasts/SuccessCreate.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
-import { loadingSpinner } from "../LoadingSpinner.js";
+import { loadingSpinner } from "../loading/LoadingSpinner.js";
 import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export function openNewListingModal() {

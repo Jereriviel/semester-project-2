@@ -1,12 +1,12 @@
 import { createModal } from "../../utils/createModal.js";
-import { input, textArea } from "../../components/Inputs.js";
+import { input, textArea } from "../inputs/Inputs.js";
 import { getProfile, updateProfile } from "../../services/profile.js";
 import { showToast } from "../../utils/showToast.js";
 import { successToastUpdate } from "../toasts/SuccessUpdate.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
 import { UpdateProfileRequest } from "../../types/profile.js";
-import { loadingSpinner } from "../LoadingSpinner.js";
+import { loadingSpinner } from "../loading/LoadingSpinner.js";
 import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export async function openEditProfileModal(username: string) {

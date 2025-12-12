@@ -1,4 +1,4 @@
-import { input } from "../components/Inputs.js";
+import { input } from "../../components/inputs/Inputs.js";
 
 export function createImageInputGroup(index: number): HTMLDivElement {
   const container = document.createElement("div");

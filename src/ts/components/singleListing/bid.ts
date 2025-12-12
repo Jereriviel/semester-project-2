@@ -1,4 +1,4 @@
-import { bidInput } from "../Inputs.js";
+import { bidInput } from "../inputs/Inputs.js";
 import {
   CreateBidRequest,
   CreateBidResponse,

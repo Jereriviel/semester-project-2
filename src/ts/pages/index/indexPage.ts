@@ -1,6 +1,6 @@
 import { ListingCard } from "../../components/listings/ListingCard.js";
 import { getAllListings } from "../../services/listings.js";
-import { ListingCardSkeleton } from "../../components/skeletons/ListingCardSkeleton.js";
+import { ListingCardSkeleton } from "../../components/loading/ListingCardSkeleton.js";
 import { initPaginatedList } from "../../utils/pagination.js";
 import { SearchBar } from "../../components/listings/searchBar.js";
 import { searchListings } from "../../services/listings.js";

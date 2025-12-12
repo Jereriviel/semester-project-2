@@ -4,7 +4,7 @@ import { showToast } from "../../utils/showToast.js";
 import { successToastDelete } from "../toasts/SuccessDelete.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { showErrorModal } from "./errorModal.js";
-import { loadingSpinner } from "../LoadingSpinner.js";
+import { loadingSpinner } from "../loading/LoadingSpinner.js";
 import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
 
 export function confirmDeleteModal(listingId: string) {

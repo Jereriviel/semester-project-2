@@ -1,4 +1,4 @@
-import { tagFilterInput } from "../Inputs.js";
+import { tagFilterInput } from "../inputs/Inputs.js";
 
 export function TagFilter(onSearch: (tag: string) => void) {
   const form = document.createElement("form");

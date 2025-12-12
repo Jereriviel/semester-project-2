@@ -1,10 +1,10 @@
-import { isLoggedIn, getUser, clearUser } from "../store/userStore.js";
-import { getProfile } from "../services/profile.js";
-import { toggleDropdown } from "../utils/toggleDropdown.js";
-import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
-import { HeaderSkeleton } from "./skeletons/HeaderSkeleton.js";
-import { showToast } from "../utils/showToast.js";
-import { successToastLogOut } from "./toasts/SuccessLogOut.js";
+import { isLoggedIn, getUser, clearUser } from "../../store/userStore.js";
+import { getProfile } from "../../services/profile.js";
+import { toggleDropdown } from "../../utils/toggleDropdown.js";
+import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
+import { HeaderSkeleton } from "../loading/HeaderSkeleton.js";
+import { showToast } from "../../utils/showToast.js";
+import { successToastLogOut } from "../toasts/SuccessLogOut.js";
 
 export async function renderHeader() {
   const header = document.querySelector("header");
