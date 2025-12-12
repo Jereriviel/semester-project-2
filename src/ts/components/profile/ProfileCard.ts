@@ -1,4 +1,5 @@
 import { Profile } from "../../types/profile.js";
+import { applyPlaceholderImage } from "../../utils/placeholderImg.js";
 
 export function ProfileCard(profile: Profile) {
   const wrapper = document.createElement("div");
@@ -7,11 +8,12 @@ export function ProfileCard(profile: Profile) {
   const figure = document.createElement("figure");
 
   const img = document.createElement("img");
-  img.src = profile.avatar?.url ?? "/placeholder-avatar.png";
+  img.src = profile.avatar?.url ?? "/assets/images/placeholder-avatar.jpg";
   img.alt = profile.avatar?.alt ?? `${profile.name}'s avatar`;
   img.className =
     "h-[60px] w-[60px] rounded-full object-cover sm:h-[90px] sm:w-[90px]";
 
+  applyPlaceholderImage(img);
   figure.appendChild(img);
 
   const container = document.createElement("div");

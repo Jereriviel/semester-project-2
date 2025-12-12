@@ -5,6 +5,7 @@ import { addSkeletons, fadeOutSkeletons } from "../../utils/skeletonUtils.js";
 import { HeaderSkeleton } from "../loading/HeaderSkeleton.js";
 import { showToast } from "../../utils/showToast.js";
 import { successToastLogOut } from "../toasts/SuccessLogOut.js";
+import { applyPlaceholderImage } from "../../utils/placeholderImg.js";
 
 export async function renderHeader() {
   const header = document.querySelector("header");
@@ -113,6 +114,7 @@ export async function renderHeader() {
         avatarImg.src =
           profile.avatar?.url || "/assets/images/placeholder-avatar.jpg";
         avatarImg.alt = profile.avatar?.alt || profile.name;
+        applyPlaceholderImage(avatarImg);
       }
 
       const dropdownAvatar =
@@ -121,6 +123,7 @@ export async function renderHeader() {
         dropdownAvatar.src =
           profile.avatar?.url || "/assets/images/placeholder-avatar.jpg";
         dropdownAvatar.alt = profile.avatar?.alt || profile.name;
+        applyPlaceholderImage(dropdownAvatar);
       }
 
       const usernameText =
