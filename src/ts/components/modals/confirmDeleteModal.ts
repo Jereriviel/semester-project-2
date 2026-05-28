@@ -15,15 +15,26 @@ export function confirmDeleteModal(listingId: string) {
             <img class="w-12" src="/assets/icons/warning.png" alt="Warning icon">
             <h4 class="text-2xl">Delete?</h4>
           </div>
-          <button type="button" id="close-delete-btn" class="btn_close"><span class="material-symbols-outlined"> close </span></button>
+          <button type="button" id="close-delete-btn" class="btn_close">
+            <span class="material-symbols-outlined"> close </span>
+          </button>
         </div>
         <hr class="bg-gray-medium h-px border-0" />
         <div class="text-lg flex flex-col gap-2">
-          <p>Are you sure you want to delete this listing? This action is permanent and cannot be undone.</p>
+          <p>
+            Are you sure you want to delete this listing? This action is permanent and cannot be undone.
+          </p>
         </div>
+
         <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
-          <button id="delete-btn" class="btn btn_delete sm:w-fit"><span class="button-text">Delete Listing</span><span class="spinner hidden">${loadingSpinner()}</span></button>
-          <button id="cancel-delete-btn" class="btn btn_secondary sm:w-fit">Cancel</button>
+          <button id="delete-btn" class="btn_delete btn_base sm:w-fit">
+            <span class="button-text">Delete Listing</span>
+            <span class="spinner hidden">${loadingSpinner()}</span>
+          </button>
+
+          <button id="cancel-delete-btn" class="btn_secondary btn_base sm:w-fit">
+            Cancel
+          </button>
         </div>
       </div>
     `);
@@ -32,12 +43,16 @@ export function confirmDeleteModal(listingId: string) {
   modal.showModal();
 
   const deleteBtn = modal.querySelector<HTMLButtonElement>("#delete-btn")!;
+
   deleteBtn.addEventListener("click", async () => {
     try {
       toggleButtonLoading(deleteBtn, true);
+
       await deleteListing(listingId);
+
       showToast(successToastDelete());
       modal.close();
+
       setTimeout(() => {
         history.back();
       }, 1500);
@@ -51,18 +66,18 @@ export function confirmDeleteModal(listingId: string) {
       }
 
       await showErrorModal(message);
-      console.error("Failed to delete listing:", error);
     } finally {
       toggleButtonLoading(deleteBtn, false);
     }
   });
 
-  const cancelBtn =
-    modal.querySelector<HTMLButtonElement>("#cancel-delete-btn")!;
-  cancelBtn.addEventListener("click", () => modal.close());
+  modal
+    .querySelector<HTMLButtonElement>("#cancel-delete-btn")!
+    .addEventListener("click", () => modal.close());
 
-  const closeBtn = modal.querySelector<HTMLButtonElement>("#close-delete-btn")!;
-  closeBtn.addEventListener("click", () => modal.close());
+  modal
+    .querySelector<HTMLButtonElement>("#close-delete-btn")!
+    .addEventListener("click", () => modal.close());
 
   modal.addEventListener("close", () => {
     modal.remove();

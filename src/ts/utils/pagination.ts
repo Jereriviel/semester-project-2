@@ -1,8 +1,7 @@
 import { loadMoreButton } from "../components/buttons/LoadMoreButton.js";
 import { PaginatedResponse } from "../types/listings.js";
 import { lazyLoadImages } from "./lazyLoad.js";
-import { showErrorModal } from "../components/modals/errorModal.js";
-import { ApiError } from "../errors.ts/ApiError.js";
+import { handleApiError } from "../errors.ts/handleApiError.js";
 
 export async function initPaginatedList<T>(options: {
   container: HTMLElement;
@@ -56,15 +55,6 @@ export async function initPaginatedList<T>(options: {
       loadMoreSection.style.display = "none";
     }
   } catch (error) {
-    let message = "Something went wrong. Please try again.";
-
-    if (error instanceof ApiError) {
-      message = error.message;
-    } else if (error instanceof Error) {
-      message = error.message;
-    }
-
-    await showErrorModal(message);
-    console.error("initPaginatedList error:", error);
+    await handleApiError(error);
   }
 }

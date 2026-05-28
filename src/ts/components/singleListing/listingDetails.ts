@@ -93,7 +93,7 @@ function ListingDetails(listing: ListingBase) {
   const tagContainer = article.querySelector(".tags")!;
   listing.tags.forEach((tag) => {
     const div = document.createElement("div");
-    div.className = "btn btn_tag";
+    div.className = "btn_tag";
     const p = document.createElement("p");
     p.textContent = tag;
     div.appendChild(p);

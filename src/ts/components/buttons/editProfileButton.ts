@@ -17,7 +17,7 @@ export function editProfileButtons(username: string) {
   btnDesktop.type = "button";
   btnDesktop.id = "edit-profile-btn-desktop";
   btnDesktop.className =
-    "hidden btn btn_primary sm:flex items-center justify-center gap-2 w-fit border-white border-2";
+    "hidden btn_base btn_primary sm:flex items-center justify-center gap-2 w-fit border-white border-2";
   btnDesktop.innerHTML = `
         <span class="material-symbols-outlined"> edit </span>
         Edit Profile

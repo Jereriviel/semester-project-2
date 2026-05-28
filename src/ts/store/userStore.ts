@@ -1,4 +1,5 @@
 import type { LoginResponseData } from "../types/auth.js";
+import { showErrorModal } from "../components/modals/errorModal.js";
 
 const TOKEN_KEY = "token";
 const USER_KEY = "user";
@@ -16,7 +17,17 @@ export function getToken(): string | null {
 
 export function getUser(): User | null {
   const userData = localStorage.getItem(USER_KEY);
-  return userData ? (JSON.parse(userData) as User) : null;
+
+  if (!userData) return null;
+
+  try {
+    return JSON.parse(userData) as User;
+  } catch {
+    showErrorModal("Your saved user data was corrupted and has been reset.");
+
+    clearUser();
+    return null;
+  }
 }
 
 export function isLoggedIn(): boolean {

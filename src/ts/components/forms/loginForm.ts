@@ -48,7 +48,7 @@ export function LoginForm(): HTMLFormElement {
   const submitBtn = document.createElement("button");
   submitBtn.type = "submit";
   submitBtn.id = "loginBtn";
-  submitBtn.className = "btn btn_primary sm:w-fit text-white py-3";
+  submitBtn.className = "btn_primary btn_base sm:w-[82px] text-white py-3";
   submitBtn.innerHTML = `<span class="button-text">Log in</span><span class="spinner hidden">${loadingSpinner()}</span>`;
 
   const registerWrapper = document.createElement("div");

@@ -20,7 +20,7 @@ export function TagFilter(onSearch: (tag: string) => void) {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const input = form.querySelector<HTMLInputElement>("#filter");
-    const tag = input?.value.trim() || "";
+    const tag = input?.value.trim().toLowerCase() || "";
     onSearch(tag);
   });
 

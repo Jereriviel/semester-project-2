@@ -7,10 +7,9 @@ import { confirmDeleteModal } from "./confirmDeleteModal.js";
 import { ListingBase, UpdateListingRequest } from "../../types/listings.js";
 import { showToast } from "../../utils/showToast.js";
 import { successToastUpdate } from "../toasts/SuccessUpdate.js";
-import { ApiError } from "../../errors.ts/ApiError.js";
-import { showErrorModal } from "./errorModal.js";
 import { loadingSpinner } from "../loading/LoadingSpinner.js";
 import { toggleButtonLoading } from "../../utils/toggleButtonLoading.js";
+import { handleApiError } from "../../errors.ts/handleApiError.js";
 
 export function openEditListingModal(listing: ListingBase) {
   const form = document.createElement("form");
@@ -118,7 +117,7 @@ export function openEditListingModal(listing: ListingBase) {
 
   const deleteBtn = document.createElement("button");
   deleteBtn.type = "button";
-  deleteBtn.className = "btn btn_delete sm:w-fit";
+  deleteBtn.className = "btn_base btn_delete sm:w-fit";
   deleteBtn.textContent = "Delete Listing";
   deleteBtn.addEventListener("click", () => {
     confirmDeleteModal(listing.id);
@@ -128,7 +127,7 @@ export function openEditListingModal(listing: ListingBase) {
   const submitBtn = document.createElement("button");
   submitBtn.type = "submit";
   submitBtn.id = "edit-listing-btn";
-  submitBtn.className = "btn btn_primary sm:w-fit";
+  submitBtn.className = "btn_primary btn_base sm:w-[146px]";
   submitBtn.innerHTML = `<span class="button-text">Save Changes</span><span class="spinner hidden">${loadingSpinner()}</span>`;
 
   buttonsContainer.append(deleteBtn, submitBtn);
@@ -195,16 +194,7 @@ export function openEditListingModal(listing: ListingBase) {
         location.reload();
       }, 1500);
     } catch (error) {
-      let message = "Something went wrong. Please try again.";
-
-      if (error instanceof ApiError) {
-        message = error.message;
-      } else if (error instanceof Error) {
-        message = error.message;
-      }
-
-      await showErrorModal(message);
-      console.error("Error updating listing:", error);
+      await handleApiError(error);
     } finally {
       toggleButtonLoading(submitBtn, false);
       fieldset.disabled = false;

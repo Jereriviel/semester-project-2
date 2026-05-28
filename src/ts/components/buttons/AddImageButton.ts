@@ -3,7 +3,7 @@ export function AddImageButton() {
   button.type = "button";
   button.id = "add-img-btn";
   button.className =
-    "btn btn_secondary flex items-center justify-center gap-2 sm:w-fit";
+    "btn_secondary btn_base flex items-center justify-center gap-2 sm:w-fit";
 
   button.innerHTML = `
         <span class="material-symbols-outlined"> add </span>

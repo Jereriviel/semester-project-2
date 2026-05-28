@@ -3,13 +3,13 @@ import { Profile } from "../../types/profile.js";
 
 export function ProfileBanner(profile: Profile) {
   const container = document.createElement("div");
-  container.className = "relative";
+  container.className = "relative w-full";
 
   const figure = document.createElement("figure");
-  figure.className = "max-h-[150px] overflow-hidden rounded-xl";
+  figure.className = "h-[150px] w-full overflow-hidden rounded-xl";
 
   const image = document.createElement("img");
-  image.className = "h-auto w-full object-cover";
+  image.className = "h-full w-full object-cover";
   image.src = profile.banner?.url ?? "";
   image.alt = profile.banner?.alt || `${profile.name}'s banner`;
   image.onerror = () => {

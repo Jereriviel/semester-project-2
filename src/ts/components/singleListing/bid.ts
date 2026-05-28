@@ -9,6 +9,7 @@ import { bidOnListing } from "../../services/listings.js";
 import { ApiError } from "../../errors.ts/ApiError.js";
 import { isLoggedIn, getUser } from "../../store/userStore.js";
 import { editListingButton } from "../buttons/editListingButton.js";
+import { updateCredits } from "../../utils/updateCredits.js";
 
 export function PlaceBid(
   id: string,
@@ -22,7 +23,7 @@ export function PlaceBid(
     const link = document.createElement("a");
     link.href = "/login/index.html";
     link.className =
-      "btn btn_primary w-full sm:w-fit flex items-center gap-2 justify-center";
+      "btn_primary btn_base w-full sm:w-fit flex items-center gap-2 justify-center";
 
     link.append("Log in to place your bid now!");
 
@@ -83,9 +84,28 @@ export function PlaceBid(
   const input = bidInputElement.querySelector("#bid") as HTMLInputElement;
   const button = bidInputElement.querySelector("button") as HTMLButtonElement;
   const bidLabel = bidInputElement.querySelector(`label[for="bid"]`);
-  const bidError = bidInputElement.querySelector(
-    "#bidError"
-  ) as HTMLParagraphElement;
+
+  const bidError = document.createElement("div");
+  bidError.id = "bid-error";
+  bidError.className = "text-delete-normal items-center gap-4 hidden";
+
+  const errorIconContainer = document.createElement("div");
+  errorIconContainer.className =
+    "bg-delete-light flex h-8 w-8 items-center justify-center rounded-full";
+
+  const errorIcon = document.createElement("span");
+  errorIcon.className = "material-symbols-outlined";
+  errorIcon.textContent = "exclamation";
+
+  errorIconContainer.appendChild(errorIcon);
+
+  const errorMsgText = document.createElement("p");
+  errorMsgText.className = "font-medium";
+
+  bidError.appendChild(errorIconContainer);
+  bidError.appendChild(errorMsgText);
+
+  fieldset.appendChild(bidError);
 
   const loggedInUser = getUser();
   const isOwnListing = loggedInUser?.name === profile.name;
@@ -103,14 +123,15 @@ export function PlaceBid(
   const listingEnded = Date.now() > endsAt;
 
   if (listingEnded) {
-    fieldset.disabled = true;
-
-    if (bidLabel) bidLabel.classList.add("hidden");
+    if (input) input.disabled = true;
 
     if (button) {
+      button.disabled = true;
       button.classList.remove("btn_search");
       button.classList.add("btn_search_disabled");
     }
+
+    if (bidLabel) bidLabel.classList.add("hidden");
   }
 
   form.addEventListener("submit", async (e) => {
@@ -121,8 +142,9 @@ export function PlaceBid(
     const amount = Number(input.value);
 
     if (!amount || amount <= 0) {
-      bidError.textContent = "Please enter a valid bid amount.";
+      errorMsgText.textContent = "Please enter a valid bid amount.";
       bidError.classList.remove("hidden");
+      bidError.classList.add("flex");
       return;
     }
 
@@ -130,7 +152,10 @@ export function PlaceBid(
       const body: CreateBidRequest = { amount };
       const response = await bidOnListing(body, id);
 
+      await updateCredits();
+
       input.value = "";
+
       successMessage.classList.remove("hidden");
       successMessage.classList.add("flex");
 
@@ -139,11 +164,13 @@ export function PlaceBid(
       }, 3000);
     } catch (error: unknown) {
       if (error instanceof ApiError) {
-        bidError.textContent = error.message;
+        errorMsgText.textContent = error.message;
       } else {
-        bidError.textContent = "An unexpected error occurred.";
+        errorMsgText.textContent = "An unexpected error occurred.";
       }
+
       bidError.classList.remove("hidden");
+      bidError.classList.add("flex");
     }
   });
 

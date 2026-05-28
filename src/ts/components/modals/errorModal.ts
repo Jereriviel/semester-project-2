@@ -16,7 +16,7 @@ export function showErrorModal(message: string): Promise<void> {
           <p>Oops, something went wrong!</p>
           <p>${message}</p>
         </div>
-        <button id="go-back-btn" class="btn btn_primary sm:w-fit self-end">Go Back</button>
+        <button id="go-back-btn" class="btn_primary btn_base sm:w-fit self-end">Go Back</button>
       </div>
     `);
 

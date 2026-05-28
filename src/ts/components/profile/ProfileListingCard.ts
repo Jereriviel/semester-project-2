@@ -138,7 +138,7 @@ export function ProfileYourListingCard(listing: ListingBase) {
 
     const viewLink = document.createElement("a");
     viewLink.href = `/listing/index.html?id=${listing.id}`;
-    viewLink.className = "btn btn_secondary sm:w-fit text-center";
+    viewLink.className = "btn_secondary btn_base sm:w-fit text-center";
     viewLink.innerText = "View Listing Page";
 
     const editBtn = editListingButton(listing);
@@ -173,7 +173,7 @@ export function ProfileActiveBidCard(bid: ProfileBid) {
   if (bottomSection) {
     const bidLink = document.createElement("a");
     bidLink.href = `/listing/index.html?id=${listing.id}`;
-    bidLink.className = "btn btn_primary sm:w-fit text-center";
+    bidLink.className = "btn_primary btn_base sm:w-fit text-center";
     bidLink.innerText = "Place Another Bid";
 
     bottomSection.appendChild(bidLink);
@@ -198,7 +198,7 @@ export function ProfileWonBidCard(listing: ListingBase) {
   if (bottomSection) {
     const detailsLink = document.createElement("a");
     detailsLink.href = `/listing/index.html?id=${listing.id}`;
-    detailsLink.className = "btn btn_primary sm:w-fit text-center";
+    detailsLink.className = "btn_primary btn_base sm:w-fit text-center";
     detailsLink.innerText = "View Details";
 
     bottomSection.appendChild(detailsLink);

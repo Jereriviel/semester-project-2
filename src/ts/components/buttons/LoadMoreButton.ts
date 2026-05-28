@@ -6,6 +6,7 @@ export function loadMoreButton<T>(options: {
   fetchItems: (page: number) => Promise<PaginatedResponse<T>>;
   renderItem: (item: T) => HTMLElement;
   onAfterRender?: (newItems: T[]) => void;
+  onError?: (error: unknown) => void; // optional improvement
   initialPage?: number;
   initialIsLastPage?: boolean;
 }): HTMLButtonElement {
@@ -14,6 +15,7 @@ export function loadMoreButton<T>(options: {
     fetchItems,
     renderItem,
     onAfterRender,
+    onError,
     initialPage = 1,
     initialIsLastPage = false,
   } = options;
@@ -21,7 +23,7 @@ export function loadMoreButton<T>(options: {
   const button = document.createElement("button");
   button.id = "load-more-btn";
   button.textContent = "Load More";
-  button.classList.add("btn", "btn_primary", "w-full", "sm:w-fit");
+  button.classList.add("btn_primary", "btn_base", "sm:w-[118px]");
 
   let currentPage = initialPage;
   let isFetching = false;
@@ -33,6 +35,7 @@ export function loadMoreButton<T>(options: {
   async function fetchAndRender(page: number) {
     if (isFetching) return;
     isFetching = true;
+
     toggleButtonLoading(button, true);
     button.disabled = true;
 
@@ -41,15 +44,13 @@ export function loadMoreButton<T>(options: {
       const items = response.data;
       const meta = response.meta;
 
-      const htmlPromises = items.map((item) =>
-        Promise.resolve(renderItem(item))
+      const htmlArray = await Promise.all(
+        items.map((item) => Promise.resolve(renderItem(item)))
       );
-
-      const htmlArray = await Promise.all(htmlPromises);
 
       htmlArray.forEach((el) => container.appendChild(el));
 
-      if (onAfterRender) onAfterRender(items);
+      onAfterRender?.(items);
 
       const pageSize = items.length || 12;
       const isLastPageNow = meta?.isLastPage ?? items.length < pageSize;
@@ -57,9 +58,10 @@ export function loadMoreButton<T>(options: {
       button.style.display = isLastPageNow ? "none" : "";
       if (!isLastPageNow) button.disabled = false;
     } catch (error) {
-      console.error("Failed to load items:", error);
       button.textContent = "Failed to load. Try again?";
       button.disabled = false;
+
+      onError?.(error);
     } finally {
       isFetching = false;
       toggleButtonLoading(button, false);

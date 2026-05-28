@@ -10,6 +10,9 @@ import type {
   CreateBidRequest,
   CreateBidResponse,
 } from "../types/listings.js";
+import { buildQuery } from "../utils/queryParams.js";
+
+const BASE = "/auction/listings";
 
 export async function getAllListings(
   page: number = 1,
@@ -17,44 +20,54 @@ export async function getAllListings(
   sortOrder: "asc" | "desc" = "desc",
   active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
-  return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?page=${page}&limit=${limit}` +
-      `&sort=created&sortOrder=${sortOrder}` +
-      `&_seller=true&_bids=true` +
-      `${active !== undefined ? `&_active=${active}` : ""}`
+  return get(
+    BASE +
+      buildQuery({
+        page,
+        limit,
+        sort: "created",
+        sortOrder,
+        seller: true,
+        bids: true,
+        active,
+      })
   );
 }
 
 export async function getSingleListing(
   id: string
 ): Promise<SingleListingResponse> {
-  return get<SingleListingResponse>(
-    `/auction/listings/${id}?_seller=true&_bids=true`
+  return get(
+    `${BASE}/${id}` +
+      buildQuery({
+        seller: true,
+        bids: true,
+      })
   );
 }
 
 export async function createListing(
   body: CreateListingRequest
 ): Promise<CreateListingResponse> {
-  return post<CreateListingResponse>("/auction/listings", body);
+  return post(BASE, body);
 }
 
 export async function updateListing(
   body: UpdateListingRequest,
   id: string
 ): Promise<UpdateListingResponse> {
-  return put<UpdateListingResponse>(`/auction/listings/${id}`, body);
+  return put(`${BASE}/${id}`, body);
 }
 
 export async function deleteListing(id: string): Promise<void> {
-  return del<void>(`/auction/listings/${id}`);
+  return del(`${BASE}/${id}`);
 }
 
 export async function bidOnListing(
   body: CreateBidRequest,
   id: string
 ): Promise<CreateBidResponse> {
-  return post<CreateBidResponse>(`/auction/listings/${id}/bids`, body);
+  return post(`${BASE}/${id}/bids`, body);
 }
 
 export async function searchListings(
@@ -64,12 +77,18 @@ export async function searchListings(
   sortOrder: "asc" | "desc" = "desc",
   active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
-  return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings/search?q=${encodeURIComponent(query)}` +
-      `&page=${page}&limit=${pageSize}` +
-      `&sort=created&sortOrder=${sortOrder}` +
-      `&_seller=true&_bids=true` +
-      `${active !== undefined ? `&_active=${active}` : ""}`
+  return get(
+    `${BASE}/search` +
+      buildQuery({
+        search: query,
+        page,
+        limit: pageSize,
+        sort: "created",
+        sortOrder,
+        seller: true,
+        bids: true,
+        active,
+      })
   );
 }
 
@@ -80,11 +99,19 @@ export async function filterListingsByTag(
   sortOrder: "asc" | "desc" = "desc",
   active?: boolean
 ): Promise<PaginatedResponse<ListingBase>> {
-  return get<PaginatedResponse<ListingBase>>(
-    `/auction/listings?_tag=${encodeURIComponent(tag)}` +
-      `&page=${page}&limit=${pageSize}` +
-      `&sort=created&sortOrder=${sortOrder}` +
-      `&_seller=true&_bids=true` +
-      `${active !== undefined ? `&_active=${active}` : ""}`
+  const normalizedTag = tag.trim().toLowerCase();
+
+  return get(
+    BASE +
+      buildQuery({
+        tag: normalizedTag,
+        page,
+        limit: pageSize,
+        sort: "created",
+        sortOrder,
+        seller: true,
+        bids: true,
+        active,
+      })
   );
 }

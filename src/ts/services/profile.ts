@@ -8,12 +8,12 @@ import type {
   ProfileBidsResponse,
   ProfileWinsResponse,
 } from "../types/profile.js";
+import { buildQuery } from "../utils/queryParams.js";
+
+const BASE = "/auction/profiles";
 
 export async function getProfile(name: string): Promise<Profile> {
-  const response = await get<ProfileResponse>(`/auction/profiles/${name}`);
-  if (!response) {
-    throw new Error("Profile not found");
-  }
+  const response = await get<ProfileResponse>(`${BASE}/${name}`);
   return response.data;
 }
 
@@ -21,26 +21,42 @@ export async function updateProfile(
   body: UpdateProfileRequest,
   name: string
 ): Promise<UpdateProfileResponse> {
-  return put<UpdateProfileResponse>(`/auction/profiles/${name}`, body);
+  return put(`${BASE}/${name}`, body);
 }
 
 export async function getProfileListings(
   name: string
 ): Promise<ProfileListingsResponse> {
-  const url = `/auction/profiles/${name}/listings?_seller=true&_bids=true`;
-  return get<ProfileListingsResponse>(url);
+  return get(
+    `${BASE}/${name}/listings` +
+      buildQuery({
+        seller: true,
+        bids: true,
+      })
+  );
 }
 
 export async function getProfileBids(
   name: string
 ): Promise<ProfileBidsResponse> {
-  const url = `/auction/profiles/${name}/bids?_listings=true&_seller=true&_bids=true`;
-  return get<ProfileBidsResponse>(url);
+  return get(
+    `${BASE}/${name}/bids` +
+      buildQuery({
+        listings: true,
+        seller: true,
+        bids: true,
+      })
+  );
 }
 
 export async function getProfileWins(
   name: string
 ): Promise<ProfileWinsResponse> {
-  const url = `/auction/profiles/${name}/wins?_seller=true&_bids=true`;
-  return get<ProfileWinsResponse>(url);
+  return get(
+    `${BASE}/${name}/wins` +
+      buildQuery({
+        seller: true,
+        bids: true,
+      })
+  );
 }

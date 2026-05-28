@@ -6,6 +6,7 @@ export function ProfileCard(profile: Profile) {
   wrapper.className = "flex items-start gap-4 sm:gap-8";
 
   const figure = document.createElement("figure");
+  figure.className = "flex shrink-0";
 
   const img = document.createElement("img");
   img.src = profile.avatar?.url ?? "/assets/images/placeholder-avatar.jpg";

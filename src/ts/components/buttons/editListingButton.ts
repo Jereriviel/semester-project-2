@@ -6,7 +6,7 @@ export function editListingButton(listing: ListingBase) {
   button.type = "button";
   button.id = "edit-listing-btn";
   button.className =
-    "btn btn_primary flex items-center justify-center gap-2 sm:w-fit";
+    "btn_primary btn_base flex items-center justify-center gap-2 sm:w-fit";
 
   button.innerHTML = `
         <span class="material-symbols-outlined"> edit </span>

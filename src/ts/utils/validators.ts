@@ -16,7 +16,7 @@ export function validateName(name: string): boolean {
 }
 
 export function validateEmail(email: string): boolean {
-  const emailRegex = /^[^\s@]+@(stud\.noroff\.no|noroff\.no)$/;
+  const emailRegex = /^[^\s@]+@stud\.noroff\.no$/;
   return emailRegex.test(email);
 }
 

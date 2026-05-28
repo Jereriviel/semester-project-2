@@ -24,10 +24,10 @@ export async function renderHeader() {
         <img src="/assets/logos/logo-primary-96.png" alt="Trove logo" class="w-[109px] sm:w-[145px]" />
       </a>
       <div class="flex items-center gap-3">
-        <a href="/login/index.html" class="btn btn_round sm:hidden">
+        <a href="/login/index.html" class="btn_round sm:hidden">
           <span class="material-symbols-outlined"> login </span>
         </a>
-        <a href="/login/index.html" class="btn btn_primary hidden items-center gap-2 sm:inline-flex">
+        <a href="/login/index.html" class="btn_primary hidden btn_base items-center gap-2 sm:inline-flex">
           <span class="material-symbols-outlined"> login </span>
           <p>Log in</p>
         </a>
@@ -94,10 +94,10 @@ export async function renderHeader() {
         </div>
 
         <div class="login-section flex items-center gap-3">
-          <a href="/login/index.html" class="btn btn_round sm:hidden">
+          <a href="/login/index.html" class="btn_round sm:hidden">
             <span class="material-symbols-outlined"> login </span>
           </a>
-          <a href="/login/index.html" class="btn btn_primary hidden items-center gap-2 sm:inline-flex">
+          <a href="/login/index.html" class="btn_primary btn_base hidden items-center gap-2 sm:inline-flex">
             <span class="material-symbols-outlined"> login </span>
             <p>Log in</p>
           </a>

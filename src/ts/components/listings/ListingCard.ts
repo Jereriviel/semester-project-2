@@ -65,7 +65,7 @@ export function ListingCard(
 
   listing.tags.forEach((tag) => {
     const tagDiv = document.createElement("div");
-    tagDiv.className = "btn btn_tag";
+    tagDiv.className = "btn_tag";
 
     const tagP = document.createElement("p");
     tagP.textContent = tag;

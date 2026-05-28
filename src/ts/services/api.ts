@@ -1,5 +1,6 @@
 import { API_BASE, API_KEY } from "../utils/constants.js";
 import { ApiError } from "../errors.ts/ApiError.js";
+import { getToken } from "../store/userStore.js";
 
 async function apiFetch<T>(
   endpoint: string,
@@ -8,14 +9,17 @@ async function apiFetch<T>(
   const url = API_BASE + endpoint;
 
   const headers: Record<string, string> = {
-    "Content-Type": "application/json",
     "X-Noroff-API-Key": API_KEY,
     ...(options.headers instanceof Headers
       ? Object.fromEntries(options.headers.entries())
       : (options.headers as Record<string, string> | undefined)),
   };
 
-  const token = localStorage.getItem("token");
+  if (options.body) {
+    headers["Content-Type"] = "application/json";
+  }
+
+  const token = getToken();
   if (token) {
     headers["Authorization"] = `Bearer ${token}`;
   }
@@ -27,8 +31,8 @@ async function apiFetch<T>(
       throw await ApiError.fromResponse(response);
     }
 
-    if (response.status === 204 && options.method === "DELETE") {
-      return true as T;
+    if (response.status === 204) {
+      return undefined as T;
     }
 
     const data: T = await response.json();
@@ -59,8 +63,8 @@ export async function put<T>(endpoint: string, body?: object): Promise<T> {
   });
 }
 
-export async function del<T>(endpoint: string): Promise<T> {
-  return apiFetch<T>(endpoint, {
+export async function del(endpoint: string): Promise<void> {
+  return apiFetch<void>(endpoint, {
     method: "DELETE",
   });
 }

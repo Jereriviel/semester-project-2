@@ -10,8 +10,7 @@ import { sortFilter } from "../components/listings/SortByFilter.js";
 import { Switch } from "../components/listings/Switch.js";
 import { addSkeletons, fadeOutSkeletons } from "../utils/skeletonUtils.js";
 import { Hero } from "../components/listings/Hero.js";
-import { showErrorModal } from "../components/modals/errorModal.js";
-import { ApiError } from "../errors.ts/ApiError.js";
+import { handleApiError } from "../errors.ts/handleApiError.js";
 
 let currentSortOrder: "asc" | "desc" = "desc";
 let currentActiveOnly: boolean = true;
@@ -186,15 +185,7 @@ async function init() {
 
     await loadDefaultListings(listingSection);
   } catch (error) {
-    let message = "Something went wrong. Please try again.";
-
-    if (error instanceof ApiError) {
-      message = error.message;
-    } else if (error instanceof Error) {
-      message = error.message;
-    }
-    await showErrorModal(message);
-    console.error("initPaginatedList error:", error);
+    await handleApiError(error);
   }
 }
 
